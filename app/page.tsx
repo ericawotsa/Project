@@ -137,7 +137,7 @@ export default function Home() {
         {/* Rotating Quote */}
         <section className="mb-10 p-8 bg-white/90 rounded-lg shadow-lg text-center">
           <p className="text-2xl italic text-gray-700">
-            "{quotes[quoteIndex]}"
+            &quot;{quotes[quoteIndex]}&quot;
           </p>
         </section>
 
