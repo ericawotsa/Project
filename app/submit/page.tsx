@@ -1,4 +1,3 @@
-// app/submit/page.tsx
 "use client";
 
 import { useState } from 'react';
@@ -46,26 +45,17 @@ export default function Submit() {
           <nav>
             <ul className="flex gap-4">
               <li>
-                <Link
-                  href="/"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/memories"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
                   Memories
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/about"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
                   About
                 </Link>
               </li>
@@ -86,7 +76,7 @@ export default function Submit() {
 
             <div>
               <label className="block font-medium text-gray-700">
-                Recipient's Name (required):
+                Recipient&apos;s Name (required):
               </label>
               <input
                 type="text"
