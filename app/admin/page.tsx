@@ -1,7 +1,7 @@
 // app/admin/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
@@ -15,11 +15,10 @@ interface Memory {
   status: string;
 }
 
-export default function AdminPanel() {
+function AdminPanelContent() {
   const searchParams = useSearchParams();
   const secret = searchParams.get("secret");
   const ADMIN_SECRET = "myadminsecret";
-  // Compute authorization flag unconditionally.
   const isAuthorized = secret === ADMIN_SECRET;
 
   const [pendingMemories, setPendingMemories] = useState<Memory[]>([]);
@@ -53,7 +52,10 @@ export default function AdminPanel() {
           <nav>
             <ul className="flex gap-6">
               <li>
-                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
+                <Link
+                  href="/"
+                  className="hover:text-blue-600 transition-colors duration-200"
+                >
                   Home
                 </Link>
               </li>
@@ -63,17 +65,23 @@ export default function AdminPanel() {
       </header>
 
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <h2 className="text-3xl font-semibold mb-6 text-gray-900">Pending Memories for Review</h2>
+        <h2 className="text-3xl font-semibold mb-6 text-gray-900">
+          Pending Memories for Review
+        </h2>
         {pendingMemories.length > 0 ? (
           pendingMemories.map((memory) => (
             <div
               key={memory.id}
               className="bg-white/90 shadow rounded-lg p-6 mb-6 border-l-4 border-yellow-400"
             >
-              <h3 className="text-2xl font-semibold text-gray-800">To: {memory.recipient}</h3>
+              <h3 className="text-2xl font-semibold text-gray-800">
+                To: {memory.recipient}
+              </h3>
               <p className="mt-3 text-gray-700">{memory.message}</p>
               {memory.sender && (
-                <p className="mt-3 italic text-lg text-gray-600">— {memory.sender}</p>
+                <p className="mt-3 italic text-lg text-gray-600">
+                  — {memory.sender}
+                </p>
               )}
               <small className="block mt-3 text-gray-500">
                 {new Date(memory.created_at).toLocaleString()}
@@ -120,5 +128,13 @@ async function updateMemoryStatus(id: string, newStatus: string) {
     .update({ status: newStatus })
     .eq("id", id);
   if (error) console.error(error);
-  // Optionally, you can call fetchPendingMemories() again to refresh.
+  // Optionally, trigger a refresh of pending memories here.
+}
+
+export default function AdminPanel() {
+  return (
+    <Suspense fallback={<p className="p-6 text-center">Loading admin panel...</p>}>
+      <AdminPanelContent />
+    </Suspense>
+  );
 }
