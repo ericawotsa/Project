@@ -1,29 +1,29 @@
-// app/page.tsx
+// app/about/page.tsx
 import Link from 'next/link';
 
-export default function Home() {
+export default function About() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
       <header className="bg-white/70 backdrop-blur-sm shadow-sm">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-gray-900">If Only I Sent This</h1>
+          <h1 className="text-xl font-bold text-gray-900">About</h1>
           <nav>
             <ul className="flex gap-4">
+              <li>
+                <Link
+                  href="/"
+                  className="hover:text-blue-600 transition-colors duration-200"
+                >
+                  Home
+                </Link>
+              </li>
               <li>
                 <Link
                   href="/memories"
                   className="hover:text-blue-600 transition-colors duration-200"
                 >
                   Memories
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
-                  About
                 </Link>
               </li>
               <li>
@@ -42,8 +42,9 @@ export default function Home() {
       {/* Main Content */}
       <main className="flex-grow max-w-3xl mx-auto px-4 py-8">
         <p className="text-lg">
-          Welcome to <span className="font-semibold">If Only I Sent This</span> – a modern take on
-          unsent messages and memories.
+          <strong>If Only I Sent This</strong> is a modern re-imagining of the classic unsent messages archive.
+          Here, you can share and read memories of unsent messages—expressing past emotions
+          and revisiting lost opportunities.
         </p>
       </main>
 
