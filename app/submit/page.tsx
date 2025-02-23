@@ -40,32 +40,23 @@ export default function Submit() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm shadow-sm">
+      <header className="bg-white/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900">Submit a Memory</h1>
+          <h1 className="text-4xl font-bold text-gray-900">Submit a Memory</h1>
           <nav>
             <ul className="flex gap-6">
               <li>
-                <Link
-                  href="/"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/memories"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
                   Memories
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/about"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
                   About
                 </Link>
               </li>
@@ -77,11 +68,11 @@ export default function Submit() {
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
         {submitted ? (
-          <div className="bg-green-100 text-green-800 p-6 rounded-lg mb-6 text-center">
+          <div className="bg-gradient-to-r from-green-300 to-green-500 text-white p-8 rounded-lg mb-6 text-center">
             Thank you for your submission!
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 bg-white/90 p-8 rounded-lg shadow-lg">
             {error && (
               <p className="text-red-600 text-center font-medium">{error}</p>
             )}
@@ -95,7 +86,7 @@ export default function Submit() {
                 value={recipient}
                 onChange={(e) => setRecipient(e.target.value)}
                 required
-                className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
               />
             </div>
 
@@ -108,7 +99,7 @@ export default function Submit() {
                 onChange={(e) => setMessage(e.target.value)}
                 required
                 rows={5}
-                className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
               ></textarea>
             </div>
 
@@ -120,14 +111,14 @@ export default function Submit() {
                 type="text"
                 value={sender}
                 onChange={(e) => setSender(e.target.value)}
-                className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
               />
             </div>
 
             <div className="text-center">
               <button
                 type="submit"
-                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-blue-800 transition-colors duration-200"
               >
                 Submit Memory
               </button>
@@ -137,7 +128,7 @@ export default function Submit() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-sm shadow-sm">
+      <footer className="bg-white/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
           &copy; {new Date().getFullYear()} If Only I Sent This
         </div>
