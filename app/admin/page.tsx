@@ -18,12 +18,9 @@ interface Memory {
 export default function AdminPanel() {
   const searchParams = useSearchParams();
   const secret = searchParams.get("secret");
-  // Hardcoded secret for demonstration; replace with proper auth in production.
   const ADMIN_SECRET = "myadminsecret";
-
-  if (secret !== ADMIN_SECRET) {
-    return <p className="p-6 text-center text-red-600">Access Denied</p>;
-  }
+  // Compute authorization flag unconditionally.
+  const isAuthorized = secret === ADMIN_SECRET;
 
   const [pendingMemories, setPendingMemories] = useState<Memory[]>([]);
 
@@ -38,16 +35,13 @@ export default function AdminPanel() {
   }
 
   useEffect(() => {
-    fetchPendingMemories();
-  }, []);
+    if (isAuthorized) {
+      fetchPendingMemories();
+    }
+  }, [isAuthorized]);
 
-  async function updateMemoryStatus(id: string, newStatus: string) {
-    const { error } = await supabase
-      .from("memories")
-      .update({ status: newStatus })
-      .eq("id", id);
-    if (error) console.error(error);
-    else fetchPendingMemories();
+  if (!isAuthorized) {
+    return <p className="p-6 text-center text-red-600">Access Denied</p>;
   }
 
   return (
@@ -118,4 +112,13 @@ export default function AdminPanel() {
       </footer>
     </div>
   );
+}
+
+async function updateMemoryStatus(id: string, newStatus: string) {
+  const { error } = await supabase
+    .from("memories")
+    .update({ status: newStatus })
+    .eq("id", id);
+  if (error) console.error(error);
+  // Optionally, you can call fetchPendingMemories() again to refresh.
 }
