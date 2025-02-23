@@ -11,6 +11,7 @@ interface Memory {
   message: string;
   sender?: string;
   created_at: string;
+  status: string;
 }
 
 export default function Home() {
@@ -74,6 +75,7 @@ export default function Home() {
       const { data, error } = await supabase
         .from("memories")
         .select("*")
+        .eq("status", "approved")
         .order("created_at", { ascending: false })
         .limit(3);
       if (error) {
@@ -148,23 +150,26 @@ export default function Home() {
           </h2>
           {recentMemories.length > 0 ? (
             recentMemories.map((memory) => (
-              <div
+              <Link
                 key={memory.id}
-                className="bg-white/90 shadow rounded-lg p-6 mb-6 border-l-4 border-blue-400"
+                href={`/memories/${memory.id}`}
+                className="block"
               >
-                <h3 className="text-2xl font-semibold text-gray-800">
-                  To: {memory.recipient}
-                </h3>
-                <p className="mt-4 text-gray-700">{memory.message}</p>
-                {memory.sender && (
-                  <p className="mt-4 italic text-lg text-gray-600">
-                    — {memory.sender}
-                  </p>
-                )}
-                <small className="block mt-4 text-gray-500">
-                  {new Date(memory.created_at).toLocaleString()}
-                </small>
-              </div>
+                <div className="bg-white/90 shadow rounded-lg p-6 mb-6 border-l-4 border-blue-400 hover:scale-[102%] transition-transform duration-200">
+                  <h3 className="text-2xl font-semibold text-gray-800">
+                    To: {memory.recipient}
+                  </h3>
+                  <p className="mt-4 text-gray-700">{memory.message}</p>
+                  {memory.sender && (
+                    <p className="mt-4 italic text-lg text-gray-600">
+                      — {memory.sender}
+                    </p>
+                  )}
+                  <small className="block mt-4 text-gray-500">
+                    {new Date(memory.created_at).toLocaleString()}
+                  </small>
+                </div>
+              </Link>
             ))
           ) : (
             <p className="text-gray-700">No recent memories found.</p>

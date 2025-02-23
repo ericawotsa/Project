@@ -12,6 +12,8 @@ export default function Submit() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
+  // Remove content moderation for automatic approval.
+  // Instead, every message is submitted as "pending" for manual approval.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -21,16 +23,18 @@ export default function Submit() {
       return;
     }
 
+    // All messages are marked as "pending" for manual review.
+    const status = "pending";
+
     const { error } = await supabase
       .from("memories")
-      .insert([{ recipient, message, sender }]);
+      .insert([{ recipient, message, sender, status }]);
 
     if (error) {
       setError("Error submitting your memory.");
       console.error(error);
     } else {
       setSubmitted(true);
-      // Clear form fields
       setRecipient("");
       setMessage("");
       setSender("");
@@ -69,7 +73,7 @@ export default function Submit() {
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
         {submitted ? (
           <div className="bg-gradient-to-r from-green-300 to-green-500 text-white p-8 rounded-lg mb-6 text-center">
-            Thank you for your submission!
+            Thank you for your submission! Your memory is pending approval.
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6 bg-white/90 p-8 rounded-lg shadow-lg">
