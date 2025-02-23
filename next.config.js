@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Remove experimental options if they cause issues
+  // Removed experimental appDir option as it's causing issues.
 };
 
 module.exports = nextConfig;
