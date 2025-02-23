@@ -56,32 +56,23 @@ export default function Memories() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm shadow-sm">
+      <header className="bg-white/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between">
-          <h1 className="text-3xl font-bold text-gray-900">Memories</h1>
+          <h1 className="text-4xl font-bold text-gray-900">Memories</h1>
           <nav>
             <ul className="flex gap-6">
               <li>
-                <Link
-                  href="/"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/about"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
                   About
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/submit"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
                   Submit
                 </Link>
               </li>
@@ -129,7 +120,7 @@ export default function Memories() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-sm shadow-sm">
+      <footer className="bg-white/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
           &copy; {new Date().getFullYear()} If Only I Sent This
         </div>
