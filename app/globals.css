@@ -1,12 +1,10 @@
 /* app/globals.css */
-
-/* Import Tailwind's base, components, and utilities */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Global body styling */
+/* Global body styling with a subtle gradient background */
 body {
   @apply bg-gradient-to-br from-pink-50 to-blue-50 text-gray-800;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
 }
