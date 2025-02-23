@@ -1,36 +1,27 @@
 // app/about/page.tsx
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function About() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white/70 backdrop-blur-sm shadow-sm">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-xl font-bold text-gray-900">About</h1>
+      <header className="bg-white/80 backdrop-blur-md shadow-lg">
+        <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4 md:mb-0">About</h1>
           <nav>
-            <ul className="flex gap-4">
+            <ul className="flex gap-6">
               <li>
-                <Link
-                  href="/"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/memories"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
                   Memories
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/submit"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
                   Submit
                 </Link>
               </li>
@@ -40,17 +31,29 @@ export default function About() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow max-w-3xl mx-auto px-4 py-8">
-        <p className="text-lg">
-          <strong>If Only I Sent This</strong> is a modern re-imagining of the classic unsent messages archive.
-          Here, you can share and read memories of unsent messages—expressing past emotions
-          and revisiting lost opportunities.
-        </p>
+      <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
+        <article className="bg-white/90 p-8 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-semibold mb-4 text-gray-800">A Tale of Unsent Words</h2>
+          <p className="text-lg text-gray-700 mb-4">
+            This space is a tribute to a first love that left us with a thousand unsent messages.
+            It is a sanctuary for memories that were never fully expressed—a place where every word,
+            every regret, and every tear is honored.
+          </p>
+          <p className="text-lg text-gray-700 mb-4">
+            We remember that bittersweet moment when courage failed, and the last words remained
+            locked inside our hearts. Here, you can relive those moments, find solace in shared sorrow,
+            and honor the love that once was.
+          </p>
+          <p className="text-lg text-gray-700">
+            This archive is for anyone who has loved deeply and lost painfully, who still holds onto
+            the hope of one more chance to say goodbye—or maybe, even, hello.
+          </p>
+        </article>
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/70 backdrop-blur-sm shadow-sm">
-        <div className="max-w-3xl mx-auto px-4 py-4 text-sm text-gray-600">
+      <footer className="bg-white/80 backdrop-blur-md shadow-lg">
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
           &copy; {new Date().getFullYear()} If Only I Sent This
         </div>
       </footer>
