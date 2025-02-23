@@ -88,19 +88,19 @@ function AdminPanelContent() {
               </small>
               <div className="mt-4 flex gap-4">
                 <button
-                  onClick={() => updateMemoryStatus(memory.id, "approved")}
+                  onClick={() => updateMemoryStatus(memory.id, "approved", fetchPendingMemories)}
                   className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
                 >
                   Approve
                 </button>
                 <button
-                  onClick={() => updateMemoryStatus(memory.id, "rejected")}
+                  onClick={() => updateMemoryStatus(memory.id, "rejected", fetchPendingMemories)}
                   className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
                 >
                   Reject
                 </button>
                 <button
-                  onClick={() => updateMemoryStatus(memory.id, "banned")}
+                  onClick={() => updateMemoryStatus(memory.id, "banned", fetchPendingMemories)}
                   className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800 transition-colors"
                 >
                   Ban
@@ -122,13 +122,29 @@ function AdminPanelContent() {
   );
 }
 
-async function updateMemoryStatus(id: string, newStatus: string) {
-  const { error } = await supabase
-    .from("memories")
-    .update({ status: newStatus })
-    .eq("id", id);
-  if (error) console.error(error);
-  // Optionally, trigger a refresh of pending memories here.
+// Updated updateMemoryStatus function
+async function updateMemoryStatus(
+  id: string,
+  newStatus: string,
+  refreshCallback: () => void
+) {
+  if (newStatus === "rejected") {
+    // Delete the memory if rejected.
+    const { error } = await supabase
+      .from("memories")
+      .delete()
+      .eq("id", id);
+    if (error) console.error(error);
+  } else {
+    // Otherwise, update the status.
+    const { error } = await supabase
+      .from("memories")
+      .update({ status: newStatus })
+      .eq("id", id);
+    if (error) console.error(error);
+  }
+  // Refresh the pending memories list.
+  refreshCallback();
 }
 
 export default function AdminPanel() {
