@@ -1,33 +1,39 @@
-// app/memories/page.tsx
 "use client";
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
 import Link from 'next/link';
 
+interface Memory {
+  id: string;
+  recipient: string;
+  message: string;
+  sender?: string;
+  created_at: string;
+}
+
 export default function Memories() {
-  const [memories, setMemories] = useState<any[]>([]);
+  const [memories, setMemories] = useState<Memory[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const fetchMemories = async () => {
-    let query = supabase
-      .from('memories')
-      .select('*')
-      .order('created_at', { ascending: false });
-
-    if (searchTerm) {
-      query = query.ilike('recipient', `%${searchTerm}%`);
-    }
-
-    const { data, error } = await query;
-    if (error) {
-      console.error('Error fetching memories:', error);
-    } else {
-      setMemories(data || []);
-    }
-  };
-
   useEffect(() => {
+    async function fetchMemories() {
+      let query = supabase
+        .from('memories')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (searchTerm) {
+        query = query.ilike('recipient', `%${searchTerm}%`);
+      }
+
+      const { data, error } = await query;
+      if (error) {
+        console.error('Error fetching memories:', error);
+      } else {
+        setMemories(data || []);
+      }
+    }
     fetchMemories();
   }, [searchTerm]);
 
@@ -40,26 +46,17 @@ export default function Memories() {
           <nav>
             <ul className="flex gap-4">
               <li>
-                <Link
-                  href="/"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/about"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
                   About
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/submit"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
                   Submit
                 </Link>
               </li>
@@ -85,9 +82,7 @@ export default function Memories() {
             >
               <h3 className="text-lg font-semibold text-gray-900">To: {memory.recipient}</h3>
               <p className="mt-2 text-gray-700">{memory.message}</p>
-              {memory.sender && (
-                <p className="mt-2 italic text-sm text-gray-600">— {memory.sender}</p>
-              )}
+              {memory.sender && <p className="mt-2 italic text-sm text-gray-600">— {memory.sender}</p>}
               <small className="block mt-2 text-gray-500">
                 {new Date(memory.created_at).toLocaleString()}
               </small>
