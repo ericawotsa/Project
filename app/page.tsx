@@ -12,6 +12,7 @@ interface Memory {
   sender?: string;
   created_at: string;
   status: string;
+  color: string;
 }
 
 export default function Home() {
@@ -87,7 +88,6 @@ export default function Home() {
     fetchRecentMemories();
   }, []);
 
-  // Rotate quote every 10 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setQuoteIndex((prev) => (prev + 1) % quotes.length);
@@ -106,6 +106,11 @@ export default function Home() {
               <li>
                 <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
                   Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
+                  Memories
                 </Link>
               </li>
               <li>
@@ -138,15 +143,32 @@ export default function Home() {
           {recentMemories.length > 0 ? (
             recentMemories.map((memory) => (
               <Link key={memory.id} href={`/memories/${memory.id}`} className="block">
-                <div className="bg-white/90 shadow rounded-lg p-6 mb-6 border-l-4 border-blue-400 hover:scale-[102%] transition-transform duration-200">
+                <div className={`bg-white/90 shadow rounded-lg p-6 mb-6 border-l-4 ${
+                  memory.color === "blue"
+                    ? "border-blue-400"
+                    : memory.color === "gray"
+                    ? "border-gray-400"
+                    : memory.color === "purple"
+                    ? "border-purple-400"
+                    : memory.color === "black"
+                    ? "border-black"
+                    : memory.color === "navy"
+                    ? "border-blue-900"
+                    : memory.color === "maroon"
+                    ? "border-red-800"
+                    : "border-blue-400"
+                } hover:scale-[102%] transition-transform duration-200`}>
                   <h3 className="text-2xl font-semibold text-gray-800">To: {memory.recipient}</h3>
                   <p className="mt-4 text-gray-700">{memory.message}</p>
                   {memory.sender && (
                     <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>
                   )}
-                  <small className="block mt-4 text-gray-500">
-                    {new Date(memory.created_at).toLocaleString()}
-                  </small>
+                  <div className="mt-4 text-gray-500 text-sm">
+                    <p>Date: {new Date(memory.created_at).toLocaleDateString()}</p>
+                    <p>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' })}</p>
+                    <p>Time: {new Date(memory.created_at).toLocaleTimeString()}</p>
+                    <p>Selected Color: {memory.color}</p>
+                  </div>
                 </div>
               </Link>
             ))
