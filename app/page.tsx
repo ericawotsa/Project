@@ -97,36 +97,25 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Hero Section */}
+      {/* Navigation */}
       <header className="bg-white/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4 md:mb-0">
-            If Only I Sent This
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-900">If Only I Sent This</h1>
           <nav>
             <ul className="flex gap-6">
               <li>
-                <Link
-                  href="/memories"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
-                  Memories
+                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/about"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/submit"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
                   Submit
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
+                  About
                 </Link>
               </li>
             </ul>
@@ -145,25 +134,15 @@ export default function Home() {
 
         {/* Recent Memories */}
         <section>
-          <h2 className="text-3xl font-semibold mb-6 text-gray-900">
-            Recent Memories
-          </h2>
+          <h2 className="text-3xl font-semibold mb-6 text-gray-900">Recent Memories</h2>
           {recentMemories.length > 0 ? (
             recentMemories.map((memory) => (
-              <Link
-                key={memory.id}
-                href={`/memories/${memory.id}`}
-                className="block"
-              >
+              <Link key={memory.id} href={`/memories/${memory.id}`} className="block">
                 <div className="bg-white/90 shadow rounded-lg p-6 mb-6 border-l-4 border-blue-400 hover:scale-[102%] transition-transform duration-200">
-                  <h3 className="text-2xl font-semibold text-gray-800">
-                    To: {memory.recipient}
-                  </h3>
+                  <h3 className="text-2xl font-semibold text-gray-800">To: {memory.recipient}</h3>
                   <p className="mt-4 text-gray-700">{memory.message}</p>
                   {memory.sender && (
-                    <p className="mt-4 italic text-lg text-gray-600">
-                      — {memory.sender}
-                    </p>
+                    <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>
                   )}
                   <small className="block mt-4 text-gray-500">
                     {new Date(memory.created_at).toLocaleString()}
@@ -175,11 +154,8 @@ export default function Home() {
             <p className="text-gray-700">No recent memories found.</p>
           )}
           <div className="text-right mt-4">
-            <Link
-              href="/memories"
-              className="text-blue-600 hover:underline transition-colors duration-200"
-            >
-              View all memories &rarr;
+            <Link href="/memories" className="text-blue-600 hover:underline transition-colors duration-200">
+              View All Memories &rarr;
             </Link>
           </div>
         </section>
