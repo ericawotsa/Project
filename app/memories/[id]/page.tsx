@@ -13,6 +13,7 @@ interface Memory {
   sender?: string;
   created_at: string;
   status: string;
+  color: string;
 }
 
 export default function MemoryDetail() {
@@ -62,15 +63,32 @@ export default function MemoryDetail() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <div className="bg-white/90 shadow rounded-lg p-6 mb-6 border-l-4 border-blue-400">
+        <div className={`bg-white/90 shadow rounded-lg p-6 mb-6 border-l-4 ${
+                  memory.color === "blue"
+                    ? "border-blue-400"
+                    : memory.color === "gray"
+                    ? "border-gray-400"
+                    : memory.color === "purple"
+                    ? "border-purple-400"
+                    : memory.color === "black"
+                    ? "border-black"
+                    : memory.color === "navy"
+                    ? "border-blue-900"
+                    : memory.color === "maroon"
+                    ? "border-red-800"
+                    : "border-blue-400"
+                }`}>
           <h2 className="text-3xl font-semibold text-gray-800">To: {memory.recipient}</h2>
           <p className="mt-4 text-gray-700">{memory.message}</p>
           {memory.sender && (
             <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>
           )}
-          <small className="block mt-4 text-gray-500">
-            {new Date(memory.created_at).toLocaleString()}
-          </small>
+          <div className="mt-4 text-gray-500 text-sm">
+            <p>Date: {new Date(memory.created_at).toLocaleDateString()}</p>
+            <p>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' })}</p>
+            <p>Time: {new Date(memory.created_at).toLocaleTimeString()}</p>
+            <p>Selected Color: {memory.color}</p>
+          </div>
         </div>
       </main>
 
