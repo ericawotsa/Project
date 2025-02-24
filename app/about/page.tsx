@@ -4,10 +4,10 @@ import Link from "next/link";
 export default function About() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      {/* Navigation */}
       <header className="bg-white/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4 md:mb-0">About</h1>
+          <h1 className="text-4xl font-bold text-gray-900">About</h1>
           <nav>
             <ul className="flex gap-6">
               <li>
@@ -16,13 +16,13 @@ export default function About() {
                 </Link>
               </li>
               <li>
-                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
-                  Memories
+                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
+                  Submit
                 </Link>
               </li>
               <li>
-                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
-                  Submit
+                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
+                  About
                 </Link>
               </li>
             </ul>
