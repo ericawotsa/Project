@@ -14,6 +14,37 @@ interface Memory {
   created_at: string;
   status: string;
   color: string;
+  full_bg: boolean;
+}
+
+function getBorderColor(color: string) {
+  const mapping: { [key: string]: string } = {
+    default: "border-gray-400",
+    blue: "border-blue-400",
+    gray: "border-gray-400",
+    purple: "border-purple-400",
+    black: "border-black",
+    navy: "border-blue-900",
+    maroon: "border-red-800",
+    pink: "border-pink-400",
+    teal: "border-teal-400",
+  };
+  return mapping[color] || mapping["default"];
+}
+
+function getBgColor(color: string) {
+  const mapping: { [key: string]: string } = {
+    default: "bg-gray-100",
+    blue: "bg-blue-100",
+    gray: "bg-gray-100",
+    purple: "bg-purple-100",
+    black: "bg-gray-800",
+    navy: "bg-blue-100",
+    maroon: "bg-red-100",
+    pink: "bg-pink-100",
+    teal: "bg-teal-100",
+  };
+  return mapping[color] || mapping["default"];
 }
 
 export default function MemoryDetail() {
@@ -63,31 +94,22 @@ export default function MemoryDetail() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <div className={`bg-white/90 shadow rounded-lg p-6 mb-6 border-l-4 ${
-                  memory.color === "blue"
-                    ? "border-blue-400"
-                    : memory.color === "gray"
-                    ? "border-gray-400"
-                    : memory.color === "purple"
-                    ? "border-purple-400"
-                    : memory.color === "black"
-                    ? "border-black"
-                    : memory.color === "navy"
-                    ? "border-blue-900"
-                    : memory.color === "maroon"
-                    ? "border-red-800"
-                    : "border-blue-400"
-                }`}>
+        <div className={`bg-white/90 shadow rounded-lg p-6 mb-6 min-h-[200px] ${
+                  memory.full_bg ? getBgColor(memory.color) : ""
+                } ${!memory.full_bg ? `border-l-4 ${getBorderColor(memory.color)}` : ""}`}>
           <h2 className="text-3xl font-semibold text-gray-800">To: {memory.recipient}</h2>
           <p className="mt-4 text-gray-700">{memory.message}</p>
           {memory.sender && (
             <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>
           )}
-          <div className="mt-4 text-gray-500 text-sm">
-            <p>Date: {new Date(memory.created_at).toLocaleDateString()}</p>
-            <p>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' })}</p>
-            <p>Time: {new Date(memory.created_at).toLocaleTimeString()}</p>
-            <p>Selected Color: {memory.color}</p>
+          <div className="mt-4 flex flex-wrap text-gray-500 text-sm items-center">
+            <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
+            <span className="mx-2">|</span>
+            <span>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' })}</span>
+            <span className="mx-2">|</span>
+            <span>Time: {new Date(memory.created_at).toLocaleTimeString()}</span>
+            <span className="mx-2">|</span>
+            <span>Color: {memory.color}</span>
           </div>
         </div>
       </main>
