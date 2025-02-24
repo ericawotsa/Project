@@ -14,6 +14,7 @@ interface Memory {
   status: string;
   color: string;
   full_bg: boolean;
+  letter_style: string;
 }
 
 function getBorderColor(color: string) {
@@ -22,7 +23,6 @@ function getBorderColor(color: string) {
     blue: "border-blue-400",
     gray: "border-gray-400",
     purple: "border-purple-400",
-    black: "border-black",
     navy: "border-blue-900",
     maroon: "border-red-800",
     pink: "border-pink-400",
@@ -37,7 +37,6 @@ function getBgColor(color: string) {
     blue: "bg-blue-100",
     gray: "bg-gray-100",
     purple: "bg-purple-100",
-    black: "bg-gray-800",
     navy: "bg-blue-100",
     maroon: "bg-red-100",
     pink: "bg-pink-100",
@@ -73,31 +72,15 @@ export default function Memories() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
-      <header className="bg-white/80 backdrop-blur-md shadow-lg">
+      <header className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between">
           <h1 className="text-4xl font-bold text-gray-900">Memories</h1>
           <nav>
             <ul className="flex gap-6">
-              <li>
-                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
-                  Memories
-                </Link>
-              </li>
-              <li>
-                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
-                  Submit
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
-                  About
-                </Link>
-              </li>
+              <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
+              <li><Link href="/memories" className="hover:text-blue-600">Memories</Link></li>
+              <li><Link href="/submit" className="hover:text-blue-600">Submit</Link></li>
+              <li><Link href="/about" className="hover:text-blue-600">About</Link></li>
             </ul>
           </nav>
         </div>
@@ -117,13 +100,9 @@ export default function Memories() {
         {memories.length > 0 ? (
           memories.map((memory) => (
             <Link key={memory.id} href={`/memories/${memory.id}`} className="block">
-              <div
-                className={`${
-                  memory.full_bg ? getBgColor(memory.color) : "bg-white/90"
-                } shadow rounded-lg p-6 mb-6 ${
-                  !memory.full_bg ? `border-l-8 ${getBorderColor(memory.color)}` : ""
-                } hover:scale-[102%] transition-transform duration-200`}
-              >
+              <div className={`shadow-lg rounded-lg p-6 mb-6 transition-transform duration-200 hover:scale-105 
+                  ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} 
+                  border-l-8 ${getBorderColor(memory.color)}`}>
                 <h3 className="text-2xl font-semibold text-gray-800">To: {memory.recipient}</h3>
                 <p className="mt-3 text-gray-700">{memory.message}</p>
                 {memory.sender && (
@@ -147,7 +126,7 @@ export default function Memories() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-md shadow-lg">
+      <footer className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
           &copy; {new Date().getFullYear()} If Only I Sent This
         </div>
