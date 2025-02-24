@@ -16,13 +16,13 @@ export default function About() {
                 </Link>
               </li>
               <li>
-                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
-                  Submit
+                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
+                  Memories
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
-                  About
+                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
+                  Submit
                 </Link>
               </li>
             </ul>
