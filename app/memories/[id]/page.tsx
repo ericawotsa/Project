@@ -91,7 +91,7 @@ export default function MemoryDetail() {
           <h2 className="text-3xl font-semibold text-gray-800">To: {memory.recipient}</h2>
           <p className="mt-4 text-gray-700">{memory.message}</p>
           {memory.sender && <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>}
-          <div className="mt-6 border-t pt-3 flex flex-wrap text-gray-500 text-sm items-center">
+          <div className="mt-6 border-t border-gray-300 pt-3 flex flex-wrap text-gray-500 text-sm items-center">
             <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
             <span className="mx-2">|</span>
             <span>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: "long" })}</span>
