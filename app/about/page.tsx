@@ -10,21 +10,9 @@ export default function About() {
           <h1 className="text-4xl font-bold text-gray-900">About</h1>
           <nav>
             <ul className="flex gap-6">
-              <li>
-                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
-                  Memories
-                </Link>
-              </li>
-              <li>
-                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
-                  Submit
-                </Link>
-              </li>
+              <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
+              <li><Link href="/memories" className="hover:text-blue-600">Memories</Link></li>
+              <li><Link href="/submit" className="hover:text-blue-600">Submit</Link></li>
             </ul>
           </nav>
         </div>
@@ -53,9 +41,7 @@ export default function About() {
 
       {/* Footer */}
       <footer className="bg-white/80 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
-          &copy; {new Date().getFullYear()} If Only I Sent This
-        </div>
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">&copy; {new Date().getFullYear()} If Only I Sent This</div>
       </footer>
     </div>
   );
