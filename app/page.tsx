@@ -14,15 +14,16 @@ interface Memory {
   status: string;
   color: string;
   full_bg: boolean;
+  letter_style: string;
 }
 
+// Helper functions for color styling
 function getBorderColor(color: string) {
   const mapping: { [key: string]: string } = {
     default: "border-gray-400",
     blue: "border-blue-400",
     gray: "border-gray-400",
     purple: "border-purple-400",
-    black: "border-black",
     navy: "border-blue-900",
     maroon: "border-red-800",
     pink: "border-pink-400",
@@ -37,13 +38,21 @@ function getBgColor(color: string) {
     blue: "bg-blue-100",
     gray: "bg-gray-100",
     purple: "bg-purple-100",
-    black: "bg-gray-800",
     navy: "bg-blue-100",
     maroon: "bg-red-100",
     pink: "bg-pink-100",
     teal: "bg-teal-100",
   };
   return mapping[color] || mapping["default"];
+}
+
+function getLetterStyleClasses(letterStyle: string) {
+  const mapping: { [key: string]: string } = {
+    default: "",
+    sad: "italic text-gray-600",
+    love: "font-serif text-pink-700",
+  };
+  return mapping[letterStyle] || "";
 }
 
 export default function Home() {
@@ -99,7 +108,7 @@ export default function Home() {
     "Our unspoken words are my greatest sorrow.",
     "I’m haunted by the memories of our unfinished love.",
     "I wish I had the courage to say it all.",
-    "Our love remains, a bittersweet ghost in my heart."
+    "Our love remains, a bittersweet ghost in my heart.",
   ];
 
   useEffect(() => {
@@ -134,26 +143,10 @@ export default function Home() {
           <h1 className="text-4xl font-bold text-gray-900">If Only I Sent This</h1>
           <nav>
             <ul className="flex gap-6">
-              <li>
-                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
-                  Memories
-                </Link>
-              </li>
-              <li>
-                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
-                  Submit
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
-                  About
-                </Link>
-              </li>
+              <li><Link href="/" className="hover:text-blue-600 transition-colors duration-200">Home</Link></li>
+              <li><Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">Memories</Link></li>
+              <li><Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">Submit</Link></li>
+              <li><Link href="/about" className="hover:text-blue-600 transition-colors duration-200">About</Link></li>
             </ul>
           </nav>
         </div>
@@ -163,9 +156,7 @@ export default function Home() {
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
         {/* Rotating Quote */}
         <section className="mb-10 p-8 bg-white/90 rounded-lg shadow-lg text-center">
-          <p className="text-2xl italic text-gray-700">
-            &quot;{quotes[quoteIndex]}&quot;
-          </p>
+          <p className="text-2xl italic text-gray-700">&quot;{quotes[quoteIndex]}&quot;</p>
         </section>
 
         {/* Recent Memories */}
@@ -174,18 +165,10 @@ export default function Home() {
           {recentMemories.length > 0 ? (
             recentMemories.map((memory) => (
               <Link key={memory.id} href={`/memories/${memory.id}`} className="block">
-                <div
-                  className={`${
-                    memory.full_bg ? getBgColor(memory.color) : "bg-white/90"
-                  } shadow rounded-lg p-6 mb-6 ${
-                    !memory.full_bg ? `border-l-4 ${getBorderColor(memory.color)}` : ""
-                  } hover:scale-[102%] transition-transform duration-200`}
-                >
-                  <h3 className="text-2xl font-semibold text-gray-800">To: {memory.recipient}</h3>
+                <div className={`shadow rounded-lg p-6 mb-6 ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} border-l-4 ${getBorderColor(memory.color)} hover:scale-105 transition-transform duration-200`}>
+                  <h3 className={`text-2xl font-semibold text-gray-800 ${getLetterStyleClasses(memory.letter_style)}`}>To: {memory.recipient}</h3>
                   <p className="mt-4 text-gray-700">{memory.message}</p>
-                  {memory.sender && (
-                    <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>
-                  )}
+                  {memory.sender && <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>}
                   <div className="mt-4 flex flex-wrap text-gray-500 text-sm items-center">
                     <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
                     <span className="mx-2">|</span>
@@ -194,6 +177,8 @@ export default function Home() {
                     <span>Time: {new Date(memory.created_at).toLocaleTimeString()}</span>
                     <span className="mx-2">|</span>
                     <span>Color: {memory.color}</span>
+                    <span className="mx-2">|</span>
+                    <span>Letter Style: {memory.letter_style}</span>
                   </div>
                 </div>
               </Link>
@@ -202,18 +187,14 @@ export default function Home() {
             <p className="text-gray-700">No recent memories found.</p>
           )}
           <div className="text-right mt-4">
-            <Link href="/memories" className="text-blue-600 hover:underline transition-colors duration-200">
-              View All Memories &rarr;
-            </Link>
+            <Link href="/memories" className="text-blue-600 hover:underline transition-colors duration-200">View All Memories &rarr;</Link>
           </div>
         </section>
       </main>
 
       {/* Footer */}
       <footer className="bg-white/80 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
-          &copy; {new Date().getFullYear()} If Only I Sent This
-        </div>
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">&copy; {new Date().getFullYear()} If Only I Sent This</div>
       </footer>
     </div>
   );
