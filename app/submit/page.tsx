@@ -12,8 +12,7 @@ export default function Submit() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  // Remove content moderation for automatic approval.
-  // Instead, every message is submitted as "pending" for manual approval.
+  // All submissions are marked "pending" for manual review.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -23,9 +22,7 @@ export default function Submit() {
       return;
     }
 
-    // All messages are marked as "pending" for manual review.
     const status = "pending";
-
     const { error } = await supabase
       .from("memories")
       .insert([{ recipient, message, sender, status }]);
@@ -43,7 +40,7 @@ export default function Submit() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      {/* Navigation */}
       <header className="bg-white/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between">
           <h1 className="text-4xl font-bold text-gray-900">Submit a Memory</h1>
@@ -55,8 +52,8 @@ export default function Submit() {
                 </Link>
               </li>
               <li>
-                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
-                  Memories
+                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
+                  Submit
                 </Link>
               </li>
               <li>
@@ -77,9 +74,7 @@ export default function Submit() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6 bg-white/90 p-8 rounded-lg shadow-lg">
-            {error && (
-              <p className="text-red-600 text-center font-medium">{error}</p>
-            )}
+            {error && <p className="text-red-600 text-center font-medium">{error}</p>}
 
             <div>
               <label className="block font-medium text-gray-700">
