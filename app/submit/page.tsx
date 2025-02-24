@@ -6,19 +6,23 @@ import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 
 const colorOptions = [
+  { value: "default", label: "Default" },
   { value: "blue", label: "Blue" },
   { value: "gray", label: "Gray" },
   { value: "purple", label: "Purple" },
   { value: "black", label: "Black" },
   { value: "navy", label: "Navy" },
   { value: "maroon", label: "Maroon" },
+  { value: "pink", label: "Pink" },
+  { value: "teal", label: "Teal" },
 ];
 
 export default function Submit() {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
   const [sender, setSender] = useState("");
-  const [color, setColor] = useState("blue");
+  const [color, setColor] = useState("default");
+  const [fullBg, setFullBg] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
@@ -34,7 +38,7 @@ export default function Submit() {
     const status = "pending";
     const { error } = await supabase
       .from("memories")
-      .insert([{ recipient, message, sender, status, color }]);
+      .insert([{ recipient, message, sender, status, color, full_bg: fullBg }]);
 
     if (error) {
       setError("Error submitting your memory.");
@@ -44,7 +48,8 @@ export default function Submit() {
       setRecipient("");
       setMessage("");
       setSender("");
-      setColor("blue");
+      setColor("default");
+      setFullBg(false);
     }
   };
 
@@ -126,7 +131,7 @@ export default function Submit() {
 
             <div>
               <label className="block font-medium text-gray-700">
-                Select a Color for Your Message:
+                Select a Color for Your Message (optional):
               </label>
               <select
                 value={color}
@@ -139,6 +144,19 @@ export default function Submit() {
                   </option>
                 ))}
               </select>
+            </div>
+
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                checked={fullBg}
+                onChange={(e) => setFullBg(e.target.checked)}
+                id="fullBg"
+                className="mr-2"
+              />
+              <label htmlFor="fullBg" className="font-medium text-gray-700">
+                Apply color to full card background
+              </label>
             </div>
 
             <div className="text-center">
