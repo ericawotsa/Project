@@ -6,11 +6,7 @@ export const metadata = {
   description: "A modern archive for unsent memories and heartfelt messages.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>{children}</body>
