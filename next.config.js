@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // No experimental flags for now.
+  // No experimental options needed.
 };
 
 module.exports = nextConfig;
