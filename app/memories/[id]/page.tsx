@@ -46,15 +46,6 @@ function getBgColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-function getLetterStyleClasses(letterStyle: string) {
-  const mapping: { [key: string]: string } = {
-    default: "",
-    sad: "italic text-gray-600",
-    love: "font-serif text-pink-700",
-  };
-  return mapping[letterStyle] || "";
-}
-
 export default function MemoryDetail() {
   const { id } = useParams();
   const [memory, setMemory] = useState<Memory | null>(null);
@@ -80,7 +71,7 @@ export default function MemoryDetail() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
-      <header className="bg-white/80 backdrop-blur-md shadow-lg">
+      <header className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex items-center justify-between">
           <h1 className="text-4xl font-bold text-gray-900">Memory Detail</h1>
           <nav>
@@ -94,11 +85,11 @@ export default function MemoryDetail() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <div className={`${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} shadow rounded-lg p-6 mb-6 min-h-[250px] border-l-4 ${getBorderColor(memory.color)}`}>
-          <h2 className={`text-3xl font-semibold text-gray-800 ${getLetterStyleClasses(memory.letter_style)}`}>To: {memory.recipient}</h2>
+        <div className={`shadow-lg rounded-lg p-6 mb-6 min-h-[250px] ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} border-l-4 ${getBorderColor(memory.color)}`}>
+          <h2 className="text-3xl font-semibold text-gray-800">To: {memory.recipient}</h2>
           <p className="mt-4 text-gray-700">{memory.message}</p>
           {memory.sender && <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>}
-          <div className="mt-4 flex flex-wrap text-gray-500 text-sm items-center">
+          <div className="mt-6 border-t pt-3 flex flex-wrap text-gray-500 text-sm items-center">
             <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
             <span className="mx-2">|</span>
             <span>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: "long" })}</span>
@@ -106,14 +97,12 @@ export default function MemoryDetail() {
             <span>Time: {new Date(memory.created_at).toLocaleTimeString()}</span>
             <span className="mx-2">|</span>
             <span>Color: {memory.color}</span>
-            <span className="mx-2">|</span>
-            <span>Letter Style: {memory.letter_style}</span>
           </div>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-md shadow-lg">
+      <footer className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">&copy; {new Date().getFullYear()} If Only I Sent This</div>
       </footer>
     </div>
