@@ -63,7 +63,7 @@ export default function Submit() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation */}
-      <header className="bg-white/80 backdrop-blur-md shadow-lg">
+      <header className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between">
           <h1 className="text-4xl font-bold text-gray-900">Submit a Memory</h1>
           <nav>
@@ -170,7 +170,7 @@ export default function Submit() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-md shadow-lg">
+      <footer className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">&copy; {new Date().getFullYear()} If Only I Sent This</div>
       </footer>
     </div>
