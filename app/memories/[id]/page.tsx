@@ -6,17 +6,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 
-interface Memory {
-  id: string;
-  recipient: string;
-  message: string;
-  sender?: string;
-  created_at: string;
-  status: string;
-  color: string;
-  full_bg: boolean;
-}
-
+// Helper functions to map color strings to Tailwind classes
 function getBorderColor(color: string) {
   const mapping: { [key: string]: string } = {
     default: "border-gray-400",
@@ -45,6 +35,17 @@ function getBgColor(color: string) {
     teal: "bg-teal-100",
   };
   return mapping[color] || mapping["default"];
+}
+
+interface Memory {
+  id: string;
+  recipient: string;
+  message: string;
+  sender?: string;
+  created_at: string;
+  status: string;
+  color: string;
+  full_bg: boolean;
 }
 
 export default function MemoryDetail() {
@@ -94,9 +95,13 @@ export default function MemoryDetail() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <div className={`bg-white/90 shadow rounded-lg p-6 mb-6 min-h-[200px] ${
-                  memory.full_bg ? getBgColor(memory.color) : ""
-                } ${!memory.full_bg ? `border-l-4 ${getBorderColor(memory.color)}` : ""}`}>
+        <div
+          className={`${
+            memory.full_bg ? getBgColor(memory.color) : "bg-white/90"
+          } shadow rounded-lg p-6 mb-6 min-h-[200px] ${
+            !memory.full_bg ? `border-l-4 ${getBorderColor(memory.color)}` : ""
+          }`}
+        >
           <h2 className="text-3xl font-semibold text-gray-800">To: {memory.recipient}</h2>
           <p className="mt-4 text-gray-700">{memory.message}</p>
           {memory.sender && (
@@ -105,7 +110,9 @@ export default function MemoryDetail() {
           <div className="mt-4 flex flex-wrap text-gray-500 text-sm items-center">
             <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
             <span className="mx-2">|</span>
-            <span>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' })}</span>
+            <span>
+              Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: "long" })}
+            </span>
             <span className="mx-2">|</span>
             <span>Time: {new Date(memory.created_at).toLocaleTimeString()}</span>
             <span className="mx-2">|</span>
