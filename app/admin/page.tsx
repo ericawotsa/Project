@@ -45,17 +45,14 @@ function AdminPanelContent() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      {/* Navigation */}
       <header className="bg-white/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex items-center justify-between">
           <h1 className="text-4xl font-bold text-gray-900">Admin Panel</h1>
           <nav>
             <ul className="flex gap-6">
               <li>
-                <Link
-                  href="/"
-                  className="hover:text-blue-600 transition-colors duration-200"
-                >
+                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
                   Home
                 </Link>
               </li>
@@ -79,9 +76,7 @@ function AdminPanelContent() {
               </h3>
               <p className="mt-3 text-gray-700">{memory.message}</p>
               {memory.sender && (
-                <p className="mt-3 italic text-lg text-gray-600">
-                  — {memory.sender}
-                </p>
+                <p className="mt-3 italic text-lg text-gray-600">— {memory.sender}</p>
               )}
               <small className="block mt-3 text-gray-500">
                 {new Date(memory.created_at).toLocaleString()}
@@ -122,7 +117,6 @@ function AdminPanelContent() {
   );
 }
 
-// Updated updateMemoryStatus function
 async function updateMemoryStatus(
   id: string,
   newStatus: string,
@@ -136,14 +130,12 @@ async function updateMemoryStatus(
       .eq("id", id);
     if (error) console.error(error);
   } else {
-    // Otherwise, update the status.
     const { error } = await supabase
       .from("memories")
       .update({ status: newStatus })
       .eq("id", id);
     if (error) console.error(error);
   }
-  // Refresh the pending memories list.
   refreshCallback();
 }
 
