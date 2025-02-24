@@ -108,7 +108,7 @@ export default function Memories() {
                 {memory.sender && (
                   <p className="mt-3 italic text-lg text-gray-600">— {memory.sender}</p>
                 )}
-                <div className="mt-4 flex flex-wrap text-gray-500 text-sm items-center">
+                <div className="mt-4 border-t border-gray-300 pt-2 flex flex-wrap text-gray-500 text-sm items-center">
                   <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
                   <span className="mx-2">|</span>
                   <span>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' })}</span>
