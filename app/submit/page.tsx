@@ -5,14 +5,23 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 
+const colorOptions = [
+  { value: "blue", label: "Blue" },
+  { value: "gray", label: "Gray" },
+  { value: "purple", label: "Purple" },
+  { value: "black", label: "Black" },
+  { value: "navy", label: "Navy" },
+  { value: "maroon", label: "Maroon" },
+];
+
 export default function Submit() {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
   const [sender, setSender] = useState("");
+  const [color, setColor] = useState("blue");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  // All submissions are marked "pending" for manual review.
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -25,7 +34,7 @@ export default function Submit() {
     const status = "pending";
     const { error } = await supabase
       .from("memories")
-      .insert([{ recipient, message, sender, status }]);
+      .insert([{ recipient, message, sender, status, color }]);
 
     if (error) {
       setError("Error submitting your memory.");
@@ -35,6 +44,7 @@ export default function Submit() {
       setRecipient("");
       setMessage("");
       setSender("");
+      setColor("blue");
     }
   };
 
@@ -52,8 +62,8 @@ export default function Submit() {
                 </Link>
               </li>
               <li>
-                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
-                  Submit
+                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
+                  Memories
                 </Link>
               </li>
               <li>
@@ -112,6 +122,23 @@ export default function Submit() {
                 onChange={(e) => setSender(e.target.value)}
                 className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
               />
+            </div>
+
+            <div>
+              <label className="block font-medium text-gray-700">
+                Select a Color for Your Message:
+              </label>
+              <select
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+                className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
+              >
+                {colorOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="text-center">
