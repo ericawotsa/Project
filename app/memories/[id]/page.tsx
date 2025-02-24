@@ -6,14 +6,24 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 
-// Helper functions to map color strings to Tailwind classes
+interface Memory {
+  id: string;
+  recipient: string;
+  message: string;
+  sender?: string;
+  created_at: string;
+  status: string;
+  color: string;
+  full_bg: boolean;
+  letter_style: string;
+}
+
 function getBorderColor(color: string) {
   const mapping: { [key: string]: string } = {
     default: "border-gray-400",
     blue: "border-blue-400",
     gray: "border-gray-400",
     purple: "border-purple-400",
-    black: "border-black",
     navy: "border-blue-900",
     maroon: "border-red-800",
     pink: "border-pink-400",
@@ -28,7 +38,6 @@ function getBgColor(color: string) {
     blue: "bg-blue-100",
     gray: "bg-gray-100",
     purple: "bg-purple-100",
-    black: "bg-gray-800",
     navy: "bg-blue-100",
     maroon: "bg-red-100",
     pink: "bg-pink-100",
@@ -37,15 +46,13 @@ function getBgColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-interface Memory {
-  id: string;
-  recipient: string;
-  message: string;
-  sender?: string;
-  created_at: string;
-  status: string;
-  color: string;
-  full_bg: boolean;
+function getLetterStyleClasses(letterStyle: string) {
+  const mapping: { [key: string]: string } = {
+    default: "",
+    sad: "italic text-gray-600",
+    love: "font-serif text-pink-700",
+  };
+  return mapping[letterStyle] || "";
 }
 
 export default function MemoryDetail() {
@@ -78,16 +85,8 @@ export default function MemoryDetail() {
           <h1 className="text-4xl font-bold text-gray-900">Memory Detail</h1>
           <nav>
             <ul className="flex gap-6">
-              <li>
-                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
-                  Back to Memories
-                </Link>
-              </li>
+              <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
+              <li><Link href="/memories" className="hover:text-blue-600">Back to Memories</Link></li>
             </ul>
           </nav>
         </div>
@@ -95,37 +94,27 @@ export default function MemoryDetail() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <div
-          className={`${
-            memory.full_bg ? getBgColor(memory.color) : "bg-white/90"
-          } shadow rounded-lg p-6 mb-6 min-h-[200px] ${
-            !memory.full_bg ? `border-l-4 ${getBorderColor(memory.color)}` : ""
-          }`}
-        >
-          <h2 className="text-3xl font-semibold text-gray-800">To: {memory.recipient}</h2>
+        <div className={`${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} shadow rounded-lg p-6 mb-6 min-h-[250px] border-l-4 ${getBorderColor(memory.color)}`}>
+          <h2 className={`text-3xl font-semibold text-gray-800 ${getLetterStyleClasses(memory.letter_style)}`}>To: {memory.recipient}</h2>
           <p className="mt-4 text-gray-700">{memory.message}</p>
-          {memory.sender && (
-            <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>
-          )}
+          {memory.sender && <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>}
           <div className="mt-4 flex flex-wrap text-gray-500 text-sm items-center">
             <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
             <span className="mx-2">|</span>
-            <span>
-              Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: "long" })}
-            </span>
+            <span>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: "long" })}</span>
             <span className="mx-2">|</span>
             <span>Time: {new Date(memory.created_at).toLocaleTimeString()}</span>
             <span className="mx-2">|</span>
             <span>Color: {memory.color}</span>
+            <span className="mx-2">|</span>
+            <span>Letter Style: {memory.letter_style}</span>
           </div>
         </div>
       </main>
 
       {/* Footer */}
       <footer className="bg-white/80 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
-          &copy; {new Date().getFullYear()} If Only I Sent This
-        </div>
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">&copy; {new Date().getFullYear()} If Only I Sent This</div>
       </footer>
     </div>
   );
