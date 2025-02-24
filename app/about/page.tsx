@@ -41,7 +41,9 @@ export default function About() {
 
       {/* Footer */}
       <footer className="bg-white/90 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">&copy; {new Date().getFullYear()} If Only I Sent This</div>
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
+          &copy; {new Date().getFullYear()} If Only I Sent This
+        </div>
       </footer>
     </div>
   );
