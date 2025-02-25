@@ -1,4 +1,3 @@
-// app/memories/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -71,12 +70,13 @@ export default function Memories() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navigation */}
+      {/* Header */}
       <header className="bg-white/90 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between">
+        <div className="max-w-4xl mx-auto px-6 py-6 text-center">
           <h1 className="text-4xl font-bold text-gray-900">Memories</h1>
+          <hr className="my-4 border-gray-300" />
           <nav>
-            <ul className="flex gap-6">
+            <ul className="flex flex-wrap justify-center gap-6">
               <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
               <li><Link href="/memories" className="hover:text-blue-600">Memories</Link></li>
               <li><Link href="/submit" className="hover:text-blue-600">Submit</Link></li>
