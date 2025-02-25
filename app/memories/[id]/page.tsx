@@ -1,4 +1,3 @@
-// app/memories/[id]/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -70,12 +69,13 @@ export default function MemoryDetail() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Navigation */}
+      {/* Header */}
       <header className="bg-white/90 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-6 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-6 py-6 text-center">
           <h1 className="text-4xl font-bold text-gray-900">Memory Detail</h1>
+          <hr className="my-4 border-gray-300" />
           <nav>
-            <ul className="flex gap-6">
+            <ul className="flex flex-wrap justify-center gap-6">
               <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
               <li><Link href="/memories" className="hover:text-blue-600">Back to Memories</Link></li>
             </ul>
@@ -85,9 +85,7 @@ export default function MemoryDetail() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <div className={`shadow-lg rounded-lg p-6 mb-6 min-h-[250px] 
-                  ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} 
-                  border-l-4 ${getBorderColor(memory.color)}`}>
+        <div className={`shadow-lg rounded-lg p-6 mb-6 min-h-[250px] ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} border-l-4 ${getBorderColor(memory.color)}`}>
           <h2 className="text-3xl font-semibold text-gray-800">To: {memory.recipient}</h2>
           <p className="mt-4 text-gray-700">{memory.message}</p>
           {memory.sender && <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>}
