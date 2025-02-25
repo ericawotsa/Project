@@ -57,7 +57,7 @@ export default function Home() {
     "The soul has been given its own ears to hear things the mind does not understand.",
     "Let the beauty we love be what we do.",
     "Everything that is made beautiful and fair is made for the eye of one who sees.",
-    "Forget safety. Live where you fear to live."
+    "Forget safety. Live where you fear to live.",
   ];
 
   useEffect(() => {
@@ -86,7 +86,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      {/* Header with border */}
       <header className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
           <h1 className="text-4xl font-bold text-gray-900">If Only I Sent This</h1>
