@@ -55,3 +55,10 @@ body {
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+/* Book Card Styles for detail view */
+.book-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(240,240,240,0.9));
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  border-radius: 8px;
+}
