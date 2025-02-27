@@ -48,16 +48,16 @@ export default function Home() {
   const [recentMemories, setRecentMemories] = useState<Memory[]>([]);
   const [quoteIndex, setQuoteIndex] = useState(0);
   const quotes = [
-    "The wound is the place where the Light enters you.",
-    "Let yourself be silently drawn by the strange pull of what you really love.",
+    "The wound is where the light enters you.",
+    "Let yourself be drawn by what you truly love.",
     "When you let go, you feel free.",
-    "Don’t grieve. Anything you lose comes round in another form.",
-    "The minute I heard my first love story, I started looking for you, not knowing how blind that was.",
-    "Why do you stay in prison when the door is so wide open?",
-    "The soul has been given its own ears to hear things the mind does not understand.",
-    "Let the beauty we love be what we do.",
-    "Everything that is made beautiful and fair is made for the eye of one who sees.",
-    "Forget safety. Live where you fear to live.",
+    "Do not grieve; all loss is transformed.",
+    "In your silence, I found the song of my soul.",
+    "The memory of you is a bittersweet echo.",
+    "Our love, unspoken, lives in the shadows.",
+    "Broken hearts carry stories of resilience.",
+    "Every farewell holds the promise of a new dawn.",
+    "In the quiet, the soul speaks its truth.",
   ];
 
   useEffect(() => {
@@ -86,17 +86,25 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header with border below site name */}
+      {/* Header */}
       <header className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
           <h1 className="text-4xl font-bold text-gray-900">If Only I Sent This</h1>
           <hr className="my-4 border-gray-300" />
           <nav>
             <ul className="flex flex-wrap justify-center gap-6">
-              <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
-              <li><Link href="/memories" className="hover:text-blue-600">Memories</Link></li>
-              <li><Link href="/submit" className="hover:text-blue-600">Submit</Link></li>
-              <li><Link href="/about" className="hover:text-blue-600">About</Link></li>
+              <li>
+                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">Home</Link>
+              </li>
+              <li>
+                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">Memories</Link>
+              </li>
+              <li>
+                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">Submit</Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">About</Link>
+              </li>
             </ul>
           </nav>
         </div>
@@ -105,7 +113,7 @@ export default function Home() {
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
         {/* Rotating Quote */}
-        <section className="mb-10 p-8 bg-white/90 rounded-lg shadow-lg text-center">
+        <section className="mb-10 p-8 bg-white/90 rounded-2xl shadow-2xl text-center">
           <p className="text-2xl italic text-gray-700">{quotes[quoteIndex]}</p>
         </section>
 
@@ -115,13 +123,17 @@ export default function Home() {
           {recentMemories.length > 0 ? (
             recentMemories.map((memory) => (
               <Link key={memory.id} href={`/memories/${memory.id}`} className="block">
-                <div className="card-3d">
-                  <div className={`card-3d-inner shadow-2xl rounded-xl p-6 mb-6 transition-transform duration-300 hover:scale-105 
-                    ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} 
-                    border-l-4 ${getBorderColor(memory.color)}`}>
+                <div className="card-container group relative transform transition duration-300 hover:scale-105">
+                  <div
+                    className={`card relative z-10 p-6 rounded-2xl ${
+                      memory.full_bg ? getBgColor(memory.color) : "bg-white/90"
+                    } border border-gray-300 shadow-2xl`}
+                  >
                     <h3 className="text-2xl font-semibold text-gray-800">To: {memory.recipient}</h3>
                     <p className="mt-4 text-gray-700">{memory.message}</p>
-                    {memory.sender && <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>}
+                    {memory.sender && (
+                      <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>
+                    )}
                     <div className="mt-4 border-t border-gray-300 pt-2 flex flex-wrap text-gray-500 text-sm items-center">
                       <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
                       <span className="mx-2">|</span>
@@ -132,6 +144,7 @@ export default function Home() {
                       <span>Color: {memory.color}</span>
                     </div>
                   </div>
+                  <div className="card-overlay absolute inset-0 rounded-2xl"></div>
                 </div>
               </Link>
             ))
@@ -139,9 +152,7 @@ export default function Home() {
             <p className="text-gray-700">No recent memories found.</p>
           )}
           <div className="text-right mt-4">
-            <Link href="/memories" className="text-blue-600 hover:underline transition-colors duration-200">
-              View All Memories &rarr;
-            </Link>
+            <Link href="/memories" className="text-blue-600 hover:underline transition-colors duration-200">View All Memories &rarr;</Link>
           </div>
         </section>
       </main>
