@@ -61,7 +61,7 @@ export default function Submit() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header with border */}
+      {/* Header */}
       <header className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
           <h1 className="text-4xl font-bold text-gray-900">Submit a Memory</h1>
@@ -83,7 +83,7 @@ export default function Submit() {
             Thank you for your submission! Your memory is pending approval.
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6 bg-white/90 p-8 rounded-lg shadow-2xl">
+          <form onSubmit={handleSubmit} className="space-y-6 bg-white/90 p-8 rounded-lg shadow-lg">
             {error && <p className="text-red-600 text-center font-medium">{error}</p>}
 
             <div>
