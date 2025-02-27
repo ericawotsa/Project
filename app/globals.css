@@ -8,28 +8,9 @@ body {
   font-family: 'Arial', sans-serif;
 }
 
-/* 3D Card & Overlay Styles */
+/* Custom styles for letter style variations */
 
-/* Card container: gives a subtle lift effect */
-.card-container {
-  perspective: 1000px;
-}
-
-/* Base card styling */
-.card {
-  @apply relative rounded-2xl p-6 border border-gray-300 shadow-2xl transition-transform duration-300 ease-in-out;
-}
-
-/* Overlay for a 3D/gradient effect on hover */
-.card-overlay {
-  @apply absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-black to-transparent opacity-0 transition-opacity duration-300;
-}
-
-.card-container:hover .card-overlay {
-  @apply opacity-20;
-}
-
-/* Letter Style Overlays for "sad" */
+/* SAD styles */
 .sad-style-1 {
   background: repeating-linear-gradient(45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 10px, transparent 10px, transparent 20px);
 }
@@ -44,7 +25,7 @@ body {
   background: linear-gradient(45deg, rgba(150,150,150,0.2), rgba(100,100,100,0.2));
 }
 
-/* Letter Style Overlays for "love" */
+/* LOVE styles */
 .love-style-1 {
   background: linear-gradient(135deg, rgba(255,182,193,0.2), rgba(255,105,180,0.2));
 }
