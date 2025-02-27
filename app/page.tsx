@@ -91,16 +91,20 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Rotating Quote with fixed height to prevent layout shift */}
-      <section className="mb-10 p-8 bg-white/90 rounded-lg shadow-lg text-center h-16 flex items-center justify-center">
-        <p className="text-2xl italic text-gray-700">{quotes[quoteIndex]}</p>
+      {/* Rotating Quote */}
+      <section className="mb-10 p-8 bg-white/90 rounded-lg shadow-lg text-center h-20 flex items-center justify-center overflow-hidden">
+        <p className="text-2xl md:text-3xl italic text-gray-700 px-4 break-words">
+          {quotes[quoteIndex]}
+        </p>
       </section>
 
       {/* Recent Memories */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
         <h2 className="text-3xl font-semibold mb-6 text-gray-900">Recent Memories</h2>
         {recentMemories.length > 0 ? (
-          recentMemories.map((memory) => <MemoryCard key={memory.id} memory={memory} />)
+          recentMemories.map((memory) => (
+            <MemoryCard key={memory.id} memory={memory} />
+          ))
         ) : (
           <p className="text-gray-700">No recent memories found.</p>
         )}
