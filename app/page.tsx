@@ -91,27 +91,24 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        {/* Rotating Quote */}
-        <section className="mb-10 p-8 bg-white/90 rounded-lg shadow-lg text-center">
-          <p className="text-2xl italic text-gray-700">{quotes[quoteIndex]}</p>
-        </section>
+      {/* Rotating Quote with fixed height to prevent layout shift */}
+      <section className="mb-10 p-8 bg-white/90 rounded-lg shadow-lg text-center h-16 flex items-center justify-center">
+        <p className="text-2xl italic text-gray-700">{quotes[quoteIndex]}</p>
+      </section>
 
-        {/* Recent Memories */}
-        <section>
-          <h2 className="text-3xl font-semibold mb-6 text-gray-900">Recent Memories</h2>
-          {recentMemories.length > 0 ? (
-            recentMemories.map((memory) => <MemoryCard key={memory.id} memory={memory} />)
-          ) : (
-            <p className="text-gray-700">No recent memories found.</p>
-          )}
-          <div className="text-right mt-4">
-            <Link href="/memories" className="text-blue-600 hover:underline transition-colors duration-200">
-              View All Memories &rarr;
-            </Link>
-          </div>
-        </section>
+      {/* Recent Memories */}
+      <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
+        <h2 className="text-3xl font-semibold mb-6 text-gray-900">Recent Memories</h2>
+        {recentMemories.length > 0 ? (
+          recentMemories.map((memory) => <MemoryCard key={memory.id} memory={memory} />)
+        ) : (
+          <p className="text-gray-700">No recent memories found.</p>
+        )}
+        <div className="text-right mt-4">
+          <Link href="/memories" className="text-blue-600 hover:underline transition-colors duration-200">
+            View All Memories &rarr;
+          </Link>
+        </div>
       </main>
 
       {/* Footer */}
