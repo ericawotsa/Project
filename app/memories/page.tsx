@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
@@ -87,9 +86,7 @@ export default function Memories() {
           />
         </div>
         {memories.length > 0 ? (
-          memories.map((memory) => (
-            <MemoryCard key={memory.id} memory={memory} />
-          ))
+          memories.map((memory) => <MemoryCard key={memory.id} memory={memory} />)
         ) : (
           <p className="text-gray-700">No memories found.</p>
         )}
