@@ -33,7 +33,7 @@ function getBorderColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* Returns a hex color to use for elements like the arrow */
+/* Returns a hex color for elements like the arrow */
 function getColorHex(color: string): string {
   const mapping: { [key: string]: string } = {
     default: "#A0AEC0",
@@ -48,7 +48,7 @@ function getColorHex(color: string): string {
   return mapping[color] || "#A0AEC0";
 }
 
-/* For background colors in cards, we continue to use Tailwind classes */
+/* For background colors in cards */
 function getBgColor(color: string) {
   const mapping: { [key: string]: string } = {
     default: "bg-gray-100",
@@ -182,7 +182,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' });
 
   if (detail) {
-    // Individual (detail) view: full card with header, dividers, message and details
+    // Detail view: responsive full card layout.
     return (
       <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`}>
         <div className="mb-2">
@@ -207,7 +207,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
     );
   }
 
-  // Flip (list/home) view:
+  // Flip view (list/home) layout.
   return (
     <div className="relative group">
       {/* Arrow outside the card */}
@@ -242,11 +242,14 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
               <h3 className="text-lg italic text-gray-700 text-center">if only I sent this</h3>
               <hr className="border-t border-gray-300 my-1" />
             </div>
-            <div className="flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap" 
-              style={{ 
-                "--scroll-bg": scrollColors.track, 
-                "--scroll-thumb": scrollColors.thumb 
-              }}
+            <div 
+              className="flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap" 
+              style={
+                { 
+                  "--scroll-bg": scrollColors.track, 
+                  "--scroll-thumb": scrollColors.thumb 
+                } as React.CSSProperties
+              }
             >
               {memory.message}
             </div>
