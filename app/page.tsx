@@ -92,8 +92,8 @@ export default function Home() {
       </header>
 
       {/* Rotating Quote */}
-      <section className="mb-10 p-8 bg-white/90 rounded-lg shadow-lg text-center h-20 flex items-center justify-center overflow-hidden">
-        <p className="text-2xl md:text-3xl italic text-gray-700 px-4 break-words">
+      <section className="mb-10 p-4 bg-white/90 rounded-lg shadow-lg text-center h-20 md:h-24 flex items-center justify-center overflow-hidden">
+        <p className="w-full text-2xl md:text-3xl italic text-gray-700 px-2 break-words whitespace-normal">
           {quotes[quoteIndex]}
         </p>
       </section>
@@ -123,4 +123,4 @@ export default function Home() {
       </footer>
     </div>
   );
-}
+      }
