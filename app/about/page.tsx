@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function About() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
+      {/* Header with border */}
       <header className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
           <h1 className="text-4xl font-bold text-gray-900">About</h1>
@@ -20,7 +20,7 @@ export default function About() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <article className="bg-white/90 p-8 rounded-lg shadow-lg">
+        <article className="bg-white/90 p-8 rounded-lg shadow-2xl">
           <h2 className="text-3xl font-semibold mb-4 text-gray-800">A Tale of Unsent Words</h2>
           <p className="text-lg text-gray-700 mb-4">
             This space is a tribute to a first love that left us with a thousand unsent messages.
