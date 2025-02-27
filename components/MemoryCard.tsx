@@ -49,12 +49,19 @@ function getBgColor(color: string) {
 
 const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const borderColor = getBorderColor(memory.color);
-  const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-white/90";
+  // Always use the chosen color so that both sides reflect it.
+  const bgColor = getBgColor(memory.color);
+
+  // Always call hooks at the top
+  const [flipped, setFlipped] = useState(false);
+  const handleFlip = () => {
+    setFlipped(!flipped);
+  };
 
   if (detail) {
     // Render a static, book-like card for the individual memory detail view.
     return (
-      <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`}>
+      <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-xl shadow-2xl ring-4 ring-gray-300`}>
         <h3 className="text-2xl font-bold text-gray-800">To: {memory.recipient}</h3>
         {memory.sender && <p className="mt-2 text-lg italic text-gray-600">From: {memory.sender}</p>}
         <div className="mt-2 text-sm text-gray-500 flex gap-4">
@@ -67,12 +74,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
     );
   }
 
-  // Flip card view (for list/home pages)
-  const [flipped, setFlipped] = useState(false);
-  const handleFlip = () => {
-    setFlipped(!flipped);
-  };
-
+  // Flip card view for list/home pages (fixed square)
   return (
     <div
       className="flip-card w-full max-w-xs mx-auto my-4 perspective-1000 aspect-square cursor-pointer"
@@ -98,7 +100,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
           </Link>
         </div>
         {/* Back Side (Message) */}
-        <div className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 flex flex-col justify-center items-center p-4 overflow-y-auto`}>
+        <div className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 flex flex-col justify-center items-center p-4 overflow-auto`}>
           <p className="text-lg text-gray-800 whitespace-pre-wrap">{memory.message}</p>
           <Link href={`/memories/${memory.id}`}>
             <button
