@@ -87,7 +87,9 @@ export default function Memories() {
           />
         </div>
         {memories.length > 0 ? (
-          memories.map((memory) => <MemoryCard key={memory.id} memory={memory} />)
+          memories.map((memory) => (
+            <MemoryCard key={memory.id} memory={memory} />
+          ))
         ) : (
           <p className="text-gray-700">No memories found.</p>
         )}
