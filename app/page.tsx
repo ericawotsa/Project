@@ -92,8 +92,11 @@ export default function Home() {
       </header>
 
       {/* Rotating Quote */}
-      <section className="mb-10 p-4 bg-white/90 rounded-lg shadow-lg text-center h-20 md:h-24 flex items-center justify-center overflow-hidden">
-        <p className="w-full text-2xl md:text-3xl italic text-gray-700 px-2 break-words whitespace-normal">
+      <section
+        className="mb-10 p-4 bg-white/90 rounded-lg shadow-lg text-center flex items-center justify-center overflow-hidden"
+        style={{ minHeight: "4rem" }}
+      >
+        <p className="w-full text-xl md:text-2xl italic text-gray-700 px-2 break-words whitespace-normal overflow-hidden">
           {quotes[quoteIndex]}
         </p>
       </section>
@@ -123,4 +126,4 @@ export default function Home() {
       </footer>
     </div>
   );
-      }
+}
