@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
+import MemoryCard from "@/components/MemoryCard";
 
 interface Memory {
   id: string;
@@ -14,34 +15,6 @@ interface Memory {
   color: string;
   full_bg: boolean;
   letter_style: string;
-}
-
-function getBorderColor(color: string) {
-  const mapping: { [key: string]: string } = {
-    default: "border-gray-400",
-    blue: "border-blue-400",
-    gray: "border-gray-400",
-    purple: "border-purple-400",
-    navy: "border-blue-900",
-    maroon: "border-red-800",
-    pink: "border-pink-400",
-    teal: "border-teal-400",
-  };
-  return mapping[color] || mapping["default"];
-}
-
-function getBgColor(color: string) {
-  const mapping: { [key: string]: string } = {
-    default: "bg-gray-100",
-    blue: "bg-blue-100",
-    gray: "bg-gray-100",
-    purple: "bg-purple-100",
-    navy: "bg-blue-100",
-    maroon: "bg-red-100",
-    pink: "bg-pink-100",
-    teal: "bg-teal-100",
-  };
-  return mapping[color] || mapping["default"];
 }
 
 export default function Memories() {
@@ -77,10 +50,26 @@ export default function Memories() {
           <hr className="my-4 border-gray-300" />
           <nav>
             <ul className="flex flex-wrap justify-center gap-6">
-              <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
-              <li><Link href="/memories" className="hover:text-blue-600">Memories</Link></li>
-              <li><Link href="/submit" className="hover:text-blue-600">Submit</Link></li>
-              <li><Link href="/about" className="hover:text-blue-600">About</Link></li>
+              <li>
+                <Link href="/" className="hover:text-blue-600">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/memories" className="hover:text-blue-600">
+                  Memories
+                </Link>
+              </li>
+              <li>
+                <Link href="/submit" className="hover:text-blue-600">
+                  Submit
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-blue-600">
+                  About
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
@@ -98,28 +87,7 @@ export default function Memories() {
           />
         </div>
         {memories.length > 0 ? (
-          memories.map((memory) => (
-            <Link key={memory.id} href={`/memories/${memory.id}`} className="block">
-              <div className={`shadow-lg rounded-lg p-6 mb-6 transition-transform duration-200 hover:scale-105 
-                  ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} 
-                  border-l-8 ${getBorderColor(memory.color)}`}>
-                <h3 className="text-2xl font-semibold text-gray-800">To: {memory.recipient}</h3>
-                <p className="mt-3 text-gray-700">{memory.message}</p>
-                {memory.sender && (
-                  <p className="mt-3 italic text-lg text-gray-600">— {memory.sender}</p>
-                )}
-                <div className="mt-4 border-t border-gray-300 pt-2 flex flex-wrap text-gray-500 text-sm items-center">
-                  <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
-                  <span className="mx-2">|</span>
-                  <span>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' })}</span>
-                  <span className="mx-2">|</span>
-                  <span>Time: {new Date(memory.created_at).toLocaleTimeString()}</span>
-                  <span className="mx-2">|</span>
-                  <span>Color: {memory.color}</span>
-                </div>
-              </div>
-            </Link>
-          ))
+          memories.map((memory) => <MemoryCard key={memory.id} memory={memory} />)
         ) : (
           <p className="text-gray-700">No memories found.</p>
         )}
