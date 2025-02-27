@@ -85,7 +85,7 @@ export default function MemoryDetail() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <div className={`shadow-lg rounded-2xl p-6 mb-6 min-h-[250px] ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} border-l-4 ${getBorderColor(memory.color)}`}>
+        <div className={`shadow-lg rounded-lg p-6 mb-6 min-h-[250px] ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} border-l-4 ${getBorderColor(memory.color)}`}>
           <h2 className="text-3xl font-semibold text-gray-800">To: {memory.recipient}</h2>
           <p className="mt-4 text-gray-700">{memory.message}</p>
           {memory.sender && <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>}
