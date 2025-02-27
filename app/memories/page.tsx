@@ -100,11 +100,13 @@ export default function Memories() {
         {memories.length > 0 ? (
           memories.map((memory) => (
             <Link key={memory.id} href={`/memories/${memory.id}`} className="block">
-              <div className={`shadow-lg rounded-2xl p-6 mb-6 transition-transform duration-200 hover:scale-105 ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} border-l-8 ${getBorderColor(memory.color)}`}>
+              <div className={`shadow-lg rounded-lg p-6 mb-6 transition-transform duration-200 hover:scale-105 
+                  ${memory.full_bg ? getBgColor(memory.color) : "bg-white/90"} 
+                  border-l-8 ${getBorderColor(memory.color)}`}>
                 <h3 className="text-2xl font-semibold text-gray-800">To: {memory.recipient}</h3>
-                <p className="mt-4 text-gray-700">{memory.message}</p>
+                <p className="mt-3 text-gray-700">{memory.message}</p>
                 {memory.sender && (
-                  <p className="mt-4 italic text-lg text-gray-600">— {memory.sender}</p>
+                  <p className="mt-3 italic text-lg text-gray-600">— {memory.sender}</p>
                 )}
                 <div className="mt-4 border-t border-gray-300 pt-2 flex flex-wrap text-gray-500 text-sm items-center">
                   <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
