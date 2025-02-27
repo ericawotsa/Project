@@ -102,9 +102,7 @@ export default function Home() {
         <section>
           <h2 className="text-3xl font-semibold mb-6 text-gray-900">Recent Memories</h2>
           {recentMemories.length > 0 ? (
-            recentMemories.map((memory) => (
-              <MemoryCard key={memory.id} memory={memory} />
-            ))
+            recentMemories.map((memory) => <MemoryCard key={memory.id} memory={memory} />)
           ) : (
             <p className="text-gray-700">No recent memories found.</p>
           )}
