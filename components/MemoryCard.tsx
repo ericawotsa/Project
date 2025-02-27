@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 
 interface Memory {
@@ -47,12 +47,9 @@ function getBgColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* 
-   TypewriterPrompt: shows a poetic prompt that cycles through 50 heartbreak messages 
-   with a typewriter effect.
-*/
+/* TypewriterPrompt: cycles through poetic messages with a typewriter effect */
 const TypewriterPrompt: React.FC = () => {
-  const prompts = [
+  const prompts = useMemo(() => [
     "Whisper your sorrow...",
     "Reveal the hidden pain...",
     "Unfold your secret story...",
@@ -103,8 +100,8 @@ const TypewriterPrompt: React.FC = () => {
     "Turn the key of your hidden grief...",
     "Embrace the void of memories...",
     "Uncover the shadows of yesterday..."
-  ];
-
+  ], []);
+  
   const [displayedText, setDisplayedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -112,12 +109,11 @@ const TypewriterPrompt: React.FC = () => {
 
   useEffect(() => {
     const currentPrompt = prompts[currentIndex];
-    let typeSpeed = isDeleting ? 50 : 100;
+    const typeSpeed = isDeleting ? 50 : 100;
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         setDisplayedText(currentPrompt.substring(0, charIndex + 1));
         if (charIndex + 1 === currentPrompt.length) {
-          // Pause before deleting
           setTimeout(() => setIsDeleting(true), 2000);
         } else {
           setCharIndex(charIndex + 1);
@@ -144,10 +140,8 @@ const TypewriterPrompt: React.FC = () => {
 };
 
 const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
-  // Always call hooks unconditionally.
   const [flipped, setFlipped] = useState(false);
   const borderColor = getBorderColor(memory.color);
-  // For list view, use full_bg only if selected; otherwise white.
   const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-white/90";
 
   const dateStr = new Date(memory.created_at).toLocaleDateString();
@@ -155,7 +149,6 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' });
 
   if (detail) {
-    // Detail view (individual page) layout:
     return (
       <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`}>
         <div className="mb-2">
@@ -180,10 +173,8 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
     );
   }
 
-  // Flip view (list/home) layout
   return (
     <div className="relative group">
-      {/* Arrow outside the card */}
       <div className="absolute right-[-30px] top-1/2 transform -translate-y-1/2">
         <Link href={`/memories/${memory.id}`}>
           <span
@@ -199,7 +190,6 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
         onClick={() => setFlipped(!flipped)}
       >
         <div className={`flip-card-inner relative w-full h-full transition-transform duration-700 transform ${flipped ? "rotate-y-180" : ""}`}>
-          {/* Front Side */}
           <div className={`flip-card-front absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 p-4 flex flex-col justify-between`}>
             <div>
               <h3 className="text-xl font-bold text-gray-800">To: {memory.recipient}</h3>
@@ -220,12 +210,10 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
               <TypewriterPrompt />
             </div>
           </div>
-          {/* Back Side */}
           <div className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 p-4 flex flex-col justify-between`}>
             <div>
               <p className="text-lg italic text-gray-700">An Unsent Tale</p>
               <hr className="border-t border-gray-300 my-1" />
-              {/* Message container with cute scrollbar (appears only if needed) */}
               <div className="card-scroll cute_scroll max-h-36 overflow-y-auto text-sm text-gray-800 whitespace-pre-wrap">
                 {memory.message}
               </div>
