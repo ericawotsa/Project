@@ -9,7 +9,6 @@ body {
 }
 
 /* Custom styles for letter style variations */
-
 .sad-style-1 {
   background: repeating-linear-gradient(45deg, rgba(0,0,0,0.05), rgba(0,0,0,0.05) 10px, transparent 10px, transparent 20px);
 }
@@ -54,7 +53,94 @@ body {
   transform: rotateY(180deg);
 }
 
-/* Hide default scrollbar */
-::-webkit-scrollbar {
-  display: none;
+/* Cute scrollbar styles */
+.cute_scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb, #e91e63) var(--scrollbar-track, #f8bbd0);
+}
+
+.cute_scroll::-webkit-scrollbar {
+  width: 10px;
+  transition: opacity 0.5s ease;
+}
+
+.cute_scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px #f06292;
+  border-radius: 10px;
+  background-color: var(--scrollbar-track, #f8bbd0);
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+}
+
+.cute_scroll::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: var(--scrollbar-thumb, #e91e63);
+}
+
+/* Scrollbar fades when not hovered */
+.cute_scroll::-webkit-scrollbar {
+  opacity: 0;
+}
+.cute_scroll:hover::-webkit-scrollbar {
+  opacity: 1;
+}
+
+/* Flip hint animation for teddy and text */
+.flip-hint {
+  position: relative;
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: flipHintCycle 3s infinite;
+}
+
+@keyframes flipHintCycle {
+  0%, 66.66% {
+    opacity: 1;
+  }
+  66.67%, 100% {
+    opacity: 0;
+  }
+}
+
+.flip-hint .teddy-bear {
+  animation: teddyFade 3s infinite;
+}
+
+.flip-hint .flip-text {
+  animation: textFade 3s infinite;
+}
+
+@keyframes teddyFade {
+  0%, 66.66% { opacity: 1; }
+  66.67%, 100% { opacity: 0; }
+}
+@keyframes textFade {
+  0%, 66.66% { opacity: 0; }
+  66.67%, 100% { opacity: 1; }
+}
+
+/* Teddy bear styling (simplified example) */
+.teddy-bear {
+  width: 2rem;
+  height: 2rem;
+  background: radial-gradient(circle at center, currentColor 40%, transparent 41%);
+  color: inherit;
+}
+
+/* Flip text styling */
+.flip-text {
+  font-size: 0.8rem;
+  color: #555;
+  font-style: italic;
+}
+
+/* Arrow outside the card */
+.arrow-outside {
+  position: absolute;
+  top: 50%;
+  right: -1.5rem;
+  transform: translateY(-50%);
 }
