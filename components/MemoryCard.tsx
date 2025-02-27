@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 
 interface Memory {
   id: string;
@@ -15,6 +16,7 @@ interface Memory {
 
 interface MemoryCardProps {
   memory: Memory;
+  detail?: boolean;
 }
 
 function getBorderColor(color: string) {
@@ -45,15 +47,31 @@ function getBgColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-const MemoryCard: React.FC<MemoryCardProps> = ({ memory }) => {
-  const [flipped, setFlipped] = useState(false);
+const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
+  const borderColor = getBorderColor(memory.color);
+  const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-white/90";
 
+  if (detail) {
+    // Render a static, book-like card for the individual memory detail view.
+    return (
+      <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`}>
+        <h3 className="text-2xl font-bold text-gray-800">To: {memory.recipient}</h3>
+        {memory.sender && <p className="mt-2 text-lg italic text-gray-600">From: {memory.sender}</p>}
+        <div className="mt-2 text-sm text-gray-500 flex gap-4">
+          <span>{new Date(memory.created_at).toLocaleDateString()}</span>
+          <span>{new Date(memory.created_at).toLocaleTimeString()}</span>
+        </div>
+        <hr className="my-4 border-gray-300" />
+        <p className="text-lg text-gray-800 whitespace-pre-wrap">{memory.message}</p>
+      </div>
+    );
+  }
+
+  // Flip card view (for list/home pages)
+  const [flipped, setFlipped] = useState(false);
   const handleFlip = () => {
     setFlipped(!flipped);
   };
-
-  const borderColor = getBorderColor(memory.color);
-  const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-white/90";
 
   return (
     <div
@@ -70,10 +88,26 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory }) => {
             <p>{new Date(memory.created_at).toLocaleTimeString()}</p>
           </div>
           <p className="mt-4 text-sm text-gray-700">Tap to reveal message</p>
+          <Link href={`/memories/${memory.id}`}>
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="absolute bottom-2 right-2 bg-white/80 px-2 py-1 rounded shadow text-sm text-blue-600 hover:bg-white"
+            >
+              Open
+            </button>
+          </Link>
         </div>
         {/* Back Side (Message) */}
-        <div className="flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl bg-white/95 border-4 border-gray-300 transform rotate-y-180 flex flex-col justify-center items-center p-4">
-          <p className="text-lg text-gray-800">{memory.message}</p>
+        <div className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 flex flex-col justify-center items-center p-4 overflow-y-auto`}>
+          <p className="text-lg text-gray-800 whitespace-pre-wrap">{memory.message}</p>
+          <Link href={`/memories/${memory.id}`}>
+            <button
+              onClick={(e) => e.stopPropagation()}
+              className="absolute bottom-2 right-2 bg-white/80 px-2 py-1 rounded shadow text-sm text-blue-600 hover:bg-white"
+            >
+              Open
+            </button>
+          </Link>
         </div>
       </div>
     </div>
