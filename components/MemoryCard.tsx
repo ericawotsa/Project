@@ -47,73 +47,97 @@ function getBgColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
+export default function MemoryCard({ memory, detail }: MemoryCardProps) {
+  // Decide whether to apply full background color or just a border
   const borderColor = getBorderColor(memory.color);
-  // Always use the chosen color so that both sides reflect it.
-  const bgColor = getBgColor(memory.color);
+  const computedBg = memory.full_bg ? getBgColor(memory.color) : "bg-white";
 
-  // Always call hooks at the top
-  const [flipped, setFlipped] = useState(false);
-  const handleFlip = () => {
-    setFlipped(!flipped);
-  };
-
+  // If we're in the detail view, show a "book card" with everything at once
   if (detail) {
-    // Render a static, book-like card for the individual memory detail view.
     return (
-      <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-xl shadow-2xl ring-4 ring-gray-300`}>
-        <h3 className="text-2xl font-bold text-gray-800">To: {memory.recipient}</h3>
-        {memory.sender && <p className="mt-2 text-lg italic text-gray-600">From: {memory.sender}</p>}
-        <div className="mt-2 text-sm text-gray-500 flex gap-4">
-          <span>{new Date(memory.created_at).toLocaleDateString()}</span>
-          <span>{new Date(memory.created_at).toLocaleTimeString()}</span>
-        </div>
+      <div className={`book-card mx-auto my-6 w-full max-w-2xl ${computedBg} ${borderColor} border-4 rounded-xl shadow-2xl`}>
+        <h2 className="text-3xl font-bold text-gray-800">To: {memory.recipient}</h2>
+        {memory.sender && (
+          <p className="mt-2 text-lg italic text-gray-600">From: {memory.sender}</p>
+        )}
         <hr className="my-4 border-gray-300" />
         <p className="text-lg text-gray-800 whitespace-pre-wrap">{memory.message}</p>
+        {/* Footer details */}
+        <hr className="my-4 border-gray-300" />
+        <div className="flex flex-wrap text-gray-600 text-sm gap-2">
+          <span>Date: {new Date(memory.created_at).toLocaleDateString()}</span>
+          <span className="mx-1">|</span>
+          <span>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: "long" })}</span>
+          <span className="mx-1">|</span>
+          <span>Time: {new Date(memory.created_at).toLocaleTimeString()}</span>
+          <span className="mx-1">|</span>
+          <span>Color: {memory.color}</span>
+        </div>
       </div>
     );
   }
 
-  // Flip card view for list/home pages (fixed square)
+  // Otherwise, show a flip-card on list/home pages
+  const [flipped, setFlipped] = useState(false);
+  const handleFlip = () => setFlipped(!flipped);
+
   return (
     <div
-      className="flip-card w-full max-w-xs mx-auto my-4 perspective-1000 aspect-square cursor-pointer"
+      className="flip-card w-full max-w-md mx-auto my-6 relative perspective-1000 cursor-pointer min-h-[300px]"
       onClick={handleFlip}
     >
-      <div className={`flip-card-inner relative w-full h-full transition-transform duration-700 transform ${flipped ? "rotate-y-180" : ""}`}>
-        {/* Front Side (Cover) */}
-        <div className={`flip-card-front absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 flex flex-col justify-center items-center p-4`}>
-          <h3 className="text-xl font-bold text-gray-800">To: {memory.recipient}</h3>
-          {memory.sender && <p className="mt-2 text-md italic text-gray-600">From: {memory.sender}</p>}
-          <div className="mt-2 text-sm text-gray-500">
-            <p>{new Date(memory.created_at).toLocaleDateString()}</p>
-            <p>{new Date(memory.created_at).toLocaleTimeString()}</p>
+      <div
+        className={`flip-card-inner absolute w-full h-full transition-transform duration-700 transform ${flipped ? "rotate-y-180" : ""}`}
+      >
+        {/* FRONT SIDE */}
+        <div
+          className={`flip-card-front absolute w-full h-full backface-hidden rounded-xl shadow-2xl p-6 ${computedBg} ${borderColor} border-4 flex flex-col justify-between`}
+        >
+          <div>
+            <h3 className="text-xl font-bold text-gray-800">To: {memory.recipient}</h3>
+            {memory.sender && (
+              <p className="mt-1 text-md italic text-gray-600">From: {memory.sender}</p>
+            )}
           </div>
-          <p className="mt-4 text-sm text-gray-700">Tap to reveal message</p>
-          <Link href={`/memories/${memory.id}`}>
-            <button
+          <hr className="my-3 border-gray-300" />
+          <div className="flex justify-end items-center">
+            {/* Cursive arrow link to detail page */}
+            <Link
+              href={`/memories/${memory.id}`}
               onClick={(e) => e.stopPropagation()}
-              className="absolute bottom-2 right-2 bg-white/80 px-2 py-1 rounded shadow text-sm text-blue-600 hover:bg-white"
+              className="text-2xl text-gray-600 hover:text-blue-600 font-[cursive]"
             >
-              Open
-            </button>
-          </Link>
+              &rarr;
+            </Link>
+          </div>
         </div>
-        {/* Back Side (Message) */}
-        <div className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 flex flex-col justify-center items-center p-4 overflow-auto`}>
-          <p className="text-lg text-gray-800 whitespace-pre-wrap">{memory.message}</p>
-          <Link href={`/memories/${memory.id}`}>
-            <button
+
+        {/* BACK SIDE */}
+        <div
+          className={`flip-card-back absolute w-full h-full backface-hidden rounded-xl shadow-2xl p-6 transform rotate-y-180 flex flex-col justify-between ${computedBg} ${borderColor} border-4`}
+        >
+          <div>
+            <p className="text-lg text-gray-800 whitespace-pre-wrap">{memory.message}</p>
+          </div>
+          <hr className="my-3 border-gray-300" />
+          {/* Footer details (date, day, time, color) */}
+          <div className="text-sm text-gray-600">
+            <p>Date: {new Date(memory.created_at).toLocaleDateString()}</p>
+            <p>Day: {new Date(memory.created_at).toLocaleDateString(undefined, { weekday: "long" })}</p>
+            <p>Time: {new Date(memory.created_at).toLocaleTimeString()}</p>
+            <p>Color: {memory.color}</p>
+          </div>
+          <div className="flex justify-end items-center mt-3">
+            <Link
+              href={`/memories/${memory.id}`}
               onClick={(e) => e.stopPropagation()}
-              className="absolute bottom-2 right-2 bg-white/80 px-2 py-1 rounded shadow text-sm text-blue-600 hover:bg-white"
+              className="text-2xl text-gray-600 hover:text-blue-600 font-[cursive]"
             >
-              Open
-            </button>
-          </Link>
+              &rarr;
+            </Link>
+          </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default MemoryCard;
+}
