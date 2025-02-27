@@ -33,6 +33,22 @@ function getBorderColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
+/* Returns a hex color to use for elements like the arrow */
+function getColorHex(color: string): string {
+  const mapping: { [key: string]: string } = {
+    default: "#A0AEC0",
+    blue: "#63B3ED",
+    gray: "#A0AEC0",
+    purple: "#B794F4",
+    navy: "#2A4365",
+    maroon: "#C53030",
+    pink: "#F687B3",
+    teal: "#38B2AC",
+  };
+  return mapping[color] || "#A0AEC0";
+}
+
+/* For background colors in cards, we continue to use Tailwind classes */
 function getBgColor(color: string) {
   const mapping: { [key: string]: string } = {
     default: "bg-gray-100",
@@ -47,59 +63,74 @@ function getBgColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* TypewriterPrompt: cycles through poetic messages with a typewriter effect */
+/* Returns scrollbar colors (track and thumb) based on card color */
+function getScrollColors(color: string) {
+  const mapping: { [key: string]: { track: string; thumb: string } } = {
+    default: { track: "#ECEFF1", thumb: "#90A4AE" },
+    blue: { track: "#BBDEFB", thumb: "#1E88E5" },
+    gray: { track: "#ECEFF1", thumb: "#607D8B" },
+    purple: { track: "#E1BEE7", thumb: "#8E24AA" },
+    navy: { track: "#BBDEFB", thumb: "#0D47A1" },
+    maroon: { track: "#FFCDD2", thumb: "#C62828" },
+    pink: { track: "#F8BBD0", thumb: "#D81B60" },
+    teal: { track: "#B2DFDB", thumb: "#00796B" },
+  };
+  return mapping[color] || mapping["default"];
+}
+
+/* TypewriterPrompt: cycles through 50 poetic prompts instructing the user to tap to flip */
 const TypewriterPrompt: React.FC = () => {
   const prompts = useMemo(() => [
-    "Whisper your sorrow...",
-    "Reveal the hidden pain...",
-    "Unfold your secret story...",
-    "Let your heart speak...",
-    "Dare to unveil the silence...",
-    "Unlock the silent tears...",
-    "Embrace the quiet grief...",
-    "Expose the hidden ache...",
-    "Set your unspoken words free...",
-    "Turn the page of your soul...",
-    "Murmur your midnight lament...",
-    "Unravel the threads of loss...",
-    "Break the silence of solitude...",
-    "Echo the whispers of regret...",
-    "Let sorrow find its voice...",
-    "Unleash the ache within...",
-    "Discover the depth of despair...",
-    "Release your unvoiced emotions...",
-    "Unmask the layers of longing...",
-    "Paint your pain in silence...",
-    "Whisper the secrets of your heart...",
-    "Show the scars of time...",
-    "Reveal the story untold...",
-    "Speak the words unspoken...",
-    "Unveil the echoes of yesterday...",
-    "Sing the dirge of lost love...",
-    "Let grief be your guide...",
-    "Trace the lines of your memory...",
-    "Awaken the dormant tears...",
-    "Breathe life into your sorrows...",
-    "Echo the silence of your past...",
-    "Expose the tender wounds...",
-    "Share the burden of solitude...",
-    "Illuminate the shadows of regret...",
-    "Embrace the quiet melancholy...",
-    "Let the silence be broken...",
-    "Express the depths of despair...",
-    "Unfold the layers of your heart...",
-    "Trace the echoes of your longing...",
-    "Whisper the forgotten dreams...",
-    "Resonate with silent laments...",
-    "Unveil the story of your pain...",
-    "Surrender to the melancholy muse...",
-    "Let your tears narrate the tale...",
-    "Reveal the art of silent grieving...",
-    "Echo the heartbeat of sorrow...",
-    "Express the quiet agony...",
-    "Turn the key of your hidden grief...",
-    "Embrace the void of memories...",
-    "Uncover the shadows of yesterday..."
+    "Gently tap to unveil the hidden sorrow...",
+    "A tender touch reveals your unspoken grief...",
+    "Tap softly to release silent tears...",
+    "Let your touch awaken buried memories...",
+    "One gentle tap, and secrets unfurl...",
+    "Touch to reveal the quiet lament...",
+    "A soft tap to unlock a secret pain...",
+    "Tap the card, let the sadness flow...",
+    "Embrace the melancholy with a gentle tap...",
+    "Tap to let the unvoiced heartache speak...",
+    "A gentle touch stirs forgotten memories...",
+    "Tap to reveal the whispered sorrow...",
+    "Your touch can free hidden regrets...",
+    "Tap tenderly to unlock quiet despair...",
+    "A soft tap unveils a silent story...",
+    "Let your fingers speak; tap to reveal...",
+    "Tap to uncover the secret of lost time...",
+    "A gentle tap to stir quiet anguish...",
+    "Touch to awaken the echoes of pain...",
+    "Tap, and let the veiled sorrow emerge...",
+    "A simple tap to expose quiet grief...",
+    "Tap to let your silent tears be seen...",
+    "Gently tap to break the stillness of loss...",
+    "Your touch invites the unspoken memories...",
+    "Tap softly, let hidden regrets surface...",
+    "A tender tap reveals the weight of sorrow...",
+    "Let your touch whisper a melancholy tale...",
+    "Tap to unlock the door to your past...",
+    "A gentle tap to stir the depths of heartache...",
+    "Touch to unveil the silent cry within...",
+    "Tap to dissolve the silence of regret...",
+    "Your gentle tap awakens forgotten pain...",
+    "Tap to let the quiet lament unfold...",
+    "A soft touch exposes the hidden ache...",
+    "Tap, and let the subdued sorrow sing...",
+    "Gently tap to free the secret despair...",
+    "A tender touch can reveal quiet agony...",
+    "Tap to open the book of silent memories...",
+    "Your tap unveils a cascade of melancholy...",
+    "A gentle tap brings hidden sorrows to light...",
+    "Touch to let the silent tears spill...",
+    "Tap softly, and watch unvoiced pain emerge...",
+    "A tender tap unlocks the story of regret...",
+    "Tap to hear the murmurs of your heart...",
+    "A gentle touch reveals a tale of sorrow...",
+    "Tap to discover the echoes of a lost past...",
+    "Let your tap unburden a secret ache...",
+    "Tap to witness the quiet dance of grief...",
+    "A soft tap and the veil of sadness lifts...",
+    "Gently tap to let your hidden heart speak..."
   ], []);
   
   const [displayedText, setDisplayedText] = useState("");
@@ -143,12 +174,15 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const [flipped, setFlipped] = useState(false);
   const borderColor = getBorderColor(memory.color);
   const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-white/90";
+  const scrollColors = getScrollColors(memory.color);
+  const arrowColor = getColorHex(memory.color);
 
   const dateStr = new Date(memory.created_at).toLocaleDateString();
   const timeStr = new Date(memory.created_at).toLocaleTimeString();
   const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' });
 
   if (detail) {
+    // Individual (detail) view: full card with header, dividers, message and details
     return (
       <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`}>
         <div className="mb-2">
@@ -173,13 +207,15 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
     );
   }
 
+  // Flip (list/home) view:
   return (
     <div className="relative group">
+      {/* Arrow outside the card */}
       <div className="absolute right-[-30px] top-1/2 transform -translate-y-1/2">
         <Link href={`/memories/${memory.id}`}>
           <span
             className="text-3xl"
-            style={{ color: borderColor.replace("border-", "") || "#000", fontFamily: "cursive" }}
+            style={{ color: arrowColor, fontFamily: "cursive" }}
           >
             ➜
           </span>
@@ -190,43 +226,29 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
         onClick={() => setFlipped(!flipped)}
       >
         <div className={`flip-card-inner relative w-full h-full transition-transform duration-700 transform ${flipped ? "rotate-y-180" : ""}`}>
+          {/* Front Side */}
           <div className={`flip-card-front absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 p-4 flex flex-col justify-between`}>
             <div>
               <h3 className="text-xl font-bold text-gray-800">To: {memory.recipient}</h3>
               {memory.sender && <p className="mt-1 text-md italic text-gray-600">From: {memory.sender}</p>}
             </div>
-            <hr className="border-t border-gray-300 my-1" />
-            <div className="text-xs text-gray-500 flex flex-wrap justify-center gap-1">
-              <span>Date: {dateStr}</span>
-              <span>|</span>
-              <span>Day: {dayStr}</span>
-              <span>|</span>
-              <span>Time: {timeStr}</span>
-              <span>|</span>
-              <span>Color: {memory.color}</span>
-            </div>
-            <hr className="border-t border-gray-300 my-1" />
             <div>
               <TypewriterPrompt />
             </div>
           </div>
-          <div className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 p-4 flex flex-col justify-between`}>
+          {/* Back Side */}
+          <div className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 p-4 flex flex-col justify-start`}>
             <div>
-              <p className="text-lg italic text-gray-700">An Unsent Tale</p>
+              <h3 className="text-lg italic text-gray-700 text-center">if only I sent this</h3>
               <hr className="border-t border-gray-300 my-1" />
-              <div className="card-scroll cute_scroll max-h-36 overflow-y-auto text-sm text-gray-800 whitespace-pre-wrap">
-                {memory.message}
-              </div>
             </div>
-            <hr className="border-t border-gray-300 my-1" />
-            <div className="text-xs text-gray-500 flex flex-wrap justify-center gap-1">
-              <span>Date: {dateStr}</span>
-              <span>|</span>
-              <span>Day: {dayStr}</span>
-              <span>|</span>
-              <span>Time: {timeStr}</span>
-              <span>|</span>
-              <span>Color: {memory.color}</span>
+            <div className="flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap" 
+              style={{ 
+                "--scroll-bg": scrollColors.track, 
+                "--scroll-thumb": scrollColors.thumb 
+              }}
+            >
+              {memory.message}
             </div>
           </div>
         </div>
