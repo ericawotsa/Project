@@ -182,7 +182,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' });
 
   if (detail) {
-    // Detail view: responsive full card layout.
+    // Detail view: full card layout with header, divider, message and details.
     return (
       <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`}>
         <div className="mb-2">
@@ -207,7 +207,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
     );
   }
 
-  // Flip view (list/home) layout.
+  // Flip view (list/home): front side now shows header, a divider, details, and the typewriter prompt.
   return (
     <div className="relative group">
       {/* Arrow outside the card */}
@@ -232,7 +232,17 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
               <h3 className="text-xl font-bold text-gray-800">To: {memory.recipient}</h3>
               {memory.sender && <p className="mt-1 text-md italic text-gray-600">From: {memory.sender}</p>}
             </div>
-            <div>
+            <hr className="border-t border-gray-300 my-1" />
+            <div className="text-xs text-gray-500 flex flex-wrap justify-center gap-1">
+              <span>Date: {dateStr}</span>
+              <span>|</span>
+              <span>Day: {dayStr}</span>
+              <span>|</span>
+              <span>Time: {timeStr}</span>
+              <span>|</span>
+              <span>Color: {memory.color}</span>
+            </div>
+            <div className="mt-2">
               <TypewriterPrompt />
             </div>
           </div>
