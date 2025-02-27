@@ -66,7 +66,7 @@ export default function MemoryDetail() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <MemoryCard memory={memory} />
+        <MemoryCard memory={memory} detail />
       </main>
 
       {/* Footer */}
