@@ -33,7 +33,6 @@ function getBorderColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* Returns a hex color for elements like the arrow */
 function getColorHex(color: string): string {
   const mapping: { [key: string]: string } = {
     default: "#A0AEC0",
@@ -48,7 +47,6 @@ function getColorHex(color: string): string {
   return mapping[color] || "#A0AEC0";
 }
 
-/* For background colors in cards */
 function getBgColor(color: string) {
   const mapping: { [key: string]: string } = {
     default: "bg-gray-100",
@@ -63,7 +61,6 @@ function getBgColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* Returns scrollbar colors (track and thumb) based on card color */
 function getScrollColors(color: string) {
   const mapping: { [key: string]: { track: string; thumb: string } } = {
     default: { track: "#ECEFF1", thumb: "#90A4AE" },
@@ -79,59 +76,61 @@ function getScrollColors(color: string) {
 }
 
 /* 
-   TypewriterPrompt: cycles through 50 short, poetic lines that indirectly invite a gentle tap 
-   to flip the card and reveal unsent words. 
+   TypewriterPrompt: cycles through 50 very short, refined lines that evoke the unsent pain—
+   hinting indirectly that a gentle tap might reveal what was never sent.
 */
 const TypewriterPrompt: React.FC = () => {
   const prompts = useMemo(() => [
-    "Had I dared to send this, would you glimpse my secret?",
-    "Maybe a soft tap could reveal what I never said.",
-    "These unsent words lie in silence—dare to disturb them.",
-    "A quiet confession awaits; a gentle shift might set it free.",
-    "My secret remains hidden—could a tender nudge expose it?",
-    "I kept my truth locked away; perhaps you could let it out.",
-    "What if a subtle move revealed my unspoken pain?",
-    "Unsent and raw, these words beg to be seen.",
-    "A silent letter waits—its truth hidden in darkness.",
-    "Would you dare to unseal what I never let go?",
-    "A small shift might change this unvoiced regret.",
-    "These words were never sent—imagine if they surfaced.",
-    "My heart kept a secret; a gentle tap might let it breathe.",
-    "I left a confession unsaid—could you help set it free?",
-    "In the quiet, my unspoken truth lingers—dare to reveal it.",
-    "I never let go of this secret—what if it could change form?",
-    "A hidden letter of loss waits in the dark—might you expose it?",
-    "The silence holds my truth—perhaps a soft touch can alter it.",
-    "I bore an unspoken farewell; a small move might let it speak.",
-    "These words remain in shadow—would you risk a tender shift?",
-    "My unvoiced sorrow begs for a gentle change—can you sense it?",
-    "A secret memory waits, unsent and aching to be seen.",
-    "This quiet confession rests—imagine if it could emerge.",
-    "I held back my truth—what if a soft nudge revealed it?",
-    "A fragile message endures—dare to shift its hidden form.",
-    "The unsent note of my heart trembles in silence—could you disturb it?",
-    "I kept these words secret; perhaps a slight move might change that.",
-    "An unspoken regret lies here—its truth awaits a gentle lift.",
-    "Would you dare to transform my silent sorrow into light?",
-    "I never released my secret—imagine if it could finally show.",
-    "A quiet ache endures within—could a subtle shift unveil it?",
-    "These hidden words speak of loss—what if they could be set free?",
-    "My letter of regret remains locked away—might you unchain it?",
-    "I kept my silence; now, a tender move might break it open.",
-    "The secret I never sent waits—its truth, yearning to be seen.",
-    "In the stillness, a message of pain lingers—would you let it change?",
-    "I carried unsaid words deep inside—could you help them surface?",
-    "A muted confession endures—what if it could shift into light?",
-    "My unvoiced truth lies dormant—imagine if a small move awakened it.",
-    "These unsent lines hold my quiet pain—dare you let them shift?",
-    "I held back my confession; perhaps its form could finally change.",
-    "A silent regret remains—could a gentle touch bring it to life?",
-    "My hidden letter waits in the dark—might you unveil its truth?",
-    "The words I never sent linger—imagine if they could softly change.",
-    "A secret remains unsaid—what if a tender shift could reveal it?",
-    "My quiet truth is confined—dare to let it transform in silence.",
-    "These words, never sent, whisper of a loss only a gentle move could mend.",
-    "My unshared letter of sorrow awaits—could you allow it to change?"
+    "Was it so simple? See what stayed.",
+    "I never sent it. Look closer.",
+    "Words locked away—dare to peek.",
+    "Too raw to send. Uncover it.",
+    "Unsaid and hidden. Might you see?",
+    "A secret held tight. Dare a glance.",
+    "I kept it inside. Could you find it?",
+    "Unsent regret—what remains unseen?",
+    "The truth stayed here. Perhaps you’ll know.",
+    "I never let go. See the silent truth.",
+    "Barely spoken—wanna see more?",
+    "It lies unsent. Would you dare?",
+    "All left behind. Could you unveil it?",
+    "Hidden in quiet. Uncover my truth.",
+    "The unsaid endures. Look a little closer.",
+    "I held back my words. See if they shift.",
+    "Silence remains—maybe you can sense it.",
+    "Too much left unsaid. Notice it?",
+    "I never released it. Find the hidden pain.",
+    "The letter stayed. Let it reveal itself.",
+    "All unsent. What if you noticed?",
+    "I kept my silence. Dare to discern?",
+    "Lost in stillness—see what lingers.",
+    "It was never sent. Perhaps you'll sense it.",
+    "My truth was hidden. Would you glimpse it?",
+    "I held my words. Notice the quiet sorrow.",
+    "Unspoken and raw—could you see it?",
+    "What was never sent still lives here.",
+    "The words stayed inside—could you unveil them?",
+    "A quiet miss remains. Would you discover?",
+    "I left it unsaid. Might you notice?",
+    "A secret letter, unsent. Look a little closer.",
+    "Unshared, it endures—could you sense its weight?",
+    "I never dared to send it. See if it changes you.",
+    "The silence holds a secret. Do you feel it?",
+    "A muted farewell lingers—could you perceive it?",
+    "I never let you in. Perhaps you'll understand.",
+    "The unsent remains, hidden yet true.",
+    "Too real to send—wanna glimpse the truth?",
+    "My silence speaks volumes. Can you sense it?",
+    "A quiet goodbye, left unsent. Look again.",
+    "The words were mine alone—could you share them?",
+    "I kept them hidden—maybe you'll notice the void.",
+    "What was never sent still speaks softly.",
+    "A secret kept in time—does it stir you?",
+    "The unsaid lingers—perhaps you'll sense the loss.",
+    "I never let it out. Could you feel the absence?",
+    "Hidden sorrow endures—see if it calls to you.",
+    "A missed goodbye remains—wonder what it holds?",
+    "Unsent, unspoken—its truth lies here."
   ], []);
   
   const initialIndex = useMemo(() => Math.floor(Math.random() * prompts.length), [prompts]);
