@@ -78,7 +78,10 @@ function getScrollColors(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* TypewriterPrompt: cycles through 50 refined, heartbroken prompts urging the user to touch to flip */
+/* 
+   TypewriterPrompt: cycles through 50 refined, heartbroken prompts urging the user to touch to flip.
+   Each instance now starts with a random prompt.
+*/
 const TypewriterPrompt: React.FC = () => {
   const prompts = useMemo(() => [
     "If only I sent this, my secrets would find solace in your touch...",
@@ -100,7 +103,7 @@ const TypewriterPrompt: React.FC = () => {
     "A gentle touch unveils the unspoken letter of my heart.",
     "Touch to discover the message I dared not send.",
     "If only I sent this, my longing would find its answer in you.",
-    "A tender touch reveals the unsent story of my quiet sorrow.",
+    "A tender touch reveals the unsent story of my quiet ache.",
     "Touch to unseal the letter that I never let go.",
     "If only I sent this, perhaps the pain would soften under your light.",
     "A gentle touch invites you to read what I kept hidden.",
@@ -132,8 +135,10 @@ const TypewriterPrompt: React.FC = () => {
     "If only I sent this, the letter of my soul would be free at last."
   ], []);
   
+  // Start with a random index so each instance is unique.
+  const initialIndex = useMemo(() => Math.floor(Math.random() * prompts.length), [prompts]);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [displayedText, setDisplayedText] = useState("");
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
 
