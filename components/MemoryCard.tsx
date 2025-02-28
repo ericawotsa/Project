@@ -78,62 +78,62 @@ function getScrollColors(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* TypewriterPrompt: cycles through 50 unsent, heart-wrenching yet delicate messages
-   that evoke the bittersweet regret of what was never sent, alluding indirectly to "If Only I Sent This." */
+/* 
+   TypewriterPrompt: cycles through 50 short, poetic lines that indirectly invite a gentle tap 
+   to flip the card and reveal unsent words. 
+*/
 const TypewriterPrompt: React.FC = () => {
   const prompts = useMemo(() => [
-    "If Only I Sent This, then the quiet night would hold my unsaid farewell.",
-    "In the stillness, a letter of what might have been lingers unseen.",
-    "There are words I never dared release—lost like autumn leaves.",
-    "If Only I Sent This, my silence would speak of a love left unfulfilled.",
-    "A secret note, too fragile for daylight, rests in the twilight of memory.",
-    "I kept a confession hidden in the depths of longing and regret.",
-    "If Only I Sent This, perhaps the void would echo with gentle remorse.",
-    "In the hush of the night, an unsent letter remains a silent testimony.",
-    "There is a story of us that I never dared to write.",
-    "If Only I Sent This, the weight of my unsaid words might lift like morning mist.",
-    "A delicate refrain of lost time, kept secret in the shadows.",
-    "In a quiet corner of my heart, a letter remains forever unread.",
-    "If Only I Sent This, my solitude would find solace in unspoken truths.",
-    "A memory of a love untold, lingering like a fading star.",
-    "In the silence of dusk, a hidden letter waits for gentle understanding.",
-    "If Only I Sent This, perhaps the aching void would know a whisper of hope.",
-    "The unsent words, like forgotten poetry, reside in the depths of night.",
-    "In the quiet aftermath, a letter remains—a testament to what was left behind.",
-    "If Only I Sent This, the soft glow of regret might kindle a lost warmth.",
-    "A secret letter, delicate as dew, never touched by the light of day.",
-    "In a realm of unspoken dreams, my heart wrote what it could not send.",
-    "If Only I Sent This, the lingering silence would speak of a love unreturned.",
-    "A quiet musing of what might have been, lost in the corridors of time.",
-    "In the still night air, unsent words drift like distant memories.",
-    "If Only I Sent This, the silence would carry the weight of unshed tears.",
-    "A fragile whisper of regret, left unspoken in the deep of night.",
-    "In the realm of lost chances, a letter of longing remains concealed.",
-    "If Only I Sent This, the night would cradle my secret remorse.",
-    "A tender memory, too raw to send, now lies hidden in silent sorrow.",
-    "In the quiet pause of twilight, a confession remains a secret hope.",
-    "If Only I Sent This, perhaps the darkness would understand my quiet plea.",
-    "A silent testament to what was lost, hidden in the fabric of time.",
-    "In the depths of my solitude, unsent words bloom like nocturnal flowers.",
-    "If Only I Sent This, the night would hold the weight of my gentle regret.",
-    "A private verse of longing, written in the language of the unsaid.",
-    "In the soft hush before dawn, my heart penned a letter that never flew.",
-    "If Only I Sent This, the void would shimmer with memories of a faded love.",
-    "A wistful musing of moments gone by, preserved in silent ink.",
-    "In the quiet margins of a forgotten day, a letter remains unshared.",
-    "If Only I Sent This, my solitude would resonate with the music of regret.",
-    "A tender secret, too beautiful and raw to ever be delivered.",
-    "In the shadows of lost hope, an unsent confession lingers quietly.",
-    "If Only I Sent This, the chill of absence would be warmed by a silent verse.",
-    "A delicate missive of what was never said, hidden like a precious relic.",
-    "In the lingering dusk, the words I never sent shimmer in quiet remorse.",
-    "If Only I Sent This, the night would softly murmur of a love left behind.",
-    "A hidden letter of unspoken dreams, too bittersweet for the world to know.",
-    "In the serene hush of memory, my heart holds a message never sent.",
-    "If Only I Sent This, the gentle melancholy of the night would carry my truth."
+    "Had I dared to send this, would you glimpse my secret?",
+    "Maybe a soft tap could reveal what I never said.",
+    "These unsent words lie in silence—dare to disturb them.",
+    "A quiet confession awaits; a gentle shift might set it free.",
+    "My secret remains hidden—could a tender nudge expose it?",
+    "I kept my truth locked away; perhaps you could let it out.",
+    "What if a subtle move revealed my unspoken pain?",
+    "Unsent and raw, these words beg to be seen.",
+    "A silent letter waits—its truth hidden in darkness.",
+    "Would you dare to unseal what I never let go?",
+    "A small shift might change this unvoiced regret.",
+    "These words were never sent—imagine if they surfaced.",
+    "My heart kept a secret; a gentle tap might let it breathe.",
+    "I left a confession unsaid—could you help set it free?",
+    "In the quiet, my unspoken truth lingers—dare to reveal it.",
+    "I never let go of this secret—what if it could change form?",
+    "A hidden letter of loss waits in the dark—might you expose it?",
+    "The silence holds my truth—perhaps a soft touch can alter it.",
+    "I bore an unspoken farewell; a small move might let it speak.",
+    "These words remain in shadow—would you risk a tender shift?",
+    "My unvoiced sorrow begs for a gentle change—can you sense it?",
+    "A secret memory waits, unsent and aching to be seen.",
+    "This quiet confession rests—imagine if it could emerge.",
+    "I held back my truth—what if a soft nudge revealed it?",
+    "A fragile message endures—dare to shift its hidden form.",
+    "The unsent note of my heart trembles in silence—could you disturb it?",
+    "I kept these words secret; perhaps a slight move might change that.",
+    "An unspoken regret lies here—its truth awaits a gentle lift.",
+    "Would you dare to transform my silent sorrow into light?",
+    "I never released my secret—imagine if it could finally show.",
+    "A quiet ache endures within—could a subtle shift unveil it?",
+    "These hidden words speak of loss—what if they could be set free?",
+    "My letter of regret remains locked away—might you unchain it?",
+    "I kept my silence; now, a tender move might break it open.",
+    "The secret I never sent waits—its truth, yearning to be seen.",
+    "In the stillness, a message of pain lingers—would you let it change?",
+    "I carried unsaid words deep inside—could you help them surface?",
+    "A muted confession endures—what if it could shift into light?",
+    "My unvoiced truth lies dormant—imagine if a small move awakened it.",
+    "These unsent lines hold my quiet pain—dare you let them shift?",
+    "I held back my confession; perhaps its form could finally change.",
+    "A silent regret remains—could a gentle touch bring it to life?",
+    "My hidden letter waits in the dark—might you unveil its truth?",
+    "The words I never sent linger—imagine if they could softly change.",
+    "A secret remains unsaid—what if a tender shift could reveal it?",
+    "My quiet truth is confined—dare to let it transform in silence.",
+    "These words, never sent, whisper of a loss only a gentle move could mend.",
+    "My unshared letter of sorrow awaits—could you allow it to change?"
   ], []);
   
-  // Start with a random index so each instance is unique.
   const initialIndex = useMemo(() => Math.floor(Math.random() * prompts.length), [prompts]);
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [displayedText, setDisplayedText] = useState("");
@@ -184,7 +184,6 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' });
 
   if (detail) {
-    // Detail view: full card layout with header, divider, message and details.
     return (
       <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`}>
         <div className="mb-2">
@@ -209,16 +208,12 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
     );
   }
 
-  // Flip view (list/home) layout.
   return (
     <div className="relative group">
       {/* Arrow outside the card */}
       <div className="absolute right-[-30px] top-1/2 transform -translate-y-1/2">
         <Link href={`/memories/${memory.id}`}>
-          <span
-            className="text-3xl"
-            style={{ color: arrowColor, fontFamily: "cursive" }}
-          >
+          <span className="text-3xl" style={{ color: arrowColor, fontFamily: "cursive" }}>
             ➜
           </span>
         </Link>
@@ -256,12 +251,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
             </div>
             <div 
               className="flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap" 
-              style={
-                { 
-                  "--scroll-bg": scrollColors.track, 
-                  "--scroll-thumb": scrollColors.thumb 
-                } as React.CSSProperties
-              }
+              style={{ "--scroll-bg": scrollColors.track, "--scroll-thumb": scrollColors.thumb } as React.CSSProperties}
             >
               {memory.message}
             </div>
