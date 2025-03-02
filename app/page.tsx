@@ -21,6 +21,7 @@ interface Memory {
 export default function Home() {
   const [recentMemories, setRecentMemories] = useState<Memory[]>([]);
   const [quoteIndex, setQuoteIndex] = useState(0);
+  const [showWelcome, setShowWelcome] = useState(true);
   const quotes = [
     "The wound is the place where the Light enters you.",
     "Let yourself be silently drawn by the strange pull of what you really love.",
@@ -60,31 +61,44 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Welcome Modal */}
+      {showWelcome && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div className="bg-gray-900 border border-gray-700 p-8 rounded-lg text-center">
+            <h2 className="text-3xl font-bold text-red-400 mb-4">Welcome to the Graveyard of Memories</h2>
+            <p className="text-gray-300 mb-6">A place where unsent words find solace in darkness. If you're new, please visit the "How It Works" page to learn about this melancholic sanctuary.</p>
+            <button onClick={() => setShowWelcome(false)} className="px-6 py-3 bg-red-500 text-white rounded hover:bg-red-600 transition">
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md shadow-lg">
+      <header className="bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
-          <h1 className="text-4xl font-bold text-gray-900">If Only I Sent This</h1>
-          <hr className="my-4 border-gray-300" />
+          <h1 className="text-4xl font-bold text-gray-100">If Only I Sent This</h1>
+          <hr className="my-4 border-gray-700" />
           <nav>
             <ul className="flex flex-wrap justify-center gap-6">
               <li>
-                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
+                <Link href="/" className="hover:text-red-400 transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
+                <Link href="/memories" className="hover:text-red-400 transition-colors duration-200">
                   Memories
                 </Link>
               </li>
               <li>
-                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
+                <Link href="/submit" className="hover:text-red-400 transition-colors duration-200">
                   Submit
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
-                  About
+                <Link href="/about" className="hover:text-red-400 transition-colors duration-200">
+                  How It Works
                 </Link>
               </li>
             </ul>
@@ -94,35 +108,37 @@ export default function Home() {
 
       {/* Rotating Quote */}
       <section
-        className="mb-10 p-4 bg-white/90 rounded-lg shadow-lg text-center flex items-center justify-center overflow-hidden"
+        className="mb-10 p-6 bg-gray-800 bg-opacity-90 rounded-lg shadow-lg text-center flex items-center justify-center"
         style={{ minHeight: "4rem" }}
       >
-        <p className="w-full text-xl md:text-2xl italic text-gray-700 px-2 break-words whitespace-normal overflow-hidden">
+        <p className="w-full text-xl md:text-2xl italic text-gray-300 px-2 break-words whitespace-normal">
           {quotes[quoteIndex]}
         </p>
       </section>
 
       {/* Recent Memories */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <h2 className="text-3xl font-semibold mb-6 text-gray-900">Recent Memories</h2>
+        <h2 className="text-3xl font-semibold mb-6 text-gray-100">Recent Memories</h2>
         {recentMemories.length > 0 ? (
-          recentMemories.map((memory) => (
-            <MemoryCard key={memory.id} memory={memory} />
-          ))
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {recentMemories.map((memory) => (
+              <MemoryCard key={memory.id} memory={memory} />
+            ))}
+          </div>
         ) : (
-          <p className="text-gray-700">No recent memories found.</p>
+          <p className="text-gray-400">No recent memories found.</p>
         )}
         <div className="text-right mt-4">
-          <Link href="/memories" className="text-blue-600 hover:underline transition-colors duration-200">
-            View All Memories →
+          <Link href="/memories" className="text-red-400 hover:underline transition-colors duration-200">
+            View All Memories &rarr;
           </Link>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/90 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
-          © {new Date().getFullYear()} If Only I Sent This
+      <footer className="bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg">
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-500">
+          &copy; {new Date().getFullYear()} If Only I Sent This
         </div>
       </footer>
     </div>
