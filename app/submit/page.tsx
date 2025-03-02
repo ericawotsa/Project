@@ -22,17 +22,13 @@ const letterStyleOptions = [
 ];
 
 const sadAnimations = [
-  { value: "shattering", label: "Shattering Glass" },
-  { value: "glitch", label: "Glitch Text" },
-  { value: "vanishing", label: "Vanishing Text" },
-  { value: "inkBleeding", label: "Ink Bleeding" },
+  { value: "bleeding", label: "Bleeding Text" },
+  { value: "broken", label: "Broken Words" },
 ];
 
 const loveAnimations = [
-  { value: "handwrittenNeon", label: "Handwritten Neon Love Notes" },
-  { value: "fireAndIce", label: "Fire & Ice Love Effect" },
-  { value: "handwrittenLove", label: "Handwritten Love Letters" },
-  { value: "neonGlow", label: "Neon Love Glow" },
+  { value: "neon", label: "Neon Love Glow" },
+  { value: "handwritten", label: "Handwritten" },
 ];
 
 export default function Submit() {
@@ -153,7 +149,7 @@ export default function Submit() {
                 value={letterStyle}
                 onChange={(e) => {
                   setLetterStyle(e.target.value);
-                  setAnimation(""); // reset animation when letter style changes
+                  setAnimation("");
                 }}
                 className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
               >
