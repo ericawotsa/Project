@@ -5,11 +5,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
+/* Global styling with a depressing 1980 vibe background */
 body {
-  @apply bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-300;
+  @apply bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-200;
   font-family: 'Arial', sans-serif;
 }
 
+/* Flip Card Styles */
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -23,37 +25,65 @@ body {
   transform: rotateY(180deg);
 }
 
+/* Cute Scrollbar for card message */
 .card-scroll {
   -webkit-overflow-scrolling: touch;
   overflow-x: hidden;
-  overflow-y: auto;
-  white-space: pre-wrap;
+  word-break: break-word;
 }
 .card-scroll::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  background-color: var(--scroll-bg);
+  opacity: 0;
+  transition: opacity 2s ease-out;
+}
+.card-scroll:hover::-webkit-scrollbar {
+  opacity: 1;
+  transition: opacity 0s;
 }
 .card-scroll::-webkit-scrollbar-track {
-  background-color: var(--scroll-bg);
+  -webkit-box-shadow: inset 0 0 6px #000;
   border-radius: 10px;
+  background-color: var(--scroll-bg);
+  border-left: 3px solid #333;
+  border-right: 3px solid #333;
 }
 .card-scroll::-webkit-scrollbar-thumb {
+  border-radius: 20px;
   background-color: var(--scroll-thumb);
-  border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
+/* Bleeding Text Effect */
 .bleeding-text {
   font-family: 'Architects Daughter', cursive;
-  text-shadow: 0 0 0.05em rgb(0%, 0%, 100%),
-    0 0 0.1em rgb(0%, 100%, 0%),
-    0 0 0.2em rgb(100%, 10%, 10%);
+  text-shadow: 0 0 0.05em rgba(255, 0, 0, 0.7),
+    0 0 0.1em rgba(0, 255, 0, 0.7),
+    0 0 0.2em rgba(0, 0, 255, 0.7);
 }
 
+/* Handwritten Text Effect */
 .handwritten-text p {
   font-family: 'Pacifico', cursive;
   font-size: 1.5rem;
 }
 
+/* Flip Card Additional Styling */
+.flip-card-front, .flip-card-back {
+  transition: transform 0.7s;
+}
+
+/* Fancy Arrow Styling */
+.fancy-arrow {
+  font-size: 2rem;
+  font-family: 'cursive';
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  transition: transform 0.3s;
+}
+.fancy-arrow:hover {
+  transform: scale(1.2) rotate(10deg);
+}
+
+/* Animations */
 @keyframes slide-up {
   0% {
     opacity: 0;
