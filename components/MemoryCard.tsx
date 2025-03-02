@@ -62,20 +62,6 @@ function getBgColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-function getScrollColors(color: string) {
-  const mapping: { [key: string]: { track: string; thumb: string } } = {
-    default: { track: "#ECEFF1", thumb: "#90A4AE" },
-    blue: { track: "#BBDEFB", thumb: "#1E88E5" },
-    gray: { track: "#ECEFF1", thumb: "#607D8B" },
-    purple: { track: "#E1BEE7", thumb: "#8E24AA" },
-    navy: { track: "#BBDEFB", thumb: "#0D47A1" },
-    maroon: { track: "#FFCDD2", thumb: "#C62828" },
-    pink: { track: "#F8BBD0", thumb: "#D81B60" },
-    teal: { track: "#B2DFDB", thumb: "#00796B" },
-  };
-  return mapping[color] || mapping["default"];
-}
-
 /* 
    TypewriterPrompt: cycles through 50 very short, refined lines 
    that evoke the unsent pain – exactly as originally provided.
@@ -209,7 +195,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const [flipped, setFlipped] = useState(false);
   const borderColor = getBorderColor(memory.color);
   const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-white/90";
-  const scrollColors = getScrollColors(memory.color);
+  // Removed unused scrollColors variable.
   const arrowColor = getColorHex(memory.color);
 
   const dateStr = new Date(memory.created_at).toLocaleDateString();
@@ -293,7 +279,6 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
 
   return (
     <div className="relative group">
-      {/* Arrow outside the card */}
       <div className="absolute right-[-30px] top-1/2 transform -translate-y-1/2">
         <Link href={`/memories/${memory.id}`}>
           <span className="text-3xl" style={{ color: arrowColor, fontFamily: "cursive" }}>➜</span>
