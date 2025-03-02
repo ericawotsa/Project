@@ -11,6 +11,7 @@ interface Memory {
   status: string;
   color: string;
   full_bg: boolean;
+  // letter_style is no longer used for effect selection; special effect is in animation
   letter_style: string;
   animation?: string;
 }
@@ -172,7 +173,7 @@ const TypewriterPrompt: React.FC = () => {
   );
 };
 
-/* HandwrittenText component using canvas for handwritten effect */
+/* HandwrittenText component using canvas for handwritten effect – increased font size and canvas height */
 const HandwrittenText: React.FC<{ text: string }> = ({ text }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -181,13 +182,14 @@ const HandwrittenText: React.FC<{ text: string }> = ({ text }) => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = '30px Pacifico';
+    // Increase font size for legibility
+    ctx.font = '40px Pacifico';
     ctx.fillStyle = '#000';
     const maxWidth = canvas.width - 20;
     const words = text.split(' ');
     let line = '';
-    let y = 40;
-    const lineHeight = 35;
+    let y = 50;
+    const lineHeight = 45;
     for (let n = 0; n < words.length; n++) {
       const testLine = line + words[n] + ' ';
       const metrics = ctx.measureText(testLine);
@@ -202,58 +204,55 @@ const HandwrittenText: React.FC<{ text: string }> = ({ text }) => {
     }
     ctx.fillText(line, 10, y);
   }, [text]);
-  return <canvas ref={canvasRef} width={640} height={100} className="handwritten-text-canvas" style={{ width: '100%', height: 'auto' }} />;
+  return <canvas ref={canvasRef} width={640} height={150} className="handwritten-text-canvas" style={{ width: '100%', height: 'auto' }} />;
 };
 
 /* 
-   The renderMessage function applies the new effects (if any) to the card message.
-   If no effect is selected, the message is rendered as plain text.
+   renderMessage renders the card message based solely on memory.animation.
+   If no special effect is chosen (animation is empty), plain text is rendered.
 */
 const renderMessage = (memory: Memory, arrowColor: string) => {
-  if (memory.letter_style === "sad") {
-    if (memory.animation === "bleeding") {
-      return (
-        <p className="text-base text-gray-800 whitespace-pre-wrap bleeding-text" style={{ wordWrap: "break-word" }}>
-          {memory.message}
-        </p>
-      );
-    }
-    if (memory.animation === "broken") {
-      return (
-        <p className="text-base text-gray-800 whitespace-pre-wrap broken-text" data-text={memory.message} style={{ wordWrap: "break-word" }}>
-          {memory.message}
-        </p>
-      );
-    }
-  } else if (memory.letter_style === "love") {
-    if (memory.animation === "neon") {
-      return (
-        <div className="neon-love-container" style={{ color: arrowColor, position: "relative" }}>
-          <div className="neon-love-heart">
-            <svg width="150" height="150" viewBox="0 0 150 150">
-              <g transform="translate(100 100)">
-                <path transform="translate(-75 -75)" stroke="#fff" strokeWidth="2" strokeLinecap="round" fill="none" d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"></path>
-              </g>
-            </svg>
-            <div className="gradient"></div>
-            <svg width="150" height="150" viewBox="0 0 150 150">
-              <g transform="translate(100 100)">
-                <path transform="translate(-75 -75)" stroke="#fffa" strokeWidth="1" strokeLinecap="round" fill="none" d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"></path>
-              </g>
-            </svg>
-          </div>
-          <div className="neon-love-background"></div>
-          <div className="neon-love-text" style={{ position: "relative", zIndex: 2 }}>
-            <p className="text-base text-gray-800 whitespace-pre-wrap" style={{ wordWrap: "break-word" }}>
-              {memory.message}
-            </p>
-          </div>
+  if (memory.animation === "bleeding") {
+    return (
+      <p className="text-base text-gray-800 whitespace-pre-wrap bleeding-text" style={{ wordWrap: "break-word" }}>
+        {memory.message}
+      </p>
+    );
+  }
+  if (memory.animation === "broken") {
+    return (
+      <p className="text-base text-gray-800 whitespace-pre-wrap broken-text" data-text={memory.message} style={{ wordWrap: "break-word" }}>
+        {memory.message}
+      </p>
+    );
+  }
+  if (memory.animation === "neon") {
+    return (
+      <div className="neon-love-container" style={{ color: arrowColor, position: "relative" }}>
+        <div className="neon-love-heart">
+          <svg viewBox="0 0 150 150">
+            <g transform="translate(100 100)">
+              <path transform="translate(-75 -75)" stroke="#fff" strokeWidth="2" strokeLinecap="round" fill="none" d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"></path>
+            </g>
+          </svg>
+          <div className="gradient"></div>
+          <svg viewBox="0 0 150 150">
+            <g transform="translate(100 100)">
+              <path transform="translate(-75 -75)" stroke="#fffa" strokeWidth="1" strokeLinecap="round" fill="none" d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"></path>
+            </g>
+          </svg>
         </div>
-      );
-    }
-    if (memory.animation === "handwritten") {
-      return <HandwrittenText text={memory.message} />;
-    }
+        <div className="neon-love-background"></div>
+        <div className="neon-love-text" style={{ position: "relative", zIndex: 2 }}>
+          <p className="text-base text-gray-800 whitespace-pre-wrap" style={{ wordWrap: "break-word" }}>
+            {memory.message}
+          </p>
+        </div>
+      </div>
+    );
+  }
+  if (memory.animation === "handwritten") {
+    return <HandwrittenText text={memory.message} />;
   }
   return (
     <p className="text-base text-gray-800 whitespace-pre-wrap" style={{ wordWrap: "break-word" }}>
