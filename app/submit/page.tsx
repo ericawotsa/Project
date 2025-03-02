@@ -22,13 +22,13 @@ const letterStyleOptions = [
 ];
 
 const sadAnimations = [
-  { value: "bleeding", label: "Bleeding Text" },
-  { value: "broken", label: "Broken Words" },
+  { value: "bleeding", label: "Bleeding Text Effect" },
+  { value: "broken", label: "Broken Words Effect" },
 ];
 
 const loveAnimations = [
   { value: "neon", label: "Neon Love Glow" },
-  { value: "handwritten", label: "Handwritten" },
+  { value: "handwritten", label: "Handwritten Text Effect" },
 ];
 
 export default function Submit() {
