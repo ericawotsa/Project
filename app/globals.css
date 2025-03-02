@@ -63,7 +63,7 @@ body {
 .broken-word {
   position: relative;
   display: inline-block;
-  color: transparent;
+  color: transparent; /* Keep this to hide the base text */
   margin-right: 0.2em; /* Spacing between words */
 }
 
@@ -73,7 +73,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  color: inherit; /* Inherit text color from card */
+  color: inherit; /* Inherit text color from the card */
   transition: 0.2s;
 }
 
@@ -120,7 +120,6 @@ body {
   height: 100%;
   stroke-dasharray: 75px;
   stroke-dashoffset: 0px;
-  animation: heart-draw 2s linear infinite;
 }
 
 .neon-heart .gradient {
@@ -129,7 +128,6 @@ body {
   transform: translate(-12.5%, -12.5%);
   background: linear-gradient(180deg, var(--heart-color) 0%, var(--heart-color) 50%, var(--heart-color) 50%);
   mix-blend-mode: multiply;
-  animation: gradient 2s linear infinite;
 }
 
 .background {
@@ -140,52 +138,18 @@ body {
               radial-gradient(circle at 50% 75%, var(--heart-color), transparent);
   background-blend-mode: multiply;
   opacity: 0.33;
-  animation: background 2s linear infinite;
 }
 
 .neon-text {
   position: relative;
   z-index: 1;
-  color: #fff;
-  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--heart-color), 0 0 40px var(--heart-color);
+  color: #000; /* Changed to black for better contrast */
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--heart-color); /* Subtle glow */
 }
 
 /* Handwritten Text Effect */
 .handwritten-text p {
-  font-family: 'Pacifico', cursive;
-  font-size: 1.5rem;
-  animation: fadeInLeft 5s;
-}
-
-/* Animations */
-@keyframes heart-draw {
-  from {
-    stroke-dashoffset: 0px;
-  }
-  to {
-    stroke-dashoffset: 300px;
-  }
-}
-
-@keyframes gradient {
-  to {
-    transform: translate(-12.5%, -12.5%) rotate(360deg);
-  }
-}
-
-@keyframes background {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes fadeInLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-15px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  font-family: 'Pacifico', cursive; /* Handwritten font */
+  font-size: 1.5rem; /* Matches card text size */
+  /* Removed animation for fixed positioning */
 }
