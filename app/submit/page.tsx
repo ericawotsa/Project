@@ -19,7 +19,7 @@ const specialEffectOptions = [
   { value: "", label: "None" },
   { value: "bleeding", label: "Bleeding Text Effect" },
   { value: "broken", label: "Broken Words Effect" },
-  { value: "neon", label: "Heart Glow" },
+  { value: "neon", label: "Neon Love Glow" },
   { value: "handwritten", label: "Handwritten Text Effect" },
 ];
 
@@ -43,7 +43,6 @@ export default function Submit() {
     }
 
     const status = "pending";
-    // Save letter_style as default (unused) and store the special effect in animation
     const { error } = await supabase
       .from("memories")
       .insert([{ recipient, message, sender, status, color, full_bg: fullBg, letter_style: "default", animation: specialEffect }]);
@@ -90,7 +89,7 @@ export default function Submit() {
             {error && <p className="text-red-600 text-center font-medium">{error}</p>}
 
             <div>
-              <label className="block font-medium text-gray-700">Recipient&apos;s Name (required):</label>
+              <label className="block font-medium text-gray-700">Recipient's Name (required):</label>
               <input
                 type="text"
                 value={recipient}
@@ -175,7 +174,7 @@ export default function Submit() {
       {/* Footer */}
       <footer className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
-          &copy; {new Date().getFullYear()} If Only I Sent This
+          © {new Date().getFullYear()} If Only I Sent This
         </div>
       </footer>
     </div>
