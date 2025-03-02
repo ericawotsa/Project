@@ -76,175 +76,131 @@ function getScrollColors(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* 
-   TypewriterPrompt: cycles through 50 very short, refined lines 
-   that evoke the unsent pain – exactly as in your original code.
-*/
+/* TypewriterPrompt component remains unchanged */
 const TypewriterPrompt: React.FC = () => {
-  const prompts = useMemo(() => [
-    "Was it so simple? See what stayed.",
-    "I never sent it. Look closer.",
-    "Words locked away—dare a peek.",
-    "Too raw to send. Uncover it.",
-    "Unsaid and hidden. Might you see?",
-    "A secret held tight. Dare a glance.",
-    "I kept it inside. Could you find it?",
-    "Unsent regret—what remains unseen?",
-    "The truth stayed here. Perhaps you’ll know.",
-    "I never let go. See the silent truth.",
-    "Barely spoken—wanna see more?",
-    "It lies unsent. Would you dare?",
-    "All left behind. Could you unveil it?",
-    "Hidden in quiet. Uncover my truth.",
-    "The unsaid endures. Look a little closer.",
-    "I held back my words. See if they shift.",
-    "Silence remains—maybe you can sense it.",
-    "Too much left unsaid. Notice it?",
-    "I never released it. Find the hidden pain.",
-    "The letter stayed. Let it reveal itself.",
-    "All unsent. What if you noticed?",
-    "I kept my silence. Dare to discern?",
-    "Lost in stillness—see what lingers.",
-    "It was never sent. Perhaps you'll sense it.",
-    "My truth was hidden. Would you glimpse it?",
-    "I held my words. Notice the quiet sorrow.",
-    "Unspoken and raw—could you see it?",
-    "What was never sent still lives here.",
-    "The words stayed inside—could you unveil them?",
-    "A quiet miss remains. Would you discover?",
-    "I left it unsaid. Might you notice?",
-    "A secret letter, unsent. Look a little closer.",
-    "Unshared, it endures—could you sense its weight?",
-    "I never dared to send it. See if it changes you.",
-    "The silence holds a secret. Do you feel it?",
-    "A muted farewell lingers—could you perceive it?",
-    "I never let you in. Perhaps you'll understand.",
-    "The unsent remains, hidden yet true.",
-    "Too real to send—wanna glimpse the truth?",
-    "My silence speaks volumes. Can you sense it?",
-    "A quiet goodbye, left unsent. Look again.",
-    "The words were mine alone—could you share them?",
-    "I kept them hidden—maybe you'll notice the void.",
-    "What was never sent still speaks softly.",
-    "A secret kept in time—does it stir you?",
-    "The unsaid lingers—perhaps you'll sense the loss.",
-    "I never let it out. Could you feel the absence?",
-    "Hidden sorrow endures—see if it calls to you.",
-    "A missed goodbye remains—wonder what it holds?",
-    "Unsent, unspoken—its truth lies here."
-  ], []);
-  
-  const initialIndex = useMemo(() => Math.floor(Math.random() * prompts.length), [prompts]);
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const [displayedText, setDisplayedText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
+  const prompts = useMemo(
+    () => [
+      "Click me!",
+      "Flip me over!",
+      "What’s inside?",
+      "Take a peek!",
+      "Reveal the memory!",
+    ],
+    []
+  );
+  const [currentPrompt, setCurrentPrompt] = useState(0);
+  const [displayText, setDisplayText] = useState("");
   const [charIndex, setCharIndex] = useState(0);
+  const speed = 100;
 
   useEffect(() => {
-    const currentPrompt = prompts[currentIndex];
-    const typeSpeed = isDeleting ? 50 : 100;
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        setDisplayedText(currentPrompt.substring(0, charIndex + 1));
-        if (charIndex + 1 === currentPrompt.length) {
-          setTimeout(() => setIsDeleting(true), 2000);
-        } else {
-          setCharIndex(charIndex + 1);
-        }
-      } else {
-        setDisplayedText(currentPrompt.substring(0, charIndex - 1));
-        if (charIndex - 1 === 0) {
-          setIsDeleting(false);
-          setCurrentIndex((currentIndex + 1) % prompts.length);
-          setCharIndex(0);
-        } else {
-          setCharIndex(charIndex - 1);
-        }
-      }
-    }, typeSpeed);
-    return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, currentIndex, prompts]);
+    let typingTimeout: NodeJS.Timeout;
+    let nextPromptTimeout: NodeJS.Timeout;
+
+    if (charIndex < prompts[currentPrompt].length) {
+      typingTimeout = setTimeout(() => {
+        setDisplayText((prev) => prev + prompts[currentPrompt][charIndex]);
+        setCharIndex((prev) => prev + 1);
+      }, speed);
+    } else {
+      nextPromptTimeout = setTimeout(() => {
+        setDisplayText("");
+        setCharIndex(0);
+        setCurrentPrompt((prev) => (prev + 1) % prompts.length);
+      }, 2000);
+    }
+
+    return () => {
+      clearTimeout(typingTimeout);
+      clearTimeout(nextPromptTimeout);
+    };
+  }, [charIndex, currentPrompt, prompts]);
 
   return (
-    <div className="h-6 text-center text-sm text-gray-700 font-serif">
-      {displayedText}
-    </div>
+    <p className="text-sm text-gray-600 italic">{displayText}</p>
   );
 };
 
-/* HandwrittenText component using canvas for handwritten effect – increased for legibility */
-const HandwrittenText: React.FC<{ text: string }> = ({ text }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = '40px Pacifico';
-    ctx.fillStyle = '#000';
-    const maxWidth = canvas.width - 20;
-    const words = text.split(' ');
-    let line = '';
-    let y = 50;
-    const lineHeight = 45;
-    for (let n = 0; n < words.length; n++) {
-      const testLine = line + words[n] + ' ';
-      const metrics = ctx.measureText(testLine);
-      const testWidth = metrics.width;
-      if (testWidth > maxWidth && n > 0) {
-        ctx.fillText(line, 10, y);
-        line = words[n] + ' ';
-        y += lineHeight;
-      } else {
-        line = testLine;
-      }
-    }
-    ctx.fillText(line, 10, y);
-  }, [text]);
-  return <canvas ref={canvasRef} width={640} height={150} className="handwritten-text-canvas" style={{ width: '100%', height: 'auto' }} />;
-};
+/* BrokenWordsText component for Broken Words Effect */
+const BrokenWordsText: React.FC<{ message: string }> = ({ message }) => {
+  const words = message.split(" ");
+  const [activeIndex, setActiveIndex] = useState(0);
 
-/* renderMessage applies the selected special effect */
-const renderMessage = (memory: Memory, arrowColor: string) => {
-  if (memory.animation === "bleeding") {
-    return (
-      <p className="text-base text-gray-800 whitespace-pre-wrap bleeding-text" style={{ wordWrap: "break-word" }}>
-        {memory.message}
-      </p>
-    );
-  }
-  if (memory.animation === "broken") {
-    return (
-      <p className="text-base text-gray-800 whitespace-pre-wrap broken-text" data-text={memory.message} style={{ wordWrap: "break-word" }}>
-        {memory.message}
-      </p>
-    );
-  }
-  if (memory.animation === "neon") {
-    return (
-      <div className="heart-glow-container" style={{ color: arrowColor, position: "relative" }}>
-        <div className="heart-glow">
-          <svg viewBox="0 0 150 150">
-            <path d="M92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z" />
-          </svg>
-        </div>
-        <div style={{ paddingTop: "2rem" }}>
-          <p className="text-base text-gray-800 whitespace-pre-wrap" style={{ wordWrap: "break-word" }}>
-            {memory.message}
-          </p>
-        </div>
-      </div>
-    );
-  }
-  if (memory.animation === "handwritten") {
-    return <HandwrittenText text={memory.message} />;
-  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % words.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [words.length]);
+
   return (
-    <p className="text-base text-gray-800 whitespace-pre-wrap" style={{ wordWrap: "break-word" }}>
-      {memory.message}
+    <p>
+      {words.map((word, index) => (
+        <span
+          key={index}
+          className={`broken-word ${index === activeIndex ? "active" : ""}`}
+          data-text={word}
+        >
+          {word}
+        </span>
+      ))}
     </p>
   );
+};
+
+/* HandwrittenText component for Handwritten Text Effect */
+const HandwrittenText: React.FC<{ message: string }> = ({ message }) => (
+  <div className="handwritten-text">
+    <p>{message}</p>
+  </div>
+);
+
+/* Updated renderMessage function */
+const renderMessage = (memory: Memory, arrowColor: string) => {
+  switch (memory.animation) {
+    case "bleeding":
+      return <p className="bleeding-text">{memory.message}</p>;
+    case "broken":
+      return <BrokenWordsText message={memory.message} />;
+    case "neon":
+      return (
+        <div className="neon-container" style={{ '--heart-color': arrowColor } as React.CSSProperties}>
+          <div className="neon-heart">
+            <svg width="150" height="150" viewBox="0 0 150 150">
+              <g transform="translate(100 100)">
+                <path
+                  transform="translate(-75 -75)"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  fill="none"
+                  d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"
+                />
+              </g>
+            </svg>
+            <div className="gradient"></div>
+            <svg width="150" height="150" viewBox="0 0 150 150">
+              <g transform="translate(100 100)">
+                <path
+                  transform="translate(-75 -75)"
+                  stroke="#fffa"
+                  strokeWidth="1"
+                  strokeLinecap="round"
+                  fill="none"
+                  d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"
+                />
+              </g>
+            </svg>
+          </div>
+          <div className="background"></div>
+          <p className="neon-text">{memory.message}</p>
+        </div>
+      );
+    case "handwritten":
+      return <HandwrittenText message={memory.message} />;
+    default:
+      return <p>{memory.message}</p>;
+  }
 };
 
 const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
