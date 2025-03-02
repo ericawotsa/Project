@@ -26,7 +26,7 @@ export default function Home() {
     "The wound is the place where the Light enters you.",
     "Let yourself be silently drawn by the strange pull of what you really love.",
     "When you let go, you feel free.",
-    "Don’t grieve. Anything you lose comes round in another form.",
+    "Don&apos;t grieve. Anything you lose comes round in another form.",
     "The minute I heard my first love story, I started looking for you, not knowing how blind that was.",
     "Why do you stay in prison when the door is so wide open?",
     "The soul has been given its own ears to hear things the mind does not understand.",
@@ -66,7 +66,9 @@ export default function Home() {
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
           <div className="bg-gray-900 border border-gray-700 p-8 rounded-lg text-center">
             <h2 className="text-3xl font-bold text-red-400 mb-4">Welcome to the Graveyard of Memories</h2>
-            <p className="text-gray-300 mb-6">A place where unsent words find solace in darkness. If you're new, please visit the "How It Works" page to learn about this melancholic sanctuary.</p>
+            <p className="text-gray-300 mb-6">
+              A place where unsent words find solace in darkness. If you&apos;re new, please visit the &quot;How It Works&quot; page to learn about this melancholic sanctuary.
+            </p>
             <button onClick={() => setShowWelcome(false)} className="px-6 py-3 bg-red-500 text-white rounded hover:bg-red-600 transition">
               OK
             </button>
