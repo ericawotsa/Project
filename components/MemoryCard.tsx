@@ -235,7 +235,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
         </div>
         <hr className="my-2 border-gray-300" />
         <div className="mb-2">
-          <p className={`text-base text-gray-800 whitespace-pre-wrap ${animationClass}`}>
+          <p className={`text-base text-gray-800 whitespace-pre-wrap break-words ${animationClass}`}>
             {memory.message}
           </p>
         </div>
@@ -298,7 +298,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
               <hr className="border-t border-gray-300 my-1" />
             </div>
             <div 
-              className={`flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap ${animationClass}`} 
+              className={`flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap break-words ${animationClass}`} 
               style={{ "--scroll-bg": scrollColors.track, "--scroll-thumb": scrollColors.thumb } as React.CSSProperties}
             >
               {memory.message}
