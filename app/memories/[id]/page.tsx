@@ -38,24 +38,24 @@ export default function MemoryDetail() {
     fetchMemory();
   }, [id]);
 
-  if (!memory) return <p className="p-6">Loading...</p>;
+  if (!memory) return <p className="p-6 text-gray-400">Loading...</p>;
 
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md shadow-lg">
+      <header className="bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
-          <h1 className="text-4xl font-bold text-gray-900">Memory Detail</h1>
-          <hr className="my-4 border-gray-300" />
+          <h1 className="text-4xl font-bold text-gray-100">Memory Detail</h1>
+          <hr className="my-4 border-gray-700" />
           <nav>
             <ul className="flex flex-wrap justify-center gap-6">
               <li>
-                <Link href="/" className="hover:text-blue-600">
+                <Link href="/" className="hover:text-red-400">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/memories" className="hover:text-blue-600">
+                <Link href="/memories" className="hover:text-red-400">
                   Back to Memories
                 </Link>
               </li>
@@ -70,8 +70,8 @@ export default function MemoryDetail() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/90 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
+      <footer className="bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg">
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-500">
           &copy; {new Date().getFullYear()} If Only I Sent This
         </div>
       </footer>
