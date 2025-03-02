@@ -54,20 +54,27 @@ body {
 
 /* --- Sad Animations --- */
 
-/* 1. Shattering Glass Effect – a cracked glass overlay using a background image.
-   Replace the URL below with your own cracked glass image if desired. */
-.shattered-overlay {
-  background: url('https://i.imgur.com/ZK4cYcM.png'); /* placeholder image URL */
-  background-size: cover;
-  opacity: 0;
-  animation: overlayAppear 1s forwards;
+/* 1. Shattering Glass Effect - applied directly to text */
+@keyframes shatter {
+  0% { transform: none; opacity: 1; }
+  50% { transform: perspective(400px) rotateX(20deg) rotateY(20deg); opacity: 0.8; }
+  100% { transform: perspective(400px) rotateX(45deg) rotateY(45deg); opacity: 0; }
 }
-@keyframes overlayAppear {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.shattering-effect {
+  animation: shatter 1s forwards;
 }
 
 /* 2. Glitch Text Effect */
+@keyframes glitch1 {
+  0% { transform: translate(-2px, -2px); }
+  50% { transform: translate(2px, -2px); }
+  100% { transform: translate(-2px, -2px); }
+}
+@keyframes glitch2 {
+  0% { transform: translate(2px, 2px); }
+  50% { transform: translate(-2px, 2px); }
+  100% { transform: translate(2px, 2px); }
+}
 .glitch-effect {
   position: relative;
   color: inherit;
@@ -90,71 +97,61 @@ body {
   clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
   transform: translate(2px, 2px);
 }
-@keyframes glitch1 {
-  0% { transform: translate(-2px, -2px); }
-  50% { transform: translate(2px, -2px); }
-  100% { transform: translate(-2px, -2px); }
-}
-@keyframes glitch2 {
-  0% { transform: translate(2px, 2px); }
-  50% { transform: translate(-2px, 2px); }
-  100% { transform: translate(2px, 2px); }
-}
 
 /* 3. Vanishing Text Effect */
-.vanishing-effect {
-  animation: vanish 3s forwards;
-}
 @keyframes vanish {
   0% { opacity: 1; }
   100% { opacity: 0; }
 }
+.vanishing-effect {
+  animation: vanish 3s forwards;
+}
 
 /* 4. Ink Bleeding Text Effect */
-.ink-bleed-effect {
-  animation: inkBleed 2s forwards;
-}
 @keyframes inkBleed {
   0% { text-shadow: none; }
   100% { text-shadow: 2px 2px 5px rgba(0,0,0,0.8); color: #990000; }
+}
+.ink-bleed-effect {
+  animation: inkBleed 2s forwards;
 }
 
 /* --- Love Animations --- */
 
 /* 5. Handwritten Neon Love Notes */
-.handwritten-neon {
-  animation: handwrittenNeon 2s forwards;
-}
 @keyframes handwrittenNeon {
   0% { opacity: 0; transform: translateY(10px); }
   100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 5px #fff, 0 0 10px #0ff; }
 }
+.handwritten-neon {
+  animation: handwrittenNeon 2s forwards;
+}
 
 /* 6. Fire & Ice Love Effect */
-.fire-and-ice {
-  animation: fireAndIce 2s infinite;
-}
 @keyframes fireAndIce {
   0% { color: #fc6400; }
   50% { color: #20c3d0; }
   100% { color: #fc6400; }
 }
+.fire-and-ice {
+  animation: fireAndIce 2s infinite;
+}
 
 /* 7. Handwritten Love Letters Effect */
-.handwritten-love {
-  animation: handwrittenLove 2s forwards;
-}
 @keyframes handwrittenLove {
   0% { opacity: 0; }
   100% { opacity: 1; font-style: italic; }
 }
+.handwritten-love {
+  animation: handwrittenLove 2s forwards;
+}
 
 /* 8. Neon Love Glow Effect */
-.neon-glow {
-  animation: neonGlow 2s infinite;
-}
 @keyframes neonGlow {
   0% { opacity: 0.8; }
   50% { opacity: 1; text-shadow: 0 0 10px currentColor; }
   100% { opacity: 0.8; }
+}
+.neon-glow {
+  animation: neonGlow 2s infinite;
 }
