@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+
 /* Global styling with an emotional gradient background */
 body {
   @apply bg-gradient-to-br from-purple-50 via-pink-50 to-red-50 text-gray-800;
@@ -48,115 +51,125 @@ body {
   background-color: var(--scroll-thumb);
 }
 
-/* ==================== */
-/* Animation Effects    */
-/* ==================== */
+/* === Sad Type Effects === */
 
-/* --- SAD EFFECTS --- */
-
-/* 1. Shattering Effect – the text “shatters” with a smooth skew, scale, and translation */
-@keyframes shatter {
-  0% {
-    opacity: 1;
-    transform: none;
-  }
-  50% {
-    opacity: 0.8;
-    transform: translate(-2px, 2px) scale(1.05) skew(3deg, 3deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(5px, -5px) scale(0.95) skew(-5deg, -5deg);
-  }
-}
-.shattering-effect {
-  animation: shatter 1s forwards;
+/* Bleeding Text Effect */
+.bleeding-text {
+  font-family: 'Architects Daughter', cursive;
+  text-shadow: 0 0 0.05em rgb(0, 0, 255),
+               0 0 0.1em rgb(0, 255, 0),
+               0 0 0.2em rgb(255, 10, 10);
+  word-wrap: break-word;
 }
 
-/* 2. Glitch Effect – layered slight translations for a subtle glitch */
-@keyframes glitch {
-  0% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(2px, -2px); }
-  60% { transform: translate(-2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); }
-}
-.glitch-effect {
-  animation: glitch 1s infinite;
+/* Broken Words Effect */
+.broken-text {
+  font-size: 1rem;
+  font-family: "Arial Black", sans-serif;
   position: relative;
+  color: transparent;
+  display: inline-block;
 }
-.glitch-effect::before,
-.glitch-effect::after {
+.broken-text::before,
+.broken-text::after {
   content: attr(data-text);
   position: absolute;
-  left: 0;
   top: 0;
-  opacity: 0.7;
+  left: 0;
+  color: lightyellow;
 }
-.glitch-effect::before {
-  color: #00fffc;
-  animation: glitch 1s infinite;
+.broken-text::before {
+  clip-path: polygon(0 0, 60% 0, 30% 100%, 0 100%);
+  animation: breakWord 3s infinite;
 }
-.glitch-effect::after {
-  color: #fc00ff;
-  animation: glitch 1s infinite reverse;
+.broken-text::after {
+  clip-path: polygon(60% 0, 100% 0, 100% 100%, 30% 100%);
+  animation: breakWord 3s infinite;
+  animation-delay: 1.5s;
 }
-
-/* 3. Vanishing Effect – smoothly fades out the text */
-@keyframes vanish {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-.vanishing-effect {
-  animation: vanish 3s forwards;
+@keyframes breakWord {
+  0% { left: 0; top: 0; transform: rotate(0deg); opacity: 1; }
+  50% { left: -0.15em; top: -0.05em; transform: rotate(-5deg); opacity: 0.5; }
+  100% { left: 0; top: 0; transform: rotate(0deg); opacity: 1; }
 }
 
-/* 4. Ink Bleeding Effect – shifts text color and adds a subtle shadow */
-@keyframes inkBleed {
-  from { color: inherit; text-shadow: none; }
-  to { color: #800000; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+/* === Love Type Effects === */
+
+/* Neon Love Glow Effect */
+.neon-love-container {
+  position: relative;
+  overflow: hidden;
+  word-wrap: break-word;
 }
-.ink-bleed-effect {
-  animation: inkBleed 2s forwards;
+.neon-love-text {
+  position: relative;
+  z-index: 2;
+  color: inherit;
+}
+.neon-love-heart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+.neon-love-heart svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  animation: heart-draw 2s linear infinite;
+}
+.neon-love-heart .gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 125%;
+  height: 125%;
+  background: linear-gradient(180deg, currentColor 0%, currentColor 50%, currentColor 50%);
+  mix-blend-mode: multiply;
+  animation: gradient-rotate 2s linear infinite;
+}
+.neon-love-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 133%;
+  height: 133%;
+  background: radial-gradient(circle at 50% 25%, currentColor, transparent),
+              radial-gradient(circle at 50% 75%, currentColor, transparent);
+  background-blend-mode: multiply;
+  opacity: 0.33;
+  animation: background-rotate 2s linear infinite;
+}
+@keyframes heart-draw {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 300;
+  }
+}
+@keyframes gradient-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes background-rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* --- LOVE EFFECTS --- */
-
-/* 5. Handwritten Neon – text appears with a gentle upward motion and a glowing halo */
-@keyframes handwrittenNeon {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 16px rgba(0,255,255,0.8); }
+/* Handwritten Text Effect */
+.handwritten-text-canvas {
+  animation: fadeInLeft 5s;
 }
-.handwritten-neon {
-  animation: handwrittenNeon 2s forwards;
-}
-
-/* 6. Fire & Ice – cycles text color smoothly between warm and cool tones */
-@keyframes fireAndIce {
-  0% { color: #fc6400; }
-  50% { color: #20c3d0; }
-  100% { color: #fc6400; }
-}
-.fire-and-ice {
-  animation: fireAndIce 3s infinite;
-}
-
-/* 7. Handwritten Love – text fades in with a gentle italic flourish */
-@keyframes handwrittenLove {
-  0% { opacity: 0; transform: translateY(5px); font-style: normal; }
-  100% { opacity: 1; transform: translateY(0); font-style: italic; }
-}
-.handwritten-love {
-  animation: handwrittenLove 2s forwards;
-}
-
-/* 8. Neon Glow – applies a soft, pulsing glow around the text */
-@keyframes neonGlow {
-  0% { text-shadow: 0 0 5px rgba(255,255,255,0.8); }
-  50% { text-shadow: 0 0 15px rgba(255,255,255,1); }
-  100% { text-shadow: 0 0 5px rgba(255,255,255,0.8); }
-}
-.neon-glow {
-  animation: neonGlow 2s infinite;
+@keyframes fadeInLeft {
+  0% { opacity: 0; transform: translateX(-15px); }
+  100% { opacity: 1; transform: translateX(0); }
 }
