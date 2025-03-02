@@ -1,4 +1,3 @@
-// app/admin/page.tsx
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
@@ -13,6 +12,7 @@ interface Memory {
   sender?: string;
   created_at: string;
   status: string;
+  animation?: string;
 }
 
 function AdminPanelContent() {
