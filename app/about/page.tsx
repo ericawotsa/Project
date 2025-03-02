@@ -1,48 +1,72 @@
 import Link from "next/link";
 
-export default function About() {
+export default function HowItWorks() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
       <header className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
-          <h1 className="text-4xl font-bold text-gray-900">About</h1>
+          <h1 className="text-4xl font-bold text-gray-900">How It Works</h1>
           <hr className="my-4 border-gray-300" />
           <nav>
             <ul className="flex flex-wrap justify-center gap-6">
-              <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
-              <li><Link href="/memories" className="hover:text-blue-600">Memories</Link></li>
-              <li><Link href="/submit" className="hover:text-blue-600">Submit</Link></li>
+              <li>
+                <Link href="/" className="hover:text-blue-600">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/memories" className="hover:text-blue-600">
+                  Memories
+                </Link>
+              </li>
+              <li>
+                <Link href="/submit" className="hover:text-blue-600">
+                  Submit
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
         <article className="bg-white/90 p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-semibold mb-4 text-gray-800">A Tale of Unsent Words</h2>
+          <h2 className="text-3xl font-semibold mb-4 text-gray-800">
+            A Sanctuary for Unsent Words
+          </h2>
           <p className="text-lg text-gray-700 mb-4">
-            This space is a tribute to a first love that left us with a thousand unsent messages.
-            It is a sanctuary for memories that were never fully expressed—a place where every word,
-            every regret, and every tear is honored.
+            "If Only I Sent This" is a digital graveyard where unsent messages,
+            regrets, and memories find their final resting place. It’s a space
+            for anyone who has ever held back words meant for a person, an
+            animal, or even an abstract concept—words that were too painful,
+            too late, or simply too impossible to send.
           </p>
           <p className="text-lg text-gray-700 mb-4">
-            We remember that bittersweet moment when courage failed, and the last words remained
-            locked inside our hearts. Here, you can relive those moments, find solace in shared sorrow,
-            and honor the love that once was.
+            Here, you can submit your unsent memory, choosing a color and
+            optional special effects like bleeding text or handwritten style
+            to reflect the emotion behind your words. Once approved, your
+            memory becomes a card in this archive, a quiet testament to what
+            was never said.
+          </p>
+          <p className="text-lg text-gray-700 mb-4">
+            On the home page, you’ll see recent memories. Each card can be
+            flipped to reveal the message inside, accompanied by the haunting
+            phrase "If Only I Sent This." A star (★) beside a card indicates it
+            has a special effect, marking it as a particularly poignant piece
+            of the past.
           </p>
           <p className="text-lg text-gray-700">
-            This archive is for anyone who has loved deeply and lost painfully, who still holds onto
-            the hope of one more chance to say goodbye—or maybe, even, hello.
+            This site is for those who seek closure, catharsis, or simply a
+            place to let their unspoken words rest. It’s a graveyard of
+            memories, somber yet safe, where the unsent is finally given a
+            voice.
           </p>
         </article>
       </main>
 
-      {/* Footer */}
       <footer className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
-          &copy; {new Date().getFullYear()} If Only I Sent This
+          © {new Date().getFullYear()} If Only I Sent This
         </div>
       </footer>
     </div>
