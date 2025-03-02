@@ -196,7 +196,7 @@ const HandwrittenText: React.FC<{ message: string }> = ({ message }) => (
 );
 
 /* renderMessage function &ndash; only Bleeding and Handwritten effects retained */
-const renderMessage = (memory: Memory, arrowColor: string) => {
+const renderMessage = (memory: Memory, _unused: string) => {
   switch (memory.animation) {
     case "bleeding":
       return <p className="bleeding-text">{memory.message}</p>;
@@ -208,8 +208,6 @@ const renderMessage = (memory: Memory, arrowColor: string) => {
 };
 
 const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const arrowColor = getColorHex(memory.color);
   const borderColor = getBorderColor(memory.color);
   const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-gray-900/90";
   const scrollColors = getScrollColors(memory.color);
@@ -218,25 +216,24 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const timeStr = new Date(memory.created_at).toLocaleTimeString();
   const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: "long" });
 
+  const [flipped, setFlipped] = useState(false);
   const handleCardClick = () => {
     setFlipped(!flipped);
   };
-
-  const [flipped, setFlipped] = useState(false);
 
   if (detail) {
     return (
       <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-2xl`}>
         <div className="mb-2">
           <h3 className="text-2xl font-bold text-gray-200">
-            {memory.animation && <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>&#9733;</span>}
+            {memory.animation && <span style={{ fontSize: "0.8rem", color: getColorHex(memory.color), marginRight: "4px" }}>&#9733;</span>}
             To: {memory.recipient}
           </h3>
           {memory.sender && <p className="mt-1 text-lg italic text-gray-400">From: {memory.sender}</p>}
         </div>
         <hr className="my-2 border-gray-600" />
         <div className="mb-2">
-          {renderMessage(memory, arrowColor)}
+          {renderMessage(memory, "")}
         </div>
         <hr className="my-2 border-gray-600" />
         <div className="text-xs text-gray-400 flex flex-wrap justify-center gap-2">
@@ -256,7 +253,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
     <div className="relative group">
       <div className="absolute right-[-40px] top-1/2 transform -translate-y-1/2">
         <Link href={`/memories/${memory.id}`}>
-          <span className="fancy-arrow" style={{ color: arrowColor }}>➜</span>
+          <span className="fancy-arrow" style={{ color: getColorHex(memory.color) }}>➜</span>
         </Link>
       </div>
       <div
@@ -268,7 +265,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
           <div className={`flip-card-front absolute w-full h-full backface-hidden rounded-lg shadow-2xl ${bgColor} ${borderColor} border-4 p-4 flex flex-col justify-between`}>
             <div>
               <h3 className="text-xl font-bold text-gray-200">
-                {memory.animation && <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>&#9733;</span>}
+                {memory.animation && <span style={{ fontSize: "0.8rem", color: getColorHex(memory.color), marginRight: "4px" }}>&#9733;</span>}
                 To: {memory.recipient}
               </h3>
               {memory.sender && <p className="mt-1 text-md italic text-gray-400">From: {memory.sender}</p>}
@@ -297,7 +294,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
               className="flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-200 whitespace-pre-wrap"
               style={{ "--scroll-bg": scrollColors.track, "--scroll-thumb": scrollColors.thumb } as React.CSSProperties}
             >
-              {renderMessage(memory, arrowColor)}
+              {renderMessage(memory, "")}
             </div>
           </div>
         </div>
