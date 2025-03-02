@@ -208,6 +208,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const borderColor = getBorderColor(memory.color);
   const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-gray-800/90";
   const scrollColors = getScrollColors(memory.color);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const arrowColor = getColorHex(memory.color);
 
   const dateStr = new Date(memory.created_at).toLocaleDateString();
