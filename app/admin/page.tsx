@@ -76,7 +76,7 @@ function AdminPanelContent() {
               </h3>
               <p className="mt-3 text-gray-300">{memory.message}</p>
               {memory.sender && (
-                <p className="mt-3 italic text-lg text-gray-400">— {memory.sender}</p>
+                <p className="mt-3 italic text-lg text-gray-400">&mdash; {memory.sender}</p>
               )}
               <small className="block mt-3 text-gray-500">
                 {new Date(memory.created_at).toLocaleString()}
