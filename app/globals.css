@@ -8,8 +8,6 @@ body {
   font-family: 'Arial', sans-serif;
 }
 
-/* Removed previous sad and love styles */
-
 /* Flip Card Styles */
 .perspective-1000 {
   perspective: 1000px;
@@ -50,77 +48,106 @@ body {
   background-color: var(--scroll-thumb);
 }
 
-/* New Animation Effects */
+/* ==================== */
+/* Animation Effects    */
+/* ==================== */
 
-/* Sad Animations */
+/* --- Sad Animations --- */
+
+/* 1. Shattering Glass Effect – triggers briefly every 5 seconds */
 @keyframes shatter {
-  0% { opacity: 1; transform: none; filter: none; }
-  50% { opacity: 0.8; transform: scale(1.1) rotate(3deg); filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); }
-  100% { opacity: 0; transform: scale(1.3) rotate(10deg); filter: drop-shadow(4px 4px 4px rgba(0,0,0,0.5)); }
+  0% { opacity: 1; transform: scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: scale(1.2) rotate(10deg); filter: blur(2px); }
 }
 .shattering-animation {
-  animation: shatter 2s ease-out forwards;
+  animation: shatter 1s forwards;
 }
 
+/* 2. Glitch Text Effect */
 @keyframes glitch {
-  0% { transform: translate(0); opacity: 1; }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(2px, -2px); }
-  60% { transform: translate(-2px, 2px); }
-  80% { transform: translate(2px, -2px); }
-  100% { transform: translate(0); opacity: 0.5; }
+  0% { text-shadow: 0 0 5px #00fffc, 0 0 10px #fc00ff; }
+  50% { text-shadow: 0 0 10px #00fffc, 0 0 20px #fc00ff; }
+  100% { text-shadow: 0 0 5px #00fffc, 0 0 10px #fc00ff; }
 }
 .glitch-animation {
-  animation: glitch 2s ease-out forwards;
+  animation: glitch 725ms infinite;
+  position: relative;
+}
+.glitch-animation::before,
+.glitch-animation::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: inherit;
+}
+.glitch-animation::before {
+  animation: glitch 500ms infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+  transform: translate(-2px, -2px);
+  opacity: 0.75;
+}
+.glitch-animation::after {
+  animation: glitch 375ms infinite;
+  clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+  transform: translate(2px, 2px);
+  opacity: 0.75;
 }
 
+/* 3. Vanishing Text Effect */
 @keyframes vanish {
   0% { opacity: 1; }
   100% { opacity: 0; }
 }
 .vanishing-animation {
-  animation: vanish 2s ease-out forwards;
+  animation: vanish 3s forwards;
 }
 
+/* 4. Ink Bleeding Text Effect */
 @keyframes inkBleed {
-  0% { text-shadow: none; }
-  100% { text-shadow: 1px 1px 2px rgba(0,0,0,0.5); opacity: 0.5; }
+  0% { text-shadow: none; color: inherit; }
+  100% { text-shadow: 2px 2px 5px rgba(0,0,0,0.8); color: #990000; }
 }
 .inkBleeding-animation {
-  animation: inkBleed 2s ease-out forwards;
+  animation: inkBleed 2s forwards;
 }
 
-/* Love Animations */
+/* --- Love Animations --- */
+
+/* 5. Handwritten Neon Love Notes */
 @keyframes handwrittenNeon {
   0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 5px #fff, 0 0 10px currentColor; }
+  100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 5px #fff, 0 0 10px #0ff; }
 }
 .handwrittenNeon-animation {
-  animation: handwrittenNeon 2s ease-out forwards;
+  animation: handwrittenNeon 2s forwards;
 }
 
-@keyframes fireIce {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+/* 6. Fire & Ice Love Effect */
+@keyframes fireAndIce {
+  0% { color: #fc6400; }
+  50% { color: #20c3d0; }
+  100% { color: #fc6400; }
 }
 .fireAndIce-animation {
-  animation: fireIce 2s ease-out forwards;
+  animation: fireAndIce 2s infinite;
 }
 
+/* 7. Handwritten Love Letters Effect */
 @keyframes handwrittenLove {
   0% { opacity: 0; }
   100% { opacity: 1; font-style: italic; }
 }
 .handwrittenLove-animation {
-  animation: handwrittenLove 2s ease-out forwards;
+  animation: handwrittenLove 2s forwards;
 }
 
+/* 8. Neon Love Glow Effect */
 @keyframes neonGlow {
   0% { opacity: 0.8; }
   50% { opacity: 1; text-shadow: 0 0 10px currentColor; }
-  100% { opacity: 0.8; text-shadow: none; }
+  100% { opacity: 0.8; }
 }
 .neonGlow-animation {
-  animation: neonGlow 2s ease-out forwards;
+  animation: neonGlow 2s infinite;
 }
