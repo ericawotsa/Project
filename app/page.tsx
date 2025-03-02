@@ -21,7 +21,7 @@ interface Memory {
 export default function Home() {
   const [recentMemories, setRecentMemories] = useState<Memory[]>([]);
   const [quoteIndex, setQuoteIndex] = useState(0);
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(false);
   const quotes = [
     "The wound is the place where the Light enters you.",
     "Let yourself be silently drawn by the strange pull of what you really love.",
@@ -50,6 +50,11 @@ export default function Home() {
       }
     }
     fetchRecentMemories();
+
+    const hasSeenWelcome = localStorage.getItem("hasSeenWelcome");
+    if (!hasSeenWelcome) {
+      setShowWelcome(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -61,24 +66,22 @@ export default function Home() {
 
   const handleCloseWelcome = () => {
     setShowWelcome(false);
+    localStorage.setItem("hasSeenWelcome", "true");
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-300">
+      {/* Welcome Modal */}
       {showWelcome && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full text-center">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
-              Welcome to the Graveyard of Memories
-            </h2>
-            <p className="text-gray-600 mb-6">
-              This is a place where unsent words find their rest. If you're new,
-              please visit the "How It Works" page to understand how to navigate
-              this space.
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80 backdrop-blur-md">
+          <div className="bg-gray-900 p-8 rounded-lg shadow-xl text-center max-w-md w-full border border-gray-700">
+            <h2 className="text-3xl font-serif text-gray-100 mb-4">Welcome to the Graveyard of Memories</h2>
+            <p className="text-lg text-gray-400 mb-6">
+              A resting place for unsent words. New here? Visit "How it Works" to unearth the silence.
             </p>
             <button
               onClick={handleCloseWelcome}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg hover:from-blue-700 hover:to-blue-900 transition duration-200"
             >
               OK
             </button>
@@ -86,32 +89,31 @@ export default function Home() {
         </div>
       )}
 
-      <header className="bg-white/90 backdrop-blur-md shadow-lg">
+      {/* Header */}
+      <header className="bg-black/70 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
-          <h1 className="text-4xl font-bold text-gray-900">
-            If Only I Sent This
-          </h1>
-          <hr className="my-4 border-gray-300" />
+          <h1 className="text-4xl font-serif text-gray-100">If Only I Sent This</h1>
+          <hr className="my-4 border-dashed border-gray-500" />
           <nav>
-            <ul className="flex flex-wrap justify-center gap-6">
+            <ul className="flex flex-wrap justify-center gap-6 text-gray-400">
               <li>
-                <Link href="/" className="hover:text-blue-600">
+                <Link href="/" className="hover:text-blue-300 transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/memories" className="hover:text-blue-600">
+                <Link href="/memories" className="hover:text-blue-300 transition-colors duration-200">
                   Memories
                 </Link>
               </li>
               <li>
-                <Link href="/submit" className="hover:text-blue-600">
+                <Link href="/submit" className="hover:text-blue-300 transition-colors duration-200">
                   Submit
                 </Link>
               </li>
               <li>
-                <Link href="/how-it-works" className="hover:text-blue-600">
-                  How It Works
+                <Link href="/how-it-works" className="hover:text-blue-300 transition-colors duration-200">
+                  How it Works
                 </Link>
               </li>
             </ul>
@@ -119,37 +121,38 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="mb-10 p-4 bg-white/90 rounded-lg shadow-lg text-center flex items-center justify-center overflow-hidden">
-        <p className="w-full text-xl md:text-2xl italic text-gray-700 px-2 break-words whitespace-normal overflow-hidden">
+      {/* Rotating Quote */}
+      <section
+        className="mb-10 p-4 bg-black/70 rounded-lg shadow-lg text-center flex items-center justify-center border border-gray-700"
+        style={{ minHeight: "4rem" }}
+      >
+        <p className="w-full text-xl md:text-2xl italic text-gray-400 px-2 break-words whitespace-normal font-serif">
           {quotes[quoteIndex]}
         </p>
       </section>
 
+      {/* Recent Memories */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <h2 className="text-3xl font-semibold mb-6 text-gray-900">
-          Recent Memories
-        </h2>
+        <h2 className="text-3xl font-serif mb-6 text-gray-100">Recent Memories</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {recentMemories.length > 0 ? (
             recentMemories.map((memory) => (
               <MemoryCard key={memory.id} memory={memory} />
             ))
           ) : (
-            <p className="text-gray-700">No recent memories found.</p>
+            <p className="text-gray-400">No recent memories found.</p>
           )}
         </div>
         <div className="text-right mt-4">
-          <Link
-            href="/memories"
-            className="text-blue-600 hover:underline transition-colors duration-200"
-          >
+          <Link href="/memories" className="text-blue-300 hover:underline transition-colors duration-200">
             View All Memories →
           </Link>
         </div>
       </main>
 
-      <footer className="bg-white/90 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
+      {/* Footer */}
+      <footer className="bg-black/70 backdrop-blur-md shadow-lg text-gray-400">
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm">
           © {new Date().getFullYear()} If Only I Sent This
         </div>
       </footer>
