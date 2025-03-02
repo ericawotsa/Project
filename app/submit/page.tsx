@@ -15,18 +15,10 @@ const colorOptions = [
   { value: "teal", label: "Teal" },
 ];
 
-const letterStyleOptions = [
-  { value: "default", label: "Default" },
-  { value: "sad", label: "Sad" },
-  { value: "love", label: "Love" },
-];
-
-const sadAnimations = [
+const specialEffectOptions = [
+  { value: "", label: "None" },
   { value: "bleeding", label: "Bleeding Text Effect" },
   { value: "broken", label: "Broken Words Effect" },
-];
-
-const loveAnimations = [
   { value: "neon", label: "Neon Love Glow" },
   { value: "handwritten", label: "Handwritten Text Effect" },
 ];
@@ -36,8 +28,7 @@ export default function Submit() {
   const [message, setMessage] = useState("");
   const [sender, setSender] = useState("");
   const [color, setColor] = useState("default");
-  const [letterStyle, setLetterStyle] = useState("default");
-  const [animation, setAnimation] = useState("");
+  const [specialEffect, setSpecialEffect] = useState("");
   const [fullBg, setFullBg] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -52,9 +43,10 @@ export default function Submit() {
     }
 
     const status = "pending";
+    // Save letter_style as default (unused) and store the special effect in animation
     const { error } = await supabase
       .from("memories")
-      .insert([{ recipient, message, sender, status, color, full_bg: fullBg, letter_style: letterStyle, animation }]);
+      .insert([{ recipient, message, sender, status, color, full_bg: fullBg, letter_style: "default", animation: specialEffect }]);
 
     if (error) {
       setError("Error submitting your memory.");
@@ -65,8 +57,7 @@ export default function Submit() {
       setMessage("");
       setSender("");
       setColor("default");
-      setLetterStyle("default");
-      setAnimation("");
+      setSpecialEffect("");
       setFullBg(false);
     }
   };
@@ -144,43 +135,17 @@ export default function Submit() {
             </div>
 
             <div>
-              <label className="block font-medium text-gray-700">Select a Letter Style (optional):</label>
+              <label className="block font-medium text-gray-700">Do you want any special effect?</label>
               <select
-                value={letterStyle}
-                onChange={(e) => {
-                  setLetterStyle(e.target.value);
-                  setAnimation("");
-                }}
+                value={specialEffect}
+                onChange={(e) => setSpecialEffect(e.target.value)}
                 className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
               >
-                {letterStyleOptions.map((option) => (
+                {specialEffectOptions.map((option) => (
                   <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
               </select>
             </div>
-
-            {(letterStyle === "sad" || letterStyle === "love") && (
-              <div>
-                <label className="block font-medium text-gray-700">Select an Animation Effect:</label>
-                <select
-                  value={animation}
-                  onChange={(e) => setAnimation(e.target.value)}
-                  className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
-                >
-                  <option value="">None</option>
-                  {letterStyle === "sad" &&
-                    sadAnimations.map((option) => (
-                      <option key={option.value} value={option.value}>{option.label}</option>
-                    ))
-                  }
-                  {letterStyle === "love" &&
-                    loveAnimations.map((option) => (
-                      <option key={option.value} value={option.value}>{option.label}</option>
-                    ))
-                  }
-                </select>
-              </div>
-            )}
 
             <div className="flex items-center">
               <input
