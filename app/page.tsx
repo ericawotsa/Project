@@ -21,7 +21,6 @@ interface Memory {
 export default function Home() {
   const [recentMemories, setRecentMemories] = useState<Memory[]>([]);
   const [quoteIndex, setQuoteIndex] = useState(0);
-  const [showWelcome, setShowWelcome] = useState(false);
   const quotes = [
     "The wound is the place where the Light enters you.",
     "Let yourself be silently drawn by the strange pull of what you really love.",
@@ -50,11 +49,6 @@ export default function Home() {
       }
     }
     fetchRecentMemories();
-
-    const hasSeenWelcome = localStorage.getItem("hasSeenWelcome");
-    if (!hasSeenWelcome) {
-      setShowWelcome(true);
-    }
   }, []);
 
   useEffect(() => {
@@ -64,56 +58,33 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [quotes.length]);
 
-  const handleCloseWelcome = () => {
-    setShowWelcome(false);
-    localStorage.setItem("hasSeenWelcome", "true");
-  };
-
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-800 via-gray-900 to-black text-gray-300">
-      {/* Welcome Modal */}
-      {showWelcome && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80 backdrop-blur-md">
-          <div className="bg-gray-900 p-8 rounded-lg shadow-xl text-center max-w-md w-full border border-gray-700">
-            <h2 className="text-3xl font-serif text-gray-100 mb-4">Welcome to the Graveyard of Memories</h2>
-            <p className="text-lg text-gray-400 mb-6">
-              A resting place for unsent words. New here? Visit "How it Works" to unearth the silence.
-            </p>
-            <button
-              onClick={handleCloseWelcome}
-              className="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg hover:from-blue-700 hover:to-blue-900 transition duration-200"
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      )}
-
+    <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-black/70 backdrop-blur-md shadow-lg">
+      <header className="bg-white/90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
-          <h1 className="text-4xl font-serif text-gray-100">If Only I Sent This</h1>
-          <hr className="my-4 border-dashed border-gray-500" />
+          <h1 className="text-4xl font-bold text-gray-900">If Only I Sent This</h1>
+          <hr className="my-4 border-gray-300" />
           <nav>
-            <ul className="flex flex-wrap justify-center gap-6 text-gray-400">
+            <ul className="flex flex-wrap justify-center gap-6">
               <li>
-                <Link href="/" className="hover:text-blue-300 transition-colors duration-200">
+                <Link href="/" className="hover:text-blue-600 transition-colors duration-200">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/memories" className="hover:text-blue-300 transition-colors duration-200">
+                <Link href="/memories" className="hover:text-blue-600 transition-colors duration-200">
                   Memories
                 </Link>
               </li>
               <li>
-                <Link href="/submit" className="hover:text-blue-300 transition-colors duration-200">
+                <Link href="/submit" className="hover:text-blue-600 transition-colors duration-200">
                   Submit
                 </Link>
               </li>
               <li>
-                <Link href="/how-it-works" className="hover:text-blue-300 transition-colors duration-200">
-                  How it Works
+                <Link href="/about" className="hover:text-blue-600 transition-colors duration-200">
+                  About
                 </Link>
               </li>
             </ul>
@@ -123,36 +94,34 @@ export default function Home() {
 
       {/* Rotating Quote */}
       <section
-        className="mb-10 p-4 bg-black/70 rounded-lg shadow-lg text-center flex items-center justify-center border border-gray-700"
+        className="mb-10 p-4 bg-white/90 rounded-lg shadow-lg text-center flex items-center justify-center overflow-hidden"
         style={{ minHeight: "4rem" }}
       >
-        <p className="w-full text-xl md:text-2xl italic text-gray-400 px-2 break-words whitespace-normal font-serif">
+        <p className="w-full text-xl md:text-2xl italic text-gray-700 px-2 break-words whitespace-normal overflow-hidden">
           {quotes[quoteIndex]}
         </p>
       </section>
 
       {/* Recent Memories */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <h2 className="text-3xl font-serif mb-6 text-gray-100">Recent Memories</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {recentMemories.length > 0 ? (
-            recentMemories.map((memory) => (
-              <MemoryCard key={memory.id} memory={memory} />
-            ))
-          ) : (
-            <p className="text-gray-400">No recent memories found.</p>
-          )}
-        </div>
+        <h2 className="text-3xl font-semibold mb-6 text-gray-900">Recent Memories</h2>
+        {recentMemories.length > 0 ? (
+          recentMemories.map((memory) => (
+            <MemoryCard key={memory.id} memory={memory} />
+          ))
+        ) : (
+          <p className="text-gray-700">No recent memories found.</p>
+        )}
         <div className="text-right mt-4">
-          <Link href="/memories" className="text-blue-300 hover:underline transition-colors duration-200">
+          <Link href="/memories" className="text-blue-600 hover:underline transition-colors duration-200">
             View All Memories →
           </Link>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-black/70 backdrop-blur-md shadow-lg text-gray-400">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm">
+      <footer className="bg-white/90 backdrop-blur-md shadow-lg">
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
           © {new Date().getFullYear()} If Only I Sent This
         </div>
       </footer>
