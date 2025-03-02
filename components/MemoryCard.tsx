@@ -226,22 +226,14 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
         <div className="mb-2">
           <h3 className="text-2xl font-bold text-gray-800">
             {memory.animation && (
-              <span
-                style={{
-                  fontSize: "0.8rem",
-                  color: arrowColor,
-                  marginRight: "4px",
-                }}
-              >
+              <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>
                 ★
               </span>
             )}
             To: {memory.recipient}
           </h3>
           {memory.sender && (
-            <p className="mt-1 text-lg italic text-gray-600">
-              From: {memory.sender}
-            </p>
+            <p className="mt-1 text-lg italic text-gray-600">From: {memory.sender}</p>
           )}
         </div>
         <hr className="my-2 border-gray-300" />
@@ -265,10 +257,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
       {/* Arrow outside the card */}
       <div className="absolute right-[-30px] top-1/2 transform -translate-y-1/2">
         <Link href={`/memories/${memory.id}`}>
-          <span
-            className="text-3xl"
-            style={{ color: arrowColor, fontFamily: "cursive" }}
-          >
+          <span className="text-3xl" style={{ color: arrowColor, fontFamily: "cursive" }}>
             ➜
           </span>
         </Link>
@@ -277,34 +266,20 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
         className="flip-card w-full max-w-sm mx-auto my-4 perspective-1000 aspect-square cursor-pointer overflow-hidden"
         onClick={() => setFlipped(!flipped)}
       >
-        <div
-          className={`flip-card-inner relative w-full h-full transition-transform duration-700 transform ${
-            flipped ? "rotate-y-180" : ""
-          }`}
-        >
+        <div className={`flip-card-inner relative w-full h-full transition-transform duration-700 transform ${flipped ? "rotate-y-180" : ""}`}>
           {/* Front Side */}
-          <div
-            className={`flip-card-front absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 p-4 flex flex-col justify-between`}
-          >
+          <div className={`flip-card-front absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 p-4 flex flex-col justify-between`}>
             <div>
               <h3 className="text-xl font-bold text-gray-800">
                 {memory.animation && (
-                  <span
-                    style={{
-                      fontSize: "0.8rem",
-                      color: arrowColor,
-                      marginRight: "4px",
-                    }}
-                  >
+                  <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>
                     ★
                   </span>
                 )}
                 To: {memory.recipient}
               </h3>
               {memory.sender && (
-                <p className="mt-1 text-md italic text-gray-600">
-                  From: {memory.sender}
-                </p>
+                <p className="mt-1 text-md italic text-gray-600">From: {memory.sender}</p>
               )}
             </div>
             <hr className="border-t border-gray-300 my-1" />
@@ -322,22 +297,12 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
             </div>
           </div>
           {/* Back Side */}
-          <div
-            className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 p-4 flex flex-col justify-start`}
-          >
+          <div className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 p-4 flex flex-col justify-start`}>
             <div>
-              <h3 className="text-lg italic text-gray-700 text-center">
-                if only I sent this
-              </h3>
+              <h3 className="text-lg italic text-gray-700 text-center">if only I sent this</h3>
               <hr className="border-t border-gray-300 my-1" />
             </div>
-            <div
-              className={`flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap break-words`}
-              style={{
-                "--scroll-bg": scrollColors.track,
-                "--scroll-thumb": scrollColors.thumb,
-              } as React.CSSProperties}
-            >
+            <div className={`flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap break-words`} style={{ "--scroll-bg": scrollColors.track, "--scroll-thumb": scrollColors.thumb } as React.CSSProperties}>
               {animatedMessage}
             </div>
           </div>
