@@ -113,7 +113,7 @@ export default function Submit() {
             {error && <p className="text-red-500 text-center font-medium">{error}</p>}
 
             <div className="animate-slide-up">
-              <label className="block font-serif text-gray-300">{`Recipient's Name (required):`}</label>
+              <label className="block font-serif text-gray-300">{`Recipient&apos;s Name (required):`}</label>
               <input
                 type="text"
                 value={recipient}
