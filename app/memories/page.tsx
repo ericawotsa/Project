@@ -1,10 +1,12 @@
-"use client";
-export const dynamic = "force-dynamic";
+"use client";  // ✅ Keep this first!
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 import MemoryCard from "@/components/MemoryCard";
+
+export const dynamic = "force-dynamic";  // ✅ Move this below imports
+
 
 interface Memory {
   id: string;
