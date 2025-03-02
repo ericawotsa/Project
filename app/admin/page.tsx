@@ -123,7 +123,6 @@ async function updateMemoryStatus(
   refreshCallback: () => void
 ) {
   if (newStatus === "rejected") {
-    // Delete the memory if rejected.
     const { error } = await supabase
       .from("memories")
       .delete()
