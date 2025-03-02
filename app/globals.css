@@ -76,7 +76,7 @@ body {
 .fancy-arrow {
   font-size: 2rem;
   font-family: 'cursive';
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   transition: transform 0.3s;
 }
 .fancy-arrow:hover {
