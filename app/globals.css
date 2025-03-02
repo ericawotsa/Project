@@ -51,69 +51,21 @@ body {
   background-color: var(--scroll-thumb);
 }
 
-/* === Neon Love Glow Effect (Responsive) === */
-.neon-love-container {
+/* === Heart Glow Effect === */
+.heart-glow-container {
   position: relative;
   overflow: hidden;
-  word-wrap: break-word;
 }
-.neon-love-text {
-  position: relative;
-  z-index: 2;
-  color: inherit;
-}
-.neon-love-heart {
+.heart-glow {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 40%;
+  width: 20%;
   height: auto;
-  animation: heart-draw 2s linear infinite;
-}
-.neon-love-heart svg {
-  width: 100%;
-  height: auto;
-}
-.neon-love-heart .gradient {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 125%;
-  height: 125%;
-  background: linear-gradient(180deg, currentColor 0%, currentColor 50%, currentColor 50%);
-  mix-blend-mode: multiply;
-  animation: gradient-rotate 2s linear infinite;
-}
-.neon-love-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 133%;
-  height: 133%;
-  background: radial-gradient(circle at 50% 25%, currentColor, transparent),
-              radial-gradient(circle at 50% 75%, currentColor, transparent);
-  background-blend-mode: multiply;
-  opacity: 0.33;
-  animation: background-rotate 2s linear infinite;
-}
-@keyframes heart-draw {
-  from {
-    stroke-dashoffset: 0;
-  }
-  to {
-    stroke-dashoffset: 300;
-  }
-}
-@keyframes gradient-rotate {
-  to {
-    transform: rotate(360deg);
-  }
-}
-@keyframes background-rotate {
-  to {
-    transform: rotate(360deg);
-  }
+  fill: currentColor;
+  stroke: #fff;
+  stroke-width: 2px;
 }
 
 /* === Broken Words Effect (Color Inherited) === */
