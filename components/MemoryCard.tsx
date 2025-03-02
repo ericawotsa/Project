@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useMemo, useRef } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 
 interface Memory {
@@ -76,48 +76,99 @@ function getScrollColors(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* TypewriterPrompt component remains unchanged */
+/* 
+   TypewriterPrompt: cycles through 50 very short, refined lines 
+   that evoke the unsent pain – all still here, unchanged.
+*/
 const TypewriterPrompt: React.FC = () => {
-  const prompts = useMemo(
-    () => [
-      "Click me!",
-      "Flip me over!",
-      "What’s inside?",
-      "Take a peek!",
-      "Reveal the memory!",
-    ],
-    []
-  );
-  const [currentPrompt, setCurrentPrompt] = useState(0);
-  const [displayText, setDisplayText] = useState("");
+  const prompts = useMemo(() => [
+    "Was it so simple? See what stayed.",
+    "I never sent it. Look closer.",
+    "Words locked away—dare a peek.",
+    "Too raw to send. Uncover it.",
+    "Unsaid and hidden. Might you see?",
+    "A secret held tight. Dare a glance.",
+    "I kept it inside. Could you find it?",
+    "Unsent regret—what remains unseen?",
+    "The truth stayed here. Perhaps you’ll know.",
+    "I never let go. See the silent truth.",
+    "Barely spoken—wanna see more?",
+    "It lies unsent. Would you dare?",
+    "All left behind. Could you unveil it?",
+    "Hidden in quiet. Uncover my truth.",
+    "The unsaid endures. Look a little closer.",
+    "I held back my words. See if they shift.",
+    "Silence remains—maybe you can sense it.",
+    "Too much left unsaid. Notice it?",
+    "I never released it. Find the hidden pain.",
+    "The letter stayed. Let it reveal itself.",
+    "All unsent. What if you noticed?",
+    "I kept my silence. Dare to discern?",
+    "Lost in stillness—see what lingers.",
+    "It was never sent. Perhaps you'll sense it.",
+    "My truth was hidden. Would you glimpse it?",
+    "I held my words. Notice the quiet sorrow.",
+    "Unspoken and raw—could you see it?",
+    "What was never sent still lives here.",
+    "The words stayed inside—could you unveil them?",
+    "A quiet miss remains. Would you discover?",
+    "I left it unsaid. Might you notice?",
+    "A secret letter, unsent. Look a little closer.",
+    "Unshared, it endures—could you sense its weight?",
+    "I never dared to send it. See if it changes you.",
+    "The silence holds a secret. Do you feel it?",
+    "A muted farewell lingers—could you perceive it?",
+    "I never let you in. Perhaps you'll understand.",
+    "The unsent remains, hidden yet true.",
+    "Too real to send—wanna glimpse the truth?",
+    "My silence speaks volumes. Can you sense it?",
+    "A quiet goodbye, left unsent. Look again.",
+    "The words were mine alone—could you share them?",
+    "I kept them hidden—maybe you'll notice the void.",
+    "What was never sent still speaks softly.",
+    "A secret kept in time—does it stir you?",
+    "The unsaid lingers—perhaps you'll sense the loss.",
+    "I never let it out. Could you feel the absence?",
+    "Hidden sorrow endures—see if it calls to you.",
+    "A missed goodbye remains—wonder what it holds?",
+    "Unsent, unspoken—its truth lies here."
+  ], []);
+  
+  const initialIndex = useMemo(() => Math.floor(Math.random() * prompts.length), [prompts]);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
   const [charIndex, setCharIndex] = useState(0);
-  const speed = 100;
 
   useEffect(() => {
-    let typingTimeout: NodeJS.Timeout;
-    let nextPromptTimeout: NodeJS.Timeout;
-
-    if (charIndex < prompts[currentPrompt].length) {
-      typingTimeout = setTimeout(() => {
-        setDisplayText((prev) => prev + prompts[currentPrompt][charIndex]);
-        setCharIndex((prev) => prev + 1);
-      }, speed);
-    } else {
-      nextPromptTimeout = setTimeout(() => {
-        setDisplayText("");
-        setCharIndex(0);
-        setCurrentPrompt((prev) => (prev + 1) % prompts.length);
-      }, 2000);
-    }
-
-    return () => {
-      clearTimeout(typingTimeout);
-      clearTimeout(nextPromptTimeout);
-    };
-  }, [charIndex, currentPrompt, prompts]);
+    const currentPrompt = prompts[currentIndex];
+    const typeSpeed = isDeleting ? 50 : 100;
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        setDisplayedText(currentPrompt.substring(0, charIndex + 1));
+        if (charIndex + 1 === currentPrompt.length) {
+          setTimeout(() => setIsDeleting(true), 2000);
+        } else {
+          setCharIndex(charIndex + 1);
+        }
+      } else {
+        setDisplayedText(currentPrompt.substring(0, charIndex - 1));
+        if (charIndex - 1 === 0) {
+          setIsDeleting(false);
+          setCurrentIndex((currentIndex + 1) % prompts.length);
+          setCharIndex(0);
+        } else {
+          setCharIndex(charIndex - 1);
+        }
+      }
+    }, typeSpeed);
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, currentIndex, prompts]);
 
   return (
-    <p className="text-sm text-gray-600 italic">{displayText}</p>
+    <div className="h-6 text-center text-sm text-gray-700 font-serif">
+      {displayedText}
+    </div>
   );
 };
 
@@ -155,7 +206,7 @@ const HandwrittenText: React.FC<{ message: string }> = ({ message }) => (
   </div>
 );
 
-/* Updated renderMessage function */
+/* renderMessage function */
 const renderMessage = (memory: Memory, arrowColor: string) => {
   switch (memory.animation) {
     case "bleeding":
