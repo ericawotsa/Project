@@ -62,9 +62,23 @@ function getBgColor(color: string) {
   return mapping[color] || mapping["default"];
 }
 
+function getScrollColors(color: string) {
+  const mapping: { [key: string]: { track: string; thumb: string } } = {
+    default: { track: "#ECEFF1", thumb: "#90A4AE" },
+    blue: { track: "#BBDEFB", thumb: "#1E88E5" },
+    gray: { track: "#ECEFF1", thumb: "#607D8B" },
+    purple: { track: "#E1BEE7", thumb: "#8E24AA" },
+    navy: { track: "#BBDEFB", thumb: "#0D47A1" },
+    maroon: { track: "#FFCDD2", thumb: "#C62828" },
+    pink: { track: "#F8BBD0", thumb: "#D81B60" },
+    teal: { track: "#B2DFDB", thumb: "#00796B" },
+  };
+  return mapping[color] || mapping["default"];
+}
+
 /* 
    TypewriterPrompt: cycles through 50 very short, refined lines 
-   that evoke the unsent pain – exactly as originally provided.
+   that evoke the unsent pain – exactly as in your original code.
 */
 const TypewriterPrompt: React.FC = () => {
   const prompts = useMemo(() => [
@@ -191,59 +205,73 @@ const HandwrittenText: React.FC<{ text: string }> = ({ text }) => {
   return <canvas ref={canvasRef} width={640} height={100} className="handwritten-text-canvas" style={{ width: '100%', height: 'auto' }} />;
 };
 
+/* 
+   The renderMessage function applies the new effects (if any) to the card message.
+   If no effect is selected, the message is rendered as plain text.
+*/
+const renderMessage = (memory: Memory, arrowColor: string) => {
+  if (memory.letter_style === "sad") {
+    if (memory.animation === "bleeding") {
+      return (
+        <p className="text-base text-gray-800 whitespace-pre-wrap bleeding-text" style={{ wordWrap: "break-word" }}>
+          {memory.message}
+        </p>
+      );
+    }
+    if (memory.animation === "broken") {
+      return (
+        <p className="text-base text-gray-800 whitespace-pre-wrap broken-text" data-text={memory.message} style={{ wordWrap: "break-word" }}>
+          {memory.message}
+        </p>
+      );
+    }
+  } else if (memory.letter_style === "love") {
+    if (memory.animation === "neon") {
+      return (
+        <div className="neon-love-container" style={{ color: arrowColor, position: "relative" }}>
+          <div className="neon-love-heart">
+            <svg width="150" height="150" viewBox="0 0 150 150">
+              <g transform="translate(100 100)">
+                <path transform="translate(-75 -75)" stroke="#fff" strokeWidth="2" strokeLinecap="round" fill="none" d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"></path>
+              </g>
+            </svg>
+            <div className="gradient"></div>
+            <svg width="150" height="150" viewBox="0 0 150 150">
+              <g transform="translate(100 100)">
+                <path transform="translate(-75 -75)" stroke="#fffa" strokeWidth="1" strokeLinecap="round" fill="none" d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"></path>
+              </g>
+            </svg>
+          </div>
+          <div className="neon-love-background"></div>
+          <div className="neon-love-text" style={{ position: "relative", zIndex: 2 }}>
+            <p className="text-base text-gray-800 whitespace-pre-wrap" style={{ wordWrap: "break-word" }}>
+              {memory.message}
+            </p>
+          </div>
+        </div>
+      );
+    }
+    if (memory.animation === "handwritten") {
+      return <HandwrittenText text={memory.message} />;
+    }
+  }
+  return (
+    <p className="text-base text-gray-800 whitespace-pre-wrap" style={{ wordWrap: "break-word" }}>
+      {memory.message}
+    </p>
+  );
+};
+
 const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const [flipped, setFlipped] = useState(false);
   const borderColor = getBorderColor(memory.color);
   const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-white/90";
-  // Removed unused scrollColors variable.
+  const scrollColors = getScrollColors(memory.color);
   const arrowColor = getColorHex(memory.color);
 
   const dateStr = new Date(memory.created_at).toLocaleDateString();
   const timeStr = new Date(memory.created_at).toLocaleTimeString();
   const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' });
-
-  // Render the message with the chosen new effect (if any)
-  const renderMessage = () => {
-    if (memory.letter_style === "sad") {
-      if (memory.animation === "bleeding") {
-        return <p className="text-base text-gray-800 whitespace-pre-wrap bleeding-text" style={{ wordWrap: "break-word" }}>{memory.message}</p>;
-      }
-      if (memory.animation === "broken") {
-        return <p className="text-base text-gray-800 whitespace-pre-wrap broken-text" data-text={memory.message} style={{ wordWrap: "break-word" }}>{memory.message}</p>;
-      }
-    } else if (memory.letter_style === "love") {
-      if (memory.animation === "neon") {
-        return (
-          <div className="neon-love-container" style={{ color: arrowColor, position: "relative" }}>
-            <div className="neon-love-heart">
-              <svg width="150" height="150" viewBox="0 0 150 150">
-                <g transform="translate(100 100)">
-                  <path transform="translate(-75 -75)" stroke="#fff" strokeWidth="2" strokeLinecap="round" fill="none" d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"></path>
-                </g>
-              </svg>
-              <div className="gradient"></div>
-              <svg width="150" height="150" viewBox="0 0 150 150">
-                <g transform="translate(100 100)">
-                  <path transform="translate(-75 -75)" stroke="#fffa" strokeWidth="1" strokeLinecap="round" fill="none" d="M92.71,7.27L92.71,7.27c-9.71-9.69-25.46-9.69-35.18,0L50,14.79l-7.54-7.52C32.75-2.42,17-2.42,7.29,7.27v0 c-9.71,9.69-9.71,25.41,0,35.1L50,85l42.71-42.63C102.43,32.68,102.43,16.96,92.71,7.27z"></path>
-                </g>
-              </svg>
-            </div>
-            <div className="neon-love-background"></div>
-            <div className="neon-love-text" style={{ position: "relative", zIndex: 2 }}>
-              <p className="text-base text-gray-800 whitespace-pre-wrap" style={{ wordWrap: "break-word" }}>
-                {memory.message}
-              </p>
-            </div>
-          </div>
-        );
-      }
-      if (memory.animation === "handwritten") {
-        return <HandwrittenText text={memory.message} />;
-      }
-    }
-    // Default plain text message
-    return <p className="text-base text-gray-800 whitespace-pre-wrap" style={{ wordWrap: "break-word" }}>{memory.message}</p>;
-  };
 
   const handleCardClick = () => {
     setFlipped(!flipped);
@@ -251,7 +279,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
 
   if (detail) {
     return (
-      <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`} style={{ position: "relative" }}>
+      <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`}>
         <div className="mb-2">
           <h3 className="text-2xl font-bold text-gray-800">
             {memory.animation && <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>★</span>}
@@ -261,7 +289,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
         </div>
         <hr className="my-2 border-gray-300" />
         <div className="mb-2">
-          {renderMessage()}
+          {renderMessage(memory, arrowColor)}
         </div>
         <hr className="my-2 border-gray-300" />
         <div className="text-xs text-gray-500 flex flex-wrap justify-center gap-2">
@@ -314,7 +342,16 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
           </div>
           {/* Back Side */}
           <div className={`flip-card-back absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 transform rotate-y-180 p-4 flex flex-col justify-start`}>
-            {renderMessage()}
+            <div>
+              <h3 className="text-lg italic text-gray-700 text-center">if only I sent this</h3>
+              <hr className="border-t border-gray-300 my-1" />
+            </div>
+            <div
+              className="flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap"
+              style={{ "--scroll-bg": scrollColors.track, "--scroll-thumb": scrollColors.thumb } as React.CSSProperties}
+            >
+              {renderMessage(memory, arrowColor)}
+            </div>
           </div>
         </div>
       </div>
