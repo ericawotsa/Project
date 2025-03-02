@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css?family=Architects+Daughter');
-@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 /* Global styling with an emotional gradient background */
 body {
@@ -51,50 +51,141 @@ body {
   background-color: var(--scroll-thumb);
 }
 
-/* === Heart Glow Effect === */
-.heart-glow-container {
-  position: relative;
-  overflow: hidden;
-}
-.heart-glow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20%;
-  height: auto;
-  fill: currentColor;
-  stroke: #fff;
-  stroke-width: 2px;
+/* Bleeding Text Effect */
+.bleeding-text {
+  font-family: 'Architects Daughter', cursive;
+  text-shadow: 0 0 0.05em rgb(0%, 0%, 100%),
+    0 0 0.1em rgb(0%, 100%, 0%),
+    0 0 0.2em rgb(100%, 10%, 10%);
 }
 
-/* === Broken Words Effect (Color Inherited) === */
-.broken-text {
-  font-size: 1rem;
-  font-family: "Arial Black", sans-serif;
+/* Broken Words Effect */
+.broken-word {
   position: relative;
-  color: transparent;
   display: inline-block;
+  color: transparent;
+  margin-right: 0.2em; /* Spacing between words */
 }
-.broken-text::before,
-.broken-text::after {
+
+.broken-word::before,
+.broken-word::after {
   content: attr(data-text);
   position: absolute;
   top: 0;
   left: 0;
-  color: inherit;
+  color: inherit; /* Inherit text color from card */
+  transition: 0.2s;
 }
-.broken-text::before {
+
+.broken-word::before {
   clip-path: polygon(0 0, 60% 0, 30% 100%, 0 100%);
-  animation: breakWord 3s infinite;
 }
-.broken-text::after {
+
+.broken-word::after {
   clip-path: polygon(60% 0, 100% 0, 100% 100%, 30% 100%);
-  animation: breakWord 3s infinite;
-  animation-delay: 1.5s;
 }
-@keyframes breakWord {
-  0% { left: 0; top: 0; transform: rotate(0deg); opacity: 1; }
-  50% { left: -0.15em; top: -0.05em; transform: rotate(-5deg); opacity: 0.5; }
-  100% { left: 0; top: 0; transform: rotate(0deg); opacity: 1; }
+
+.broken-word.active::before {
+  left: -0.15em;
+  transform: rotate(-5deg);
+  top: -0.05em;
+}
+
+.broken-word.active::after {
+  left: 0.15em;
+  transform: rotate(5deg);
+  top: 0.05em;
+}
+
+/* Neon Love Glow Effect */
+.neon-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.neon-heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  filter: brightness(400%);
+}
+
+.neon-heart svg {
+  width: 100%;
+  height: 100%;
+  stroke-dasharray: 75px;
+  stroke-dashoffset: 0px;
+  animation: heart-draw 2s linear infinite;
+}
+
+.neon-heart .gradient {
+  width: 125%;
+  height: 125%;
+  transform: translate(-12.5%, -12.5%);
+  background: linear-gradient(180deg, var(--heart-color) 0%, var(--heart-color) 50%, var(--heart-color) 50%);
+  mix-blend-mode: multiply;
+  animation: gradient 2s linear infinite;
+}
+
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 25%, var(--heart-color), transparent),
+              radial-gradient(circle at 50% 75%, var(--heart-color), transparent);
+  background-blend-mode: multiply;
+  opacity: 0.33;
+  animation: background 2s linear infinite;
+}
+
+.neon-text {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--heart-color), 0 0 40px var(--heart-color);
+}
+
+/* Handwritten Text Effect */
+.handwritten-text p {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.5rem;
+  animation: fadeInLeft 5s;
+}
+
+/* Animations */
+@keyframes heart-draw {
+  from {
+    stroke-dashoffset: 0px;
+  }
+  to {
+    stroke-dashoffset: 300px;
+  }
+}
+
+@keyframes gradient {
+  to {
+    transform: translate(-12.5%, -12.5%) rotate(360deg);
+  }
+}
+
+@keyframes background {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
