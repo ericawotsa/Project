@@ -12,6 +12,7 @@ interface Memory {
   color: string;
   full_bg: boolean;
   letter_style: string;
+  animation?: string;
 }
 
 interface MemoryCardProps {
@@ -83,7 +84,7 @@ const TypewriterPrompt: React.FC = () => {
   const prompts = useMemo(() => [
     "Was it so simple? See what stayed.",
     "I never sent it. Look closer.",
-    "Words locked away—dare to peek.",
+    "Words locked away—dare a peek.",
     "Too raw to send. Uncover it.",
     "Unsaid and hidden. Might you see?",
     "A secret held tight. Dare a glance.",
@@ -173,6 +174,8 @@ const TypewriterPrompt: React.FC = () => {
 
 const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const [flipped, setFlipped] = useState(false);
+  const [animate, setAnimate] = useState(false);
+  const [shatterEffect, setShatterEffect] = useState(false);
   const borderColor = getBorderColor(memory.color);
   const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-white/90";
   const scrollColors = getScrollColors(memory.color);
@@ -182,16 +185,59 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const timeStr = new Date(memory.created_at).toLocaleTimeString();
   const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' });
 
+  // Trigger automatic animation after 5 seconds for applicable animations (except shattering)
+  useEffect(() => {
+    if(memory.animation && !(memory.letter_style === "sad" && memory.animation === "shattering")) {
+      const timer = setTimeout(() => {
+        setAnimate(true);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [memory.animation, memory.letter_style]);
+
+  // Compute animation class based on memory settings
+  let animationClass = "";
+  if(memory.animation) {
+    if(memory.letter_style === "sad") {
+      if(memory.animation === "shattering") {
+        if(shatterEffect) animationClass = "shattering-animation";
+      } else if(animate) {
+        if(memory.animation === "glitch") animationClass = "glitch-animation";
+        else if(memory.animation === "vanishing") animationClass = "vanishing-animation";
+        else if(memory.animation === "inkBleeding") animationClass = "inkBleeding-animation";
+      }
+    } else if(memory.letter_style === "love" && animate) {
+      if(memory.animation === "handwrittenNeon") animationClass = "handwrittenNeon-animation";
+      else if(memory.animation === "fireAndIce") animationClass = "fireAndIce-animation";
+      else if(memory.animation === "handwrittenLove") animationClass = "handwrittenLove-animation";
+      else if(memory.animation === "neonGlow") animationClass = "neonGlow-animation";
+    }
+  }
+
+  // Handler for card tap in non-detail view
+  const handleCardClick = () => {
+    if(memory.letter_style === "sad" && memory.animation === "shattering") {
+      setShatterEffect(true);
+      setTimeout(() => setShatterEffect(false), 2000);
+    }
+    setFlipped(!flipped);
+  };
+
   if (detail) {
     return (
       <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-xl`}>
         <div className="mb-2">
-          <h3 className="text-2xl font-bold text-gray-800">To: {memory.recipient}</h3>
+          <h3 className="text-2xl font-bold text-gray-800">
+            {memory.animation && <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>★</span>}
+            To: {memory.recipient}
+          </h3>
           {memory.sender && <p className="mt-1 text-lg italic text-gray-600">From: {memory.sender}</p>}
         </div>
         <hr className="my-2 border-gray-300" />
         <div className="mb-2">
-          <p className="text-base text-gray-800 whitespace-pre-wrap">{memory.message}</p>
+          <p className={`text-base text-gray-800 whitespace-pre-wrap ${animationClass}`}>
+            {memory.message}
+          </p>
         </div>
         <hr className="my-2 border-gray-300" />
         <div className="text-xs text-gray-500 flex flex-wrap justify-center gap-2">
@@ -219,13 +265,16 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
       </div>
       <div
         className="flip-card w-full max-w-sm mx-auto my-4 perspective-1000 aspect-square cursor-pointer overflow-hidden"
-        onClick={() => setFlipped(!flipped)}
+        onClick={handleCardClick}
       >
         <div className={`flip-card-inner relative w-full h-full transition-transform duration-700 transform ${flipped ? "rotate-y-180" : ""}`}>
           {/* Front Side */}
           <div className={`flip-card-front absolute w-full h-full backface-hidden rounded-lg shadow-xl ${bgColor} ${borderColor} border-4 p-4 flex flex-col justify-between`}>
             <div>
-              <h3 className="text-xl font-bold text-gray-800">To: {memory.recipient}</h3>
+              <h3 className="text-xl font-bold text-gray-800">
+                {memory.animation && <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>★</span>}
+                To: {memory.recipient}
+              </h3>
               {memory.sender && <p className="mt-1 text-md italic text-gray-600">From: {memory.sender}</p>}
             </div>
             <hr className="border-t border-gray-300 my-1" />
@@ -249,7 +298,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
               <hr className="border-t border-gray-300 my-1" />
             </div>
             <div 
-              className="flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap" 
+              className={`flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap ${animationClass}`} 
               style={{ "--scroll-bg": scrollColors.track, "--scroll-thumb": scrollColors.thumb } as React.CSSProperties}
             >
               {memory.message}
