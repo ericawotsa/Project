@@ -196,7 +196,7 @@ const HandwrittenText: React.FC<{ message: string }> = ({ message }) => (
 );
 
 /* renderMessage function &ndash; only Bleeding and Handwritten effects retained */
-const renderMessage = (memory: Memory, _unused: string) => {
+const renderMessage = (memory: Memory) => {
   switch (memory.animation) {
     case "bleeding":
       return <p className="bleeding-text">{memory.message}</p>;
@@ -233,7 +233,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
         </div>
         <hr className="my-2 border-gray-600" />
         <div className="mb-2">
-          {renderMessage(memory, "")}
+          {renderMessage(memory)}
         </div>
         <hr className="my-2 border-gray-600" />
         <div className="text-xs text-gray-400 flex flex-wrap justify-center gap-2">
@@ -294,7 +294,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
               className="flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-200 whitespace-pre-wrap"
               style={{ "--scroll-bg": scrollColors.track, "--scroll-thumb": scrollColors.thumb } as React.CSSProperties}
             >
-              {renderMessage(memory, "")}
+              {renderMessage(memory)}
             </div>
           </div>
         </div>
