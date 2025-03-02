@@ -52,32 +52,39 @@ body {
 /* Animation Effects    */
 /* ==================== */
 
-/* --- Sad Animations --- */
+/* --- SAD EFFECTS --- */
 
-/* 1. Shattering Glass Effect - applied directly to text */
+/* 1. Shattering Effect – the text “shatters” with a smooth skew, scale, and translation */
 @keyframes shatter {
-  0% { transform: none; opacity: 1; }
-  50% { transform: perspective(400px) rotateX(20deg) rotateY(20deg); opacity: 0.8; }
-  100% { transform: perspective(400px) rotateX(45deg) rotateY(45deg); opacity: 0; }
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-2px, 2px) scale(1.05) skew(3deg, 3deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(5px, -5px) scale(0.95) skew(-5deg, -5deg);
+  }
 }
 .shattering-effect {
   animation: shatter 1s forwards;
 }
 
-/* 2. Glitch Text Effect */
-@keyframes glitch1 {
-  0% { transform: translate(-2px, -2px); }
-  50% { transform: translate(2px, -2px); }
-  100% { transform: translate(-2px, -2px); }
-}
-@keyframes glitch2 {
-  0% { transform: translate(2px, 2px); }
-  50% { transform: translate(-2px, 2px); }
-  100% { transform: translate(2px, 2px); }
+/* 2. Glitch Effect – layered slight translations for a subtle glitch */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
 }
 .glitch-effect {
+  animation: glitch 1s infinite;
   position: relative;
-  color: inherit;
 }
 .glitch-effect::before,
 .glitch-effect::after {
@@ -85,72 +92,70 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 .glitch-effect::before {
-  animation: glitch1 500ms infinite;
-  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
-  transform: translate(-2px, -2px);
+  color: #00fffc;
+  animation: glitch 1s infinite;
 }
 .glitch-effect::after {
-  animation: glitch2 500ms infinite;
-  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
-  transform: translate(2px, 2px);
+  color: #fc00ff;
+  animation: glitch 1s infinite reverse;
 }
 
-/* 3. Vanishing Text Effect */
+/* 3. Vanishing Effect – smoothly fades out the text */
 @keyframes vanish {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 .vanishing-effect {
   animation: vanish 3s forwards;
 }
 
-/* 4. Ink Bleeding Text Effect */
+/* 4. Ink Bleeding Effect – shifts text color and adds a subtle shadow */
 @keyframes inkBleed {
-  0% { text-shadow: none; }
-  100% { text-shadow: 2px 2px 5px rgba(0,0,0,0.8); color: #990000; }
+  from { color: inherit; text-shadow: none; }
+  to { color: #800000; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
 }
 .ink-bleed-effect {
   animation: inkBleed 2s forwards;
 }
 
-/* --- Love Animations --- */
+/* --- LOVE EFFECTS --- */
 
-/* 5. Handwritten Neon Love Notes */
+/* 5. Handwritten Neon – text appears with a gentle upward motion and a glowing halo */
 @keyframes handwrittenNeon {
   0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 5px #fff, 0 0 10px #0ff; }
+  100% { opacity: 1; transform: translateY(0); text-shadow: 0 0 8px rgba(255,255,255,0.8), 0 0 16px rgba(0,255,255,0.8); }
 }
 .handwritten-neon {
   animation: handwrittenNeon 2s forwards;
 }
 
-/* 6. Fire & Ice Love Effect */
+/* 6. Fire & Ice – cycles text color smoothly between warm and cool tones */
 @keyframes fireAndIce {
   0% { color: #fc6400; }
   50% { color: #20c3d0; }
   100% { color: #fc6400; }
 }
 .fire-and-ice {
-  animation: fireAndIce 2s infinite;
+  animation: fireAndIce 3s infinite;
 }
 
-/* 7. Handwritten Love Letters Effect */
+/* 7. Handwritten Love – text fades in with a gentle italic flourish */
 @keyframes handwrittenLove {
-  0% { opacity: 0; }
-  100% { opacity: 1; font-style: italic; }
+  0% { opacity: 0; transform: translateY(5px); font-style: normal; }
+  100% { opacity: 1; transform: translateY(0); font-style: italic; }
 }
 .handwritten-love {
   animation: handwrittenLove 2s forwards;
 }
 
-/* 8. Neon Love Glow Effect */
+/* 8. Neon Glow – applies a soft, pulsing glow around the text */
 @keyframes neonGlow {
-  0% { opacity: 0.8; }
-  50% { opacity: 1; text-shadow: 0 0 10px currentColor; }
-  100% { opacity: 0.8; }
+  0% { text-shadow: 0 0 5px rgba(255,255,255,0.8); }
+  50% { text-shadow: 0 0 15px rgba(255,255,255,1); }
+  100% { text-shadow: 0 0 5px rgba(255,255,255,0.8); }
 }
 .neon-glow {
   animation: neonGlow 2s infinite;
