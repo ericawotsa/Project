@@ -19,7 +19,7 @@ const specialEffectOptions = [
   { value: "", label: "None" },
   { value: "bleeding", label: "Bleeding Text Effect" },
   { value: "broken", label: "Broken Words Effect" },
-  { value: "neon", label: "Neon Love Glow" },
+  { value: "neon", label: "Neon Heart Background" }, // Updated label
   { value: "handwritten", label: "Handwritten Text Effect" },
 ];
 
@@ -89,7 +89,7 @@ export default function Submit() {
             {error && <p className="text-red-600 text-center font-medium">{error}</p>}
 
             <div>
-              <label className="block font-medium text-gray-700">{`Recipient's Name (required):`}</label>
+              <label className="block font-medium text-gray-700">Recipient's Name (required):</label>
               <input
                 type="text"
                 value={recipient}
@@ -100,7 +100,7 @@ export default function Submit() {
             </div>
 
             <div>
-              <label className="block font-medium text-gray-700">{`Message (required):`}</label>
+              <label className="block font-medium text-gray-700">Message (required):</label>
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -111,7 +111,7 @@ export default function Submit() {
             </div>
 
             <div>
-              <label className="block font-medium text-gray-700">{`Your Name (optional):`}</label>
+              <label className="block font-medium text-gray-700">Your Name (optional):</label>
               <input
                 type="text"
                 value={sender}
@@ -121,7 +121,7 @@ export default function Submit() {
             </div>
 
             <div>
-              <label className="block font-medium text-gray-700">{`Select a Color for Your Message (optional):`}</label>
+              <label className="block font-medium text-gray-700">Select a Color for Your Message (optional):</label>
               <select
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
@@ -134,7 +134,7 @@ export default function Submit() {
             </div>
 
             <div>
-              <label className="block font-medium text-gray-700">{`Do you want any special effect?`}</label>
+              <label className="block font-medium text-gray-700">Do you want any special effect?</label>
               <select
                 value={specialEffect}
                 onChange={(e) => setSpecialEffect(e.target.value)}
