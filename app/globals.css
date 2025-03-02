@@ -51,51 +51,7 @@ body {
   background-color: var(--scroll-thumb);
 }
 
-/* === Sad Type Effects === */
-
-/* Bleeding Text Effect */
-.bleeding-text {
-  font-family: 'Architects Daughter', cursive;
-  text-shadow: 0 0 0.05em rgb(0, 0, 255),
-               0 0 0.1em rgb(0, 255, 0),
-               0 0 0.2em rgb(255, 10, 10);
-  word-wrap: break-word;
-}
-
-/* Broken Words Effect */
-.broken-text {
-  font-size: 1rem;
-  font-family: "Arial Black", sans-serif;
-  position: relative;
-  color: transparent;
-  display: inline-block;
-}
-.broken-text::before,
-.broken-text::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: lightyellow;
-}
-.broken-text::before {
-  clip-path: polygon(0 0, 60% 0, 30% 100%, 0 100%);
-  animation: breakWord 3s infinite;
-}
-.broken-text::after {
-  clip-path: polygon(60% 0, 100% 0, 100% 100%, 30% 100%);
-  animation: breakWord 3s infinite;
-  animation-delay: 1.5s;
-}
-@keyframes breakWord {
-  0% { left: 0; top: 0; transform: rotate(0deg); opacity: 1; }
-  50% { left: -0.15em; top: -0.05em; transform: rotate(-5deg); opacity: 0.5; }
-  100% { left: 0; top: 0; transform: rotate(0deg); opacity: 1; }
-}
-
-/* === Love Type Effects === */
-
-/* Neon Love Glow Effect */
+/* === Neon Love Glow Effect (Responsive) === */
 .neon-love-container {
   position: relative;
   overflow: hidden;
@@ -108,21 +64,16 @@ body {
 }
 .neon-love-heart {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-}
-.neon-love-heart svg {
-  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
+  width: 40%;
+  height: auto;
   animation: heart-draw 2s linear infinite;
+}
+.neon-love-heart svg {
+  width: 100%;
+  height: auto;
 }
 .neon-love-heart .gradient {
   position: absolute;
@@ -165,11 +116,33 @@ body {
   }
 }
 
-/* Handwritten Text Effect */
-.handwritten-text-canvas {
-  animation: fadeInLeft 5s;
+/* === Broken Words Effect (Color Inherited) === */
+.broken-text {
+  font-size: 1rem;
+  font-family: "Arial Black", sans-serif;
+  position: relative;
+  color: transparent;
+  display: inline-block;
 }
-@keyframes fadeInLeft {
-  0% { opacity: 0; transform: translateX(-15px); }
-  100% { opacity: 1; transform: translateX(0); }
+.broken-text::before,
+.broken-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: inherit;
+}
+.broken-text::before {
+  clip-path: polygon(0 0, 60% 0, 30% 100%, 0 100%);
+  animation: breakWord 3s infinite;
+}
+.broken-text::after {
+  clip-path: polygon(60% 0, 100% 0, 100% 100%, 30% 100%);
+  animation: breakWord 3s infinite;
+  animation-delay: 1.5s;
+}
+@keyframes breakWord {
+  0% { left: 0; top: 0; transform: rotate(0deg); opacity: 1; }
+  50% { left: -0.15em; top: -0.05em; transform: rotate(-5deg); opacity: 0.5; }
+  100% { left: 0; top: 0; transform: rotate(0deg); opacity: 1; }
 }
