@@ -67,7 +67,7 @@ export default function Home() {
           <div className="bg-gray-900 p-6 rounded-lg shadow-xl max-w-sm mx-auto text-center">
             <h2 className="text-2xl font-bold text-gray-100 mb-4">Welcome to the Graveyard of Memories</h2>
             <p className="text-gray-300 mb-4">
-              If you are new, please visit the "How It Works" page to understand the journey of unsent words.
+              If you are new, please visit the &quot;How It Works&quot; page to understand the journey of unsent words.
             </p>
             <button
               onClick={() => setShowWelcome(false)}
