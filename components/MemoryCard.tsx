@@ -279,7 +279,10 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
     <div className="relative group">
       <div className="absolute right-[-30px] top-1/2 transform -translate-y-1/2">
         <Link href={`/memories/${memory.id}`}>
-          <FaArrowRight className="text-3xl" style={{ color: arrowColor }} />
+          <FaArrowRight
+            className="text-3xl"
+            style={{ color: arrowColor }}
+          />
         </Link>
       </div>
       <div
