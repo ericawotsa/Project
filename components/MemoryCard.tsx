@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa"; // Requires 'react-icons' to be installed
 
 interface Memory {
   id: string;
