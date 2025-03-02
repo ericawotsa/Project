@@ -42,31 +42,31 @@ export default function Memories() {
   }, [searchTerm]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-800 via-gray-700 to-gray-600">
       {/* Header */}
-      <header className="bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg">
+      <header className="bg-gray-900/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
           <h1 className="text-4xl font-bold text-gray-100">Memories</h1>
-          <hr className="my-4 border-gray-700" />
+          <hr className="my-4 border-gray-600" />
           <nav>
             <ul className="flex flex-wrap justify-center gap-6">
               <li>
-                <Link href="/" className="hover:text-red-400">
+                <Link href="/" className="hover:text-blue-400">
                   Home
                 </Link>
               </li>
               <li>
-                <Link href="/memories" className="hover:text-red-400">
+                <Link href="/memories" className="hover:text-blue-400">
                   Memories
                 </Link>
               </li>
               <li>
-                <Link href="/submit" className="hover:text-red-400">
+                <Link href="/submit" className="hover:text-blue-400">
                   Submit
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="hover:text-red-400">
+                <Link href="/about" className="hover:text-blue-400">
                   How It Works
                 </Link>
               </li>
@@ -83,22 +83,22 @@ export default function Memories() {
             placeholder="Search by recipient name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full p-3 border border-gray-700 rounded focus:outline-none focus:border-red-400 bg-gray-900 text-gray-200"
+            className="w-full p-3 border border-gray-600 rounded focus:outline-none focus:border-blue-400 bg-gray-700 text-gray-100"
           />
         </div>
-        {memories.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {memories.map((memory) => <MemoryCard key={memory.id} memory={memory} />)}
-          </div>
-        ) : (
-          <p className="text-gray-400">No memories found.</p>
-        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {memories.length > 0 ? (
+            memories.map((memory) => <MemoryCard key={memory.id} memory={memory} />)
+          ) : (
+            <p className="text-gray-300">No memories found.</p>
+          )}
+        </div>
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} If Only I Sent This
+      <footer className="bg-gray-900/80 backdrop-blur-md shadow-lg">
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-400">
+          © {new Date().getFullYear()} If Only I Sent This
         </div>
       </footer>
     </div>
