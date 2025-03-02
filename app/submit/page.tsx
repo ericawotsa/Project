@@ -19,7 +19,7 @@ const specialEffectOptions = [
   { value: "", label: "None" },
   { value: "bleeding", label: "Bleeding Text Effect" },
   { value: "broken", label: "Broken Words Effect" },
-  { value: "neon", label: "Neon Love Glow" },
+  { value: "neon", label: "Heart Glow" },
   { value: "handwritten", label: "Handwritten Text Effect" },
 ];
 
