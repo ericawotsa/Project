@@ -21,12 +21,27 @@ const letterStyleOptions = [
   { value: "love", label: "Love" },
 ];
 
+const sadAnimations = [
+  { value: "shattering", label: "Shattering Glass" },
+  { value: "glitch", label: "Glitch Text" },
+  { value: "vanishing", label: "Vanishing Text" },
+  { value: "inkBleeding", label: "Ink Bleeding" },
+];
+
+const loveAnimations = [
+  { value: "handwrittenNeon", label: "Handwritten Neon Love Notes" },
+  { value: "fireAndIce", label: "Fire & Ice Love Effect" },
+  { value: "handwrittenLove", label: "Handwritten Love Letters" },
+  { value: "neonGlow", label: "Neon Love Glow" },
+];
+
 export default function Submit() {
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
   const [sender, setSender] = useState("");
   const [color, setColor] = useState("default");
   const [letterStyle, setLetterStyle] = useState("default");
+  const [animation, setAnimation] = useState("");
   const [fullBg, setFullBg] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -43,7 +58,7 @@ export default function Submit() {
     const status = "pending";
     const { error } = await supabase
       .from("memories")
-      .insert([{ recipient, message, sender, status, color, full_bg: fullBg, letter_style: letterStyle }]);
+      .insert([{ recipient, message, sender, status, color, full_bg: fullBg, letter_style: letterStyle, animation }]);
 
     if (error) {
       setError("Error submitting your memory.");
@@ -55,6 +70,7 @@ export default function Submit() {
       setSender("");
       setColor("default");
       setLetterStyle("default");
+      setAnimation("");
       setFullBg(false);
     }
   };
@@ -135,7 +151,10 @@ export default function Submit() {
               <label className="block font-medium text-gray-700">Select a Letter Style (optional):</label>
               <select
                 value={letterStyle}
-                onChange={(e) => setLetterStyle(e.target.value)}
+                onChange={(e) => {
+                  setLetterStyle(e.target.value);
+                  setAnimation(""); // reset animation when letter style changes
+                }}
                 className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
               >
                 {letterStyleOptions.map((option) => (
@@ -143,6 +162,29 @@ export default function Submit() {
                 ))}
               </select>
             </div>
+
+            {(letterStyle === "sad" || letterStyle === "love") && (
+              <div>
+                <label className="block font-medium text-gray-700">Select an Animation Effect:</label>
+                <select
+                  value={animation}
+                  onChange={(e) => setAnimation(e.target.value)}
+                  className="w-full mt-2 p-3 border border-gray-300 rounded focus:outline-none focus:border-blue-500 transition-colors duration-200"
+                >
+                  <option value="">None</option>
+                  {letterStyle === "sad" &&
+                    sadAnimations.map((option) => (
+                      <option key={option.value} value={option.value}>{option.label}</option>
+                    ))
+                  }
+                  {letterStyle === "love" &&
+                    loveAnimations.map((option) => (
+                      <option key={option.value} value={option.value}>{option.label}</option>
+                    ))
+                  }
+                </select>
+              </div>
+            )}
 
             <div className="flex items-center">
               <input
