@@ -40,19 +40,19 @@ function AdminPanelContent() {
   }, [isAuthorized]);
 
   if (!isAuthorized) {
-    return <p className="p-6 text-center text-red-600">Access Denied</p>;
+    return <p className="p-6 text-center text-red-500">Access Denied</p>;
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-800 via-gray-700 to-gray-600">
       {/* Navigation */}
-      <header className="bg-gray-800 bg-opacity-80 backdrop-blur-md shadow-lg">
+      <header className="bg-gray-900/80 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 flex items-center justify-between">
           <h1 className="text-4xl font-bold text-gray-100">Admin Panel</h1>
           <nav>
             <ul className="flex gap-6">
               <li>
-                <Link href="/" className="hover:text-red-400 transition-colors duration-200">
+                <Link href="/" className="hover:text-blue-400 transition-colors duration-200">
                   Home
                 </Link>
               </li>
@@ -69,34 +69,34 @@ function AdminPanelContent() {
           pendingMemories.map((memory) => (
             <div
               key={memory.id}
-              className="bg-gray-800 bg-opacity-90 shadow rounded-lg p-6 mb-6 border-l-4 border-yellow-500"
+              className="bg-gray-800/90 shadow rounded-lg p-6 mb-6 border-l-4 border-yellow-600"
             >
               <h3 className="text-2xl font-semibold text-gray-100">
                 To: {memory.recipient}
               </h3>
               <p className="mt-3 text-gray-300">{memory.message}</p>
               {memory.sender && (
-                <p className="mt-3 italic text-lg text-gray-400">&mdash; {memory.sender}</p>
+                <p className="mt-3 italic text-lg text-gray-400">— {memory.sender}</p>
               )}
-              <small className="block mt-3 text-gray-500">
+              <small className="block mt-3 text-gray-400">
                 {new Date(memory.created_at).toLocaleString()}
               </small>
               <div className="mt-4 flex gap-4">
                 <button
                   onClick={() => updateMemoryStatus(memory.id, "approved", fetchPendingMemories)}
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 transition-colors"
                 >
                   Approve
                 </button>
                 <button
                   onClick={() => updateMemoryStatus(memory.id, "rejected", fetchPendingMemories)}
-                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500 transition-colors"
                 >
                   Reject
                 </button>
                 <button
                   onClick={() => updateMemoryStatus(memory.id, "banned", fetchPendingMemories)}
-                  className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800 transition-colors"
+                  className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-600 transition-colors"
                 >
                   Ban
                 </button>
@@ -104,13 +104,13 @@ function AdminPanelContent() {
             </div>
           ))
         ) : (
-          <p className="text-gray-400">No pending memories for review.</p>
+          <p className="text-gray-300">No pending memories for review.</p>
         )}
       </main>
 
-      <footer className="bg-gray-800 bg-opacity-80 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} If Only I Sent This - Admin Panel
+      <footer className="bg-gray-900/80 backdrop-blur-md shadow-lg">
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-400">
+          © {new Date().getFullYear()} If Only I Sent This - Admin Panel
         </div>
       </footer>
     </div>
@@ -140,7 +140,7 @@ async function updateMemoryStatus(
 
 export default function AdminPanel() {
   return (
-    <Suspense fallback={<p className="p-6 text-center text-gray-300">Loading admin panel...</p>}>
+    <Suspense fallback={<p className="p-6 text-center text-gray-100">Loading admin panel...</p>}>
       <AdminPanelContent />
     </Suspense>
   );
