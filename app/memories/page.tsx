@@ -14,6 +14,7 @@ interface Memory {
   color: string;
   full_bg: boolean;
   letter_style: string;
+  animation?: string;
 }
 
 export default function Memories() {
