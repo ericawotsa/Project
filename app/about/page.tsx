@@ -4,15 +4,27 @@ export default function About() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md shadow-lg">
+      <header className="bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg">
         <div className="max-w-4xl mx-auto px-6 py-6 text-center">
-          <h1 className="text-4xl font-bold text-gray-900">About</h1>
-          <hr className="my-4 border-gray-300" />
+          <h1 className="text-4xl font-bold text-gray-100">How It Works</h1>
+          <hr className="my-4 border-gray-700" />
           <nav>
             <ul className="flex flex-wrap justify-center gap-6">
-              <li><Link href="/" className="hover:text-blue-600">Home</Link></li>
-              <li><Link href="/memories" className="hover:text-blue-600">Memories</Link></li>
-              <li><Link href="/submit" className="hover:text-blue-600">Submit</Link></li>
+              <li>
+                <Link href="/" className="hover:text-red-400">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/memories" className="hover:text-red-400">
+                  Memories
+                </Link>
+              </li>
+              <li>
+                <Link href="/submit" className="hover:text-red-400">
+                  Submit
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>
@@ -20,29 +32,33 @@ export default function About() {
 
       {/* Main Content */}
       <main className="flex-grow max-w-4xl mx-auto px-6 py-8">
-        <article className="bg-white/90 p-8 rounded-lg shadow-lg">
-          <h2 className="text-3xl font-semibold mb-4 text-gray-800">A Tale of Unsent Words</h2>
-          <p className="text-lg text-gray-700 mb-4">
-            This space is a tribute to a first love that left us with a thousand unsent messages.
-            It is a sanctuary for memories that were never fully expressed—a place where every word,
-            every regret, and every tear is honored.
+        <article className="bg-gray-800 bg-opacity-90 p-8 rounded-lg shadow-lg">
+          <h2 className="text-3xl font-semibold mb-4 text-gray-100">Welcome to the Graveyard of Memories</h2>
+          <p className="text-lg text-gray-300 mb-4">
+            This platform is a sanctuary for memories that were never sent, a digital graveyard where unsaid words find solace.
+            Whether it's a message for a person, an animal, a lost love, or anything dear to your heart, here you can archive the words
+            you couldn't send. Every memory is stored with care, preserving the pain, beauty, and depth of your unexpressed emotions.
           </p>
-          <p className="text-lg text-gray-700 mb-4">
-            We remember that bittersweet moment when courage failed, and the last words remained
-            locked inside our hearts. Here, you can relive those moments, find solace in shared sorrow,
-            and honor the love that once was.
+          <p className="text-lg text-gray-300 mb-4">
+            On the home page, you'll find a collection of these memories. Each card represents an unsent message. By tapping a card,
+            it flips to reveal the full content. Notice the star symbol on some cards? That star indicates the card has a special effect applied—
+            a mark of extra emotional intensity.
           </p>
-          <p className="text-lg text-gray-700">
-            This archive is for anyone who has loved deeply and lost painfully, who still holds onto
-            the hope of one more chance to say goodbye—or maybe, even, hello.
+          <p className="text-lg text-gray-300 mb-4">
+            The design is inspired by 1980s aesthetics—sadistic, depressing, yet visually captivating. From the revamp of card designs and animations
+            to the rhythmic, rotating quotes, every detail aims to immerse you in a world where pain meets beauty.
+          </p>
+          <p className="text-lg text-gray-300">
+            If you're new, we encourage you to explore this page to understand all the features. Experience the art of unsent memories,
+            where every word holds a story, and every story is a glimpse into the soul.
           </p>
         </article>
       </main>
 
       {/* Footer */}
-      <footer className="bg-white/90 backdrop-blur-md shadow-lg">
-        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-600">
-          © {new Date().getFullYear()} If Only I Sent This
+      <footer className="bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg">
+        <div className="max-w-4xl mx-auto px-6 py-4 text-center text-sm text-gray-500">
+          &copy; {new Date().getFullYear()} If Only I Sent This
         </div>
       </footer>
     </div>
