@@ -20,6 +20,71 @@ interface MemoryCardProps {
   detail?: boolean;
 }
 
+/**
+ * AnimatedText renders the message with an effect if animate is true.
+ * For the shattering effect, a cracked glass overlay is shown on top of the text.
+ * For other effects the text is wrapped with a corresponding CSS class.
+ */
+const AnimatedText: React.FC<{
+  text: string;
+  effect?: string;
+  animate: boolean;
+}> = ({ text, effect, animate }) => {
+  if (!animate || !effect) return <span>{text}</span>;
+  let className = "";
+  switch (effect) {
+    case "shattering":
+      className = "shattered-overlay";
+      break;
+    case "glitch":
+      className = "glitch-effect";
+      break;
+    case "vanishing":
+      className = "vanishing-effect";
+      break;
+    case "inkBleeding":
+      className = "ink-bleed-effect";
+      break;
+    case "handwrittenNeon":
+      className = "handwritten-neon";
+      break;
+    case "fireAndIce":
+      className = "fire-and-ice";
+      break;
+    case "handwrittenLove":
+      className = "handwritten-love";
+      break;
+    case "neonGlow":
+      className = "neon-glow";
+      break;
+    default:
+      break;
+  }
+  if (effect === "shattering") {
+    return (
+      <div style={{ position: "relative", display: "inline-block" }}>
+        <span>{text}</span>
+        <div
+          className={className}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
+        ></div>
+      </div>
+    );
+  } else {
+    return (
+      <span className={className} data-text={text}>
+        {text}
+      </span>
+    );
+  }
+};
+
 function getBorderColor(color: string) {
   const mapping: { [key: string]: string } = {
     default: "border-gray-400",
@@ -76,94 +141,25 @@ function getScrollColors(color: string) {
   return mapping[color] || mapping["default"];
 }
 
-/* 
-   TypewriterPrompt: cycles through refined lines that evoke unsent memories.
-*/
-const TypewriterPrompt: React.FC = () => {
-  const prompts = [
-    "Was it so simple? See what stayed.",
-    "I never sent it. Look closer.",
-    "Words locked away—dare a peek.",
-    "Too raw to send. Uncover it.",
-    "Unsaid and hidden. Might you see?",
-    "A secret held tight. Dare a glance.",
-    "I kept it inside. Could you find it?",
-    "Unsent regret—what remains unseen?",
-    "The truth stayed here. Perhaps you’ll know.",
-    "I never let go. See the silent truth.",
-    "Barely spoken—wanna see more?",
-    "It lies unsent. Would you dare?",
-    "All left behind. Could you unveil it?"
-  ];
-  const [index, setIndex] = useState(Math.floor(Math.random() * prompts.length));
-  const [displayedText, setDisplayedText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [charIndex, setCharIndex] = useState(0);
-
-  useEffect(() => {
-    const currentPrompt = prompts[index];
-    const speed = isDeleting ? 50 : 100;
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        setDisplayedText(currentPrompt.substring(0, charIndex + 1));
-        if (charIndex + 1 === currentPrompt.length) {
-          setTimeout(() => setIsDeleting(true), 2000);
-        } else {
-          setCharIndex(charIndex + 1);
-        }
-      } else {
-        setDisplayedText(currentPrompt.substring(0, charIndex - 1));
-        if (charIndex - 1 === 0) {
-          setIsDeleting(false);
-          setIndex((index + 1) % prompts.length);
-          setCharIndex(0);
-        } else {
-          setCharIndex(charIndex - 1);
-        }
-      }
-    }, speed);
-    return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, index, prompts]);
-
-  return (
-    <div className="h-6 text-center text-sm text-gray-700 font-serif">
-      {displayedText}
-    </div>
-  );
-};
-
 const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   const [flipped, setFlipped] = useState(false);
-  // For non‑shattering animations (glitch, vanishing, inkBleeding, love effects)
+  // animate flag will be set true 5 seconds after render if an animation is selected
   const [animate, setAnimate] = useState(false);
-  // For shattering effect (sad) – triggers briefly every 5 seconds
-  const [shatter, setShatter] = useState(false);
 
-  // Set up timers for animation effects when a memory has a selected animation
+  // Trigger the animation effect 5 seconds after the component mounts if an effect is selected
   useEffect(() => {
     if (memory.animation) {
-      if (memory.letter_style === "sad" && memory.animation === "shattering") {
-        // Repeat shatter every 5 seconds
-        const interval = setInterval(() => {
-          setShatter(true);
-          setTimeout(() => setShatter(false), 1000); // shatter lasts 1 second
-        }, 5000);
-        return () => clearInterval(interval);
-      } else {
-        // For other effects: apply once after 5 seconds
-        const timer = setTimeout(() => {
-          setAnimate(true);
-        }, 5000);
-        return () => clearTimeout(timer);
-      }
+      const timer = setTimeout(() => {
+        setAnimate(true);
+      }, 5000);
+      return () => clearTimeout(timer);
     }
-  }, [memory.animation, memory.letter_style]);
+  }, [memory.animation]);
 
-  // On any user tap, reset the animations (and restart timer for non‑shattering ones)
+  // Reset the animation on any tap (which also restarts the 5-second timer)
   const handleReset = () => {
     setAnimate(false);
-    setShatter(false);
-    if (memory.animation && !(memory.letter_style === "sad" && memory.animation === "shattering")) {
+    if (memory.animation) {
       const timer = setTimeout(() => {
         setAnimate(true);
       }, 5000);
@@ -171,42 +167,24 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
     }
   };
 
-  // Determine which CSS animation class to apply
-  let animationClass = "";
-  if (memory.animation) {
-    if (memory.letter_style === "sad") {
-      if (memory.animation === "shattering") {
-        if (shatter) animationClass = "shattering-animation";
-      } else if (animate) {
-        if (memory.animation === "glitch") animationClass = "glitch-animation";
-        else if (memory.animation === "vanishing") animationClass = "vanishing-animation";
-        else if (memory.animation === "inkBleeding") animationClass = "inkBleeding-animation";
-      }
-    } else if (memory.letter_style === "love" && animate) {
-      if (memory.animation === "handwrittenNeon") animationClass = "handwrittenNeon-animation";
-      else if (memory.animation === "fireAndIce") animationClass = "fireAndIce-animation";
-      else if (memory.animation === "handwrittenLove") animationClass = "handwrittenLove-animation";
-      else if (memory.animation === "neonGlow") animationClass = "neonGlow-animation";
-    }
-  }
-
-  // Wrap message text in a container that supports potential glitch effect via data attribute
-  const textContent = (
-    <p
-      className={`text-base text-gray-800 whitespace-pre-wrap break-words ${animationClass}`}
-      data-text={memory.message}
-    >
-      {memory.message}
-    </p>
-  );
-
   const dateStr = new Date(memory.created_at).toLocaleDateString();
   const timeStr = new Date(memory.created_at).toLocaleTimeString();
-  const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' });
+  const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, {
+    weekday: "long",
+  });
   const borderColor = getBorderColor(memory.color);
   const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-white/90";
   const scrollColors = getScrollColors(memory.color);
   const arrowColor = getColorHex(memory.color);
+
+  // Render the animated text using our AnimatedText component
+  const animatedMessage = (
+    <AnimatedText
+      text={memory.message}
+      effect={memory.animation}
+      animate={animate}
+    />
+  );
 
   if (detail) {
     return (
@@ -217,16 +195,26 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
         <div className="mb-2">
           <h3 className="text-2xl font-bold text-gray-800">
             {memory.animation && (
-              <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>★</span>
+              <span
+                style={{
+                  fontSize: "0.8rem",
+                  color: arrowColor,
+                  marginRight: "4px",
+                }}
+              >
+                ★
+              </span>
             )}
             To: {memory.recipient}
           </h3>
           {memory.sender && (
-            <p className="mt-1 text-lg italic text-gray-600">From: {memory.sender}</p>
+            <p className="mt-1 text-lg italic text-gray-600">
+              From: {memory.sender}
+            </p>
           )}
         </div>
         <hr className="my-2 border-gray-300" />
-        <div className="mb-2">{textContent}</div>
+        <div className="mb-2">{animatedMessage}</div>
         <hr className="my-2 border-gray-300" />
         <div className="text-xs text-gray-500 flex flex-wrap justify-center gap-2">
           <span>Date: {dateStr}</span>
@@ -256,7 +244,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
       </div>
       <div
         className="flip-card w-full max-w-sm mx-auto my-4 perspective-1000 aspect-square cursor-pointer overflow-hidden"
-        onClick={handleReset}
+        onClick={() => setFlipped(!flipped)}
       >
         <div
           className={`flip-card-inner relative w-full h-full transition-transform duration-700 transform ${
@@ -270,12 +258,22 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
             <div>
               <h3 className="text-xl font-bold text-gray-800">
                 {memory.animation && (
-                  <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>★</span>
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      color: arrowColor,
+                      marginRight: "4px",
+                    }}
+                  >
+                    ★
+                  </span>
                 )}
                 To: {memory.recipient}
               </h3>
               {memory.sender && (
-                <p className="mt-1 text-md italic text-gray-600">From: {memory.sender}</p>
+                <p className="mt-1 text-md italic text-gray-600">
+                  From: {memory.sender}
+                </p>
               )}
             </div>
             <hr className="border-t border-gray-300 my-1" />
@@ -303,13 +301,13 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
               <hr className="border-t border-gray-300 my-1" />
             </div>
             <div
-              className={`flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap break-words ${animationClass}`}
+              className={`flex-1 overflow-y-auto card-scroll cute_scroll text-sm text-gray-800 whitespace-pre-wrap break-words`}
               style={{
                 "--scroll-bg": scrollColors.track,
                 "--scroll-thumb": scrollColors.thumb,
               } as React.CSSProperties}
             >
-              {textContent}
+              {animatedMessage}
             </div>
           </div>
         </div>
