@@ -20,10 +20,63 @@ interface MemoryCardProps {
   detail?: boolean;
 }
 
+/* TypewriterPrompt component (restored) */
+const TypewriterPrompt: React.FC = () => {
+  const prompts = [
+    "Was it so simple? See what stayed.",
+    "I never sent it. Look closer.",
+    "Words locked away—dare a peek.",
+    "Too raw to send. Uncover it.",
+    "Unsaid and hidden. Might you see?",
+    "A secret held tight. Dare a glance.",
+    "I kept it inside. Could you find it?",
+    "Unsent regret—what remains unseen.",
+    "The truth stayed here. Perhaps you’ll know.",
+    "I never let go. See the silent truth.",
+    "Barely spoken—wanna see more?",
+    "It lies unsent. Would you dare?",
+    "All left behind. Could you unveil it?"
+  ];
+  const [index, setIndex] = useState(Math.floor(Math.random() * prompts.length));
+  const [displayedText, setDisplayedText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [charIndex, setCharIndex] = useState(0);
+
+  useEffect(() => {
+    const currentPrompt = prompts[index];
+    const speed = isDeleting ? 50 : 100;
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        setDisplayedText(currentPrompt.substring(0, charIndex + 1));
+        if (charIndex + 1 === currentPrompt.length) {
+          setTimeout(() => setIsDeleting(true), 2000);
+        } else {
+          setCharIndex(charIndex + 1);
+        }
+      } else {
+        setDisplayedText(currentPrompt.substring(0, charIndex - 1));
+        if (charIndex - 1 === 0) {
+          setIsDeleting(false);
+          setIndex((index + 1) % prompts.length);
+          setCharIndex(0);
+        } else {
+          setCharIndex(charIndex - 1);
+        }
+      }
+    }, speed);
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, index, prompts]);
+
+  return (
+    <div className="h-6 text-center text-sm text-gray-700 font-serif">
+      {displayedText}
+    </div>
+  );
+};
+
 /**
- * AnimatedText renders the message with an effect if animate is true.
- * For the shattering effect, a cracked glass overlay is shown on top of the text.
- * For other effects the text is wrapped with a corresponding CSS class.
+ * AnimatedText renders the message with the chosen effect.
+ * All effects are applied directly on the text.
  */
 const AnimatedText: React.FC<{
   text: string;
@@ -34,7 +87,7 @@ const AnimatedText: React.FC<{
   let className = "";
   switch (effect) {
     case "shattering":
-      className = "shattered-overlay";
+      className = "shattering-effect";
       break;
     case "glitch":
       className = "glitch-effect";
@@ -60,29 +113,7 @@ const AnimatedText: React.FC<{
     default:
       break;
   }
-  if (effect === "shattering") {
-    return (
-      <div style={{ position: "relative", display: "inline-block" }}>
-        <span>{text}</span>
-        <div
-          className={className}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-          }}
-        ></div>
-      </div>
-    );
-  } else {
-    return (
-      <span className={className} data-text={text}>
-        {text}
-      </span>
-    );
-  }
+  return <span className={className} data-text={text}>{text}</span>;
 };
 
 function getBorderColor(color: string) {
@@ -146,7 +177,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
   // animate flag will be set true 5 seconds after render if an animation is selected
   const [animate, setAnimate] = useState(false);
 
-  // Trigger the animation effect 5 seconds after the component mounts if an effect is selected
+  // Trigger the animation effect 5 seconds after mount if an effect is selected
   useEffect(() => {
     if (memory.animation) {
       const timer = setTimeout(() => {
