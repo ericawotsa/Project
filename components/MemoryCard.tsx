@@ -94,60 +94,60 @@ function getScrollColors(color: string) {
 
 /* 
    TypewriterPrompt: cycles through 50 very short, refined lines 
-   that evoke the unsent pain – all still here, unchanged.
+   that evoke the unsent pain &ndash; all still here, unchanged.
 */
 const TypewriterPrompt: React.FC = () => {
   const prompts = useMemo(() => [
     "Was it so simple? See what stayed.",
     "I never sent it. Look closer.",
-    "Words locked away—dare a peek.",
+    "Words locked away&mdash;dare a peek.",
     "Too raw to send. Uncover it.",
     "Unsaid and hidden. Might you see?",
     "A secret held tight. Dare a glance.",
     "I kept it inside. Could you find it?",
-    "Unsent regret—what remains unseen?",
-    "The truth stayed here. Perhaps you’ll know.",
+    "Unsent regret&mdash;what remains unseen?",
+    "The truth stayed here. Perhaps you&apos;ll know.",
     "I never let go. See the silent truth.",
-    "Barely spoken—wanna see more?",
+    "Barely spoken&mdash;wanna see more?",
     "It lies unsent. Would you dare?",
     "All left behind. Could you unveil it?",
     "Hidden in quiet. Uncover my truth.",
     "The unsaid endures. Look a little closer.",
     "I held back my words. See if they shift.",
-    "Silence remains—maybe you can sense it.",
+    "Silence remains&mdash;maybe you can sense it.",
     "Too much left unsaid. Notice it?",
     "I never released it. Find the hidden pain.",
     "The letter stayed. Let it reveal itself.",
     "All unsent. What if you noticed?",
     "I kept my silence. Dare to discern?",
-    "Lost in stillness—see what lingers.",
-    "It was never sent. Perhaps you'll sense it.",
+    "Lost in stillness&mdash;see what lingers.",
+    "It was never sent. Perhaps you&apos;ll sense it.",
     "My truth was hidden. Would you glimpse it?",
     "I held my words. Notice the quiet sorrow.",
-    "Unspoken and raw—could you see it?",
+    "Unspoken and raw&mdash;could you see it?",
     "What was never sent still lives here.",
-    "The words stayed inside—could you unveil them?",
+    "The words stayed inside&mdash;could you unveil them?",
     "A quiet miss remains. Would you discover?",
     "I left it unsaid. Might you notice?",
     "A secret letter, unsent. Look a little closer.",
-    "Unshared, it endures—could you sense its weight?",
+    "Unshared, it endures&mdash;could you sense its weight?",
     "I never dared to send it. See if it changes you.",
     "The silence holds a secret. Do you feel it?",
-    "A muted farewell lingers—could you perceive it?",
-    "I never let you in. Perhaps you'll understand.",
+    "A muted farewell lingers&mdash;could you perceive it?",
+    "I never let you in. Perhaps you&apos;ll understand.",
     "The unsent remains, hidden yet true.",
-    "Too real to send—wanna glimpse the truth?",
+    "Too real to send&mdash;wanna glimpse the truth?",
     "My silence speaks volumes. Can you sense it?",
     "A quiet goodbye, left unsent. Look again.",
-    "The words were mine alone—could you share them?",
-    "I kept them hidden—maybe you'll notice the void.",
+    "The words were mine alone&mdash;could you share them?",
+    "I kept them hidden&mdash;maybe you&apos;ll notice the void.",
     "What was never sent still speaks softly.",
-    "A secret kept in time—does it stir you?",
-    "The unsaid lingers—perhaps you'll sense the loss.",
+    "A secret kept in time&mdash;does it stir you?",
+    "The unsaid lingers&mdash;perhaps you&apos;ll sense the loss.",
     "I never let it out. Could you feel the absence?",
-    "Hidden sorrow endures—see if it calls to you.",
-    "A missed goodbye remains—wonder what it holds?",
-    "Unsent, unspoken—its truth lies here."
+    "Hidden sorrow endures&mdash;see if it calls to you.",
+    "A missed goodbye remains&mdash;wonder what it holds?",
+    "Unsent, unspoken&mdash;its truth lies here."
   ], []);
   
   const initialIndex = useMemo(() => Math.floor(Math.random() * prompts.length), [prompts]);
@@ -195,7 +195,7 @@ const HandwrittenText: React.FC<{ message: string }> = ({ message }) => (
   </div>
 );
 
-/* renderMessage function – only Bleeding and Handwritten effects retained */
+/* renderMessage function &ndash; only Bleeding and Handwritten effects retained */
 const renderMessage = (memory: Memory, arrowColor: string) => {
   switch (memory.animation) {
     case "bleeding":
@@ -208,26 +208,28 @@ const renderMessage = (memory: Memory, arrowColor: string) => {
 };
 
 const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
-  const [flipped, setFlipped] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const arrowColor = getColorHex(memory.color);
   const borderColor = getBorderColor(memory.color);
   const bgColor = memory.full_bg ? getBgColor(memory.color) : "bg-gray-900/90";
   const scrollColors = getScrollColors(memory.color);
-  const arrowColor = getColorHex(memory.color);
 
   const dateStr = new Date(memory.created_at).toLocaleDateString();
   const timeStr = new Date(memory.created_at).toLocaleTimeString();
-  const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: 'long' });
+  const dayStr = new Date(memory.created_at).toLocaleDateString(undefined, { weekday: "long" });
 
   const handleCardClick = () => {
     setFlipped(!flipped);
   };
+
+  const [flipped, setFlipped] = useState(false);
 
   if (detail) {
     return (
       <div className={`book-card mx-auto my-4 w-full max-w-md p-6 ${bgColor} ${borderColor} border-4 rounded-lg shadow-2xl`}>
         <div className="mb-2">
           <h3 className="text-2xl font-bold text-gray-200">
-            {memory.animation && <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>★</span>}
+            {memory.animation && <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>&#9733;</span>}
             To: {memory.recipient}
           </h3>
           {memory.sender && <p className="mt-1 text-lg italic text-gray-400">From: {memory.sender}</p>}
@@ -266,7 +268,7 @@ const MemoryCard: React.FC<MemoryCardProps> = ({ memory, detail }) => {
           <div className={`flip-card-front absolute w-full h-full backface-hidden rounded-lg shadow-2xl ${bgColor} ${borderColor} border-4 p-4 flex flex-col justify-between`}>
             <div>
               <h3 className="text-xl font-bold text-gray-200">
-                {memory.animation && <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>★</span>}
+                {memory.animation && <span style={{ fontSize: "0.8rem", color: arrowColor, marginRight: "4px" }}>&#9733;</span>}
                 To: {memory.recipient}
               </h3>
               {memory.sender && <p className="mt-1 text-md italic text-gray-400">From: {memory.sender}</p>}
